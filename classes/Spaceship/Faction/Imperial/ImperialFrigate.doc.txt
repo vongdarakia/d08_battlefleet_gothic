@@ -1,0 +1,16 @@
+
+<- ImperialFrigate ------------------------------------------------------------
+The ImperialFrigate class is a Spaceship that is part of the Imperial faction.
+
+Usage:
+new ImperialFrigate( $x, $y );
+x and y are the coordinates of the spaceship.
+
+Size: 1x4 cases
+Hull points: 5
+PP: 10
+Speed: 15
+Handling: 4
+Shield: 0
+Weapons: Side laser batteries
+------------------------------------------------------------ ImperialFrigate ->

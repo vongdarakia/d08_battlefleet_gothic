@@ -1,9 +1,9 @@
 <?php
 require_once './Imperial.class.php';
 
-class ImperialFrigate extends Imperial {
+class ImperialDestroyer extends Imperial {
 	public static function doc() {
-		return file_get_contents('./ImperialFrigate.doc.txt');
+		return file_get_contents('./ImperialDestroyer.doc.txt');
 	}
 
 	public function __construct( $x, $y ) {
