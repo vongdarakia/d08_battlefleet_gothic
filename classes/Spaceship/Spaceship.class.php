@@ -1,15 +1,20 @@
 <?php
+require_once '../'
 
 abstract class Spaceship {
-	private $_length = 1; // length of Spaceship
-	private $_width = 1; // width of Spaceship
+	private $_length = 1;
+	private $_width = 1;
 	private $_hp = 1; // hull/health points
 	private $_pp = 0; // engine power/power points
-	private $_speed = 1; // speed
-	private $_handle = 0; // handling
+	private $_speed = 1; // maximum speed
+	private $_handle = 0; // minimum speed
+	private $_weapons = array();
+	private $_direction = 0; // 0 1 2 3 -> N E S W
+	private $_x = 0;
+	private $_y = 0;
+
 	private $_shield = 0; // shield
-	private $_weapons = array(); // weapons
-	private $_direction = 0; // direction (0 1 2 3 -> N E S W)
+	private $_extraSpeed = 0; // extra speed
 
 	public static function doc() {
 		return file_get_contents('./Spaceship.doc.txt');
@@ -54,6 +59,10 @@ abstract class Spaceship {
 		return $this->_weapons;
 	}
 
+	public function spendPP( $speed, $shield, $weapon, $repair ) {
+		$this->_shield = $shield;
+	}
+
 	public function takeDamage( $d ) {
 		if ($d <= $this->_shield) {
 			$this->_shield -= $d;
@@ -61,6 +70,7 @@ abstract class Spaceship {
 		else {
 			$this->_hp += $this->_shield;
 			$this->_hp -= $d;
+			$this->_shield = 0;
 		}
 	}
 

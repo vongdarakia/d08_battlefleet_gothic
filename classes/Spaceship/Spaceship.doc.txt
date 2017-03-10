@@ -9,4 +9,9 @@ The valid keys of $kwargs are:
 length, width, hp, pp, speed, handle, weapons, direction
 
 If a key isn't set, its value is set to some default value.
+
+Functions:
+
+get'Var'();
+Returns the value of the variable 'var'
 ------------------------------------------------------------------ Spaceship ->

@@ -1,0 +1,12 @@
+
+<- Weapon ---------------------------------------------------------------------
+The Weapon class is an abstract class used to create specific weapons.
+
+Usage:
+new Weapon_child_class( $kwargs );
+
+The valid keys of $kwargs are:
+charge, short, middle, long
+
+If a key isn't set, its value is set to some default value.
+--------------------------------------------------------------------- Weapon ->
