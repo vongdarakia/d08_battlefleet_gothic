@@ -1,0 +1,18 @@
+
+<- Spaceship ------------------------------------------------------------------
+The Spaceship class is an abstract class used to create specific spaceships.
+
+Usage:
+new Spaceship_child_class( $kwargs );
+
+The valid keys of $kwargs are:
+length
+width
+hp
+pp
+speed
+handle
+shield
+weapons
+direction
+------------------------------------------------------------------ Spaceship ->
