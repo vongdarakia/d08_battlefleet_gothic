@@ -1,15 +1,15 @@
 <?php
 
 abstract class Spaceship {
-	public $length = 1; // length of Spaceship
-	public $width = 1; // width of Spaceship
-	public $hp = 1; // hull/health points
-	public $pp = 0; // engine power/power points
-	public $speed = 1; // speed
-	public $handle = 0; // handling
-	public $shield = 0; // shield
-	public $weapons = array(); // weapons
-	public $direction = 0; // direction (0 1 2 3 -> N E S W)
+	private $_length = 1; // length of Spaceship
+	private $_width = 1; // width of Spaceship
+	private $_hp = 1; // hull/health points
+	private $_pp = 0; // engine power/power points
+	private $_speed = 1; // speed
+	private $_handle = 0; // handling
+	private $_shield = 0; // shield
+	private $_weapons = array(); // weapons
+	private $_direction = 0; // direction (0 1 2 3 -> N E S W)
 
 	public static function doc() {
 		return file_get_contents('./Spaceship.doc.txt');
@@ -17,32 +17,55 @@ abstract class Spaceship {
 
 	public function __construct( array $kwargs ) {
 		if (array_key_exists('length', $kwargs)) {
-			$this->length = $kwargs['length'];
+			$this->_length = $kwargs['length'];
 		}
 		if (array_key_exists('width', $kwargs)) {
-			$this->width = $kwargs['width'];
+			$this->_width = $kwargs['width'];
 		}
 		if (array_key_exists('hp', $kwargs)) {
-			$this->hp = $kwargs['hp'];
+			$this->_hp = $kwargs['hp'];
 		}
 		if (array_key_exists('pp', $kwargs)) {
-			$this->pp = $kwargs['pp'];
+			$this->_pp = $kwargs['pp'];
 		}
 		if (array_key_exists('speed', $kwargs)) {
-			$this->speed = $kwargs['speed'];
+			$this->_speed = $kwargs['speed'];
 		}
 		if (array_key_exists('handle', $kwargs)) {
-			$this->handle = $kwargs['handle'];
-		}
-		if (array_key_exists('shield', $kwargs)) {
-			$this->shield = $kwargs['shield'];
+			$this->_handle = $kwargs['handle'];
 		}
 		if (array_key_exists('weapons', $kwargs)) {
-			$this->weapons = $kwargs['weapons'];
+			$this->_weapons = $kwargs['weapons'];
 		}
 		if (array_key_exists('direction', $kwargs)) {
-			$this->direction = $kwargs['direction'];
+			$this->_direction = $kwargs['direction'];
 		}
+	}
+
+	public function getLength() {
+		return $this->_length;
+	}
+
+	public function getWidth() {
+		return $this->_width;
+	}
+
+	public function getWeapons() {
+		return $this->_weapons;
+	}
+
+	public function takeDamage( $d ) {
+		if ($d <= $this->_shield) {
+			$this->_shield -= $d;
+		}
+		else {
+			$this->_hp += $this->_shield;
+			$this->_hp -= $d;
+		}
+	}
+
+	public function isDead() {
+		return $this->_hp <= 0;
 	}
 }
 ?>
