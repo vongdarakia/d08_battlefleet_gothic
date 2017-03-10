@@ -1,6 +1,6 @@
 <?php
-require_once '../Battlefleet/Battlefleet.class.php';
-require_once '../Weapon/Weapon.class.php';
+require_once __DIR__ . '/../Battlefleet/Battlefleet.class.php';
+require_once __DIR__ . '/../Weapon/Weapon.class.php';
 
 abstract class Spaceship {
 	private $_length = 1;
@@ -12,6 +12,7 @@ abstract class Spaceship {
 	private $_handle = 0; // minimum speed
 	private $_weapons = array();
 	private $_direction = 0; // 0 1 2 3 -> N E S W
+	private $_name = 'placeholder name';
 	private $_x = 0;
 	private $_y = 0;
 
@@ -47,6 +48,9 @@ abstract class Spaceship {
 		}
 		if (array_key_exists('direction', $kwargs)) {
 			$this->_direction = $kwargs['direction'];
+		}
+		if (array_key_exists('name', $kwargs)) {
+			$this->_name = $kwargs['name'];
 		}
 		if (array_key_exists('x', $kwargs)) {
 			$this->_x = $kwargs['x'];
