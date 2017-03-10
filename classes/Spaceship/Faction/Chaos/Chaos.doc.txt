@@ -1,0 +1,6 @@
+
+<- Chaos ----------------------------------------------------------------------
+The Chaos class is for spaceships that belong to the Spaceship class.
+
+Usage is identical to the Spaceship class.
+---------------------------------------------------------------------- Chaos ->
