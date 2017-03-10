@@ -12,11 +12,14 @@ class Battlefleet {
 	public static $S = 2;
 	public static $W = 3;
 	public static $verbose = false;
+	public static $MAP_LEN = 100;
+	public static $MAP_WIDTH = 150;
 
 	private $_currentPhase;
 	private $_playerTurn;
 	private $_players;
 	private $_gameSize;
+	private $_map;
 
 	public function __construct() {
 		$this->_currentPhase = 0;
@@ -26,6 +29,15 @@ class Battlefleet {
 		$this->_players = array();
 		$this->_players[] = $this->_currentPlayer;
 		$this->_players[] = new Player("Player 2");
+		$this->_map = array();
+
+		for ($i=0; $i < Battlefleet::$MAP_LEN; $i++) {
+			$cols = array();
+			for ($j=0; $j < Battlefleet::$MAP_WIDTH; $j++) { 
+				$cols[] = ".";
+			}
+			$this->_map[] = $cols;
+		}
 
 		if (self::$verbose)
 			print($this . " constructed.\n");
@@ -66,6 +78,43 @@ class Battlefleet {
 
 	public function getCurrentPlayer() {
 		return $this->_currentPlayer;
+	}
+
+	public function clearMap() {
+		for ($i=0; $i < Battlefleet::$MAP_LEN; $i++) {
+			for ($j=0; $j < Battlefleet::$MAP_WIDTH; $j++) { 
+				$cols[$i][$j] = ".";
+			}
+		}
+	}
+
+	public function updateMap() {
+		$this->clearMap();
+
+		foreach ($this->_players as $player_key => $player) {
+			$ships = $player->getShips();
+			echo "ships: " . count($ships) . " \n";
+			foreach ($ships as $key => $ship) {
+				$x1 = $ship->getXEnd();
+				$y1 = $ship->getYEnd();
+				echo "ships: {$ship->getX()}, {$ship->getY()} => {$x1}, {$y1} : " . count($ships) . " \n";
+				for ($r=$ship->getY(); $r != $y1; $r += $ship->getYDir()) { 
+					for ($c=$ship->getX(); $c != $x1; $c += $ship->getXDir()) { 
+						$this->_map[$r][$c] = "x";
+					}
+				}
+			}
+		}
+	}
+
+	public function displayMap() {
+		for ($i=0; $i < Battlefleet::$MAP_LEN; $i++) {
+			printf("%3d ", $i);
+			for ($j=0; $j < Battlefleet::$MAP_WIDTH; $j++) { 
+				echo $this->_map[$i][$j];
+			}
+			echo PHP_EOL;
+		}
 	}
 
 	public static function rollDice( $numDice, $sides=6 ) {

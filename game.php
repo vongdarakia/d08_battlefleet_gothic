@@ -20,6 +20,7 @@ while (true) {
 function selectPhaseOption1($bf) {
 	$option = readline("Phase 1 (order)\n"
 		. "\t[1] Select Ship\n"
+		. "\t[m] Display Map\n"
 		. "\t[0] End Turn\n"
 		. $bf->getCurrentPlayer() . ": "
 	);
@@ -27,6 +28,12 @@ function selectPhaseOption1($bf) {
 	if ($option == "1") {
 		echo PHP_EOL;
 		selectShip($bf->getCurrentPlayer());
+	}
+
+	if ($option == "m") {
+		echo PHP_EOL;
+		$bf->updateMap();
+		$bf->displayMap();
 	}
 }
 
@@ -37,10 +44,21 @@ function selectShip($player) {
 		foreach ($player->getShips() as $key => $ship) {
 			echo "\t[{$key}] {$ship}\n";
 		}
+		echo "\t[{$key}] {$ship}\n";
+
+		$option = readline($bf->getCurrentPlayer() . ": ");
+		if ($option == "1") {
+			echo PHP_EOL;
+			selectShip($bf->getCurrentPlayer());
+		}
 	}
 	else {
 		echo "You have no ships\n\n";
 	}
+}
+
+function generateMap($width, $length) {
+
 }
 
 ?>

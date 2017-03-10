@@ -11,7 +11,7 @@ abstract class Spaceship {
 	private $_speed = 1; // maximum speed
 	private $_handle = 0; // minimum speed
 	private $_weapons = array();
-	private $_direction = 0; // 0 1 2 3 -> N E S W
+	private $_direction = 1; // 0 1 2 3 -> N E S W
 	private $_cost = 100;
 	private $_name = 'placeholder name';
 	private $_x = 0;
@@ -78,6 +78,46 @@ abstract class Spaceship {
 
 	public function getWeapons() {
 		return $this->_weapons;
+	}
+
+	public function getX() {
+		return $this->_x;
+	}
+
+	public function getY() {
+		return $this->_y;
+	}
+
+	public function getXDir() {
+		if ($this->_direction == Battlefleet::$N || $this->_direction == Battlefleet::$E)
+			return 1;
+		if ($this->_direction == Battlefleet::$S || $this->_direction == Battlefleet::$W)
+			return -1;
+		return 0;
+	}
+
+	public function getYDir() {
+		if ($this->_direction == Battlefleet::$N || $this->_direction == Battlefleet::$W)
+			return 1;
+		if ($this->_direction == Battlefleet::$S || $this->_direction == Battlefleet::$E)
+			return -1;
+		return 0;
+	}
+
+	public function getXEnd() {
+		if ($this->_direction == Battlefleet::$N || $this->_direction == Battlefleet::$E)
+			return $this->_x + $this->_width;
+		if ($this->_direction == Battlefleet::$S || $this->_direction == Battlefleet::$W)
+			return $this->_x - $this->_width;
+		return $this->_x;
+	}
+
+	public function getYEnd() {
+		if ($this->_direction == Battlefleet::$N || $this->_direction == Battlefleet::$W)
+			return $this->_y + $this->_length;
+		if ($this->_direction == Battlefleet::$S || $this->_direction == Battlefleet::$E)
+			return $this->_y - $this->_length;
+		return $this->_y;
 	}
 
 	// todo: more get functions
