@@ -13,5 +13,17 @@ If a key isn't set, its value is set to some default value.
 Functions:
 
 get'Var'();
-Returns the value of the variable 'var'
+Returns the value of the variable 'var'.
+
+spendPP( $speed, $shield, $weapon, $repair );
+Attempts to spend PP distributed among 4 categories.
+
+resetPP();
+Resets the temporary variables changed by spending PP.
+
+takeDamage( $d );
+Removes $d health from the ship.
+
+isDead();
+Returns true if the ship is dead, false otherwise.
 ------------------------------------------------------------------ Spaceship ->

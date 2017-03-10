@@ -55,12 +55,10 @@ class Battlefleet {
 	}
 
 	public static rollDice( $numDice, $sides=6 ) {
-		$diceRolled = array();
-
+		$diceRolled = array_fill(1, $sides, 0);
 		for ($i=0; $i < $numDice; $i++) {
-			$diceRolled[] = rand(1, $sides);
+			$diceRolled[rand(1, $sides)]++;
 		}
-
 		return $diceRolled;
 	}
 
@@ -74,10 +72,9 @@ class Battlefleet {
 
 	public static sumDiceRolled( $diceRolled ) {
 		$val = 0;
-		$len = count($diceRolled);
 
-		for ($i=0; $i < $len; $i++) {
-			$val += $diceRolled[$i];
+		foreach ($diceRolled as $num => $count) {
+			$val += $num * $count;
 		}
 		return $val;
 	}
