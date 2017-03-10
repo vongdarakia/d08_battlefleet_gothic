@@ -2,17 +2,23 @@
 
 class Player {
 	private $_ships;
+	private $_playerName;
 
-	public function __construct() {
+	public function __construct( $playerName ) {
 		$this->_ships = array();
+		$this->_playerName = $playerName;
 
 		if (Battlefleet::$verbose)
 			print("Player constructed.\n");
 	}
 
+	public function __toString() {
+		return $this->_playerName;
+	}
+
 	public function __destruct() {
 		if (Battlefleet::$verbose)
-			print("Player destroyed.\n");
+			print($this->_playerName . " destroyed.\n");
 	}
 
 	public function addShip( $ship ) {

@@ -1,23 +1,23 @@
 <?php 
 require_once("Phase.class.php");
 
-class OrderPhase extends Phase {
-	function startPhase() {
+class OrderPhase {
+	public static function startPhase() {
 		if (Battlefleet::$verbose)
 			print("Order phase started.\n");
 	}
 
-	function rollForMoreSpeed( $game, $numPP, $ship ) {
+	public static function rollForMoreSpeed( $game, $numPP, $ship ) {
 		// if ($numPP)
 		// $rolledVal = Battlefleet::rollDiceSum($numPP, 6);
 
 	}
 
-	function rollForMoreFire( $game, $ship ) {
+	public static function rollForMoreFire( $game, $ship ) {
 
 	}
 
-	function rollForRepair( $game, $ship ) {
+	public static function rollForRepair( $game, $ship ) {
 
 	}
 }

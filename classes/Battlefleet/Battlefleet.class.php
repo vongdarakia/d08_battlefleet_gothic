@@ -3,6 +3,7 @@
 require_once('Phase/OrderPhase.class.php');
 require_once('Phase/MovementPhase.class.php');
 require_once('Phase/ShootingPhase.class.php');
+require_once('Player.class.php');
 
 class Battlefleet {
 	public static $N = 0;
@@ -13,12 +14,17 @@ class Battlefleet {
 
 	private $_currentPhase;
 	private $_playerTurn;
+	private $_players;
 	private $_gameSize;
 
 	public function __construct() {
 		$this->_currentPhase = 0;
 		$this->_playerTurn = 0;
 		$this->_gameSize = 500;
+		$this->_currentPlayer = new Player("Player 1");
+		$this->_players = array();
+		$this->_players[] = $this->_currentPlayer;
+		$this->_players[] = new Player("Player 2");
 
 		if (self::$verbose)
 			print($this . " constructed.\n");
@@ -31,15 +37,18 @@ class Battlefleet {
 	public function startPhase() {
 		if (self::$verbose)
 			print("Starting current phase.\n");
-		switch ($_currentPhase) {
+		switch ($this->_currentPhase) {
 			case 0:
-				
+				if (Battlefleet::$verbose)
+					print("Order phase started.\n");
 				break;
 			case 1:
-				MovementPhase::startPhase();
+				if (Battlefleet::$verbose)
+					print("Movement phase started.\n");
 				break;
 			case 2:
-				ShootingPhase::startPhase();
+				if (Battlefleet::$verbose)
+					print("Shooting phase started.\n");
 				break;
 			default:
 				echo "End Game" . PHP_EOL;
@@ -54,7 +63,11 @@ class Battlefleet {
 
 	}
 
-	public static rollDice( $numDice, $sides=6 ) {
+	public function getCurrentPlayer() {
+
+	}
+
+	public static function rollDice( $numDice, $sides=6 ) {
 		$diceRolled = array_fill(1, $sides, 0);
 		for ($i=0; $i < $numDice; $i++) {
 			$diceRolled[rand(1, $sides)]++;
@@ -62,7 +75,7 @@ class Battlefleet {
 		return $diceRolled;
 	}
 
-	public static rollDiceSum( $numDice, $sides=6 ) {
+	public static function rollDiceSum( $numDice, $sides=6 ) {
 		$val = 0;
 		for ($i=0; $i < $numDice; $i++) {
 			$val += rand(1, $sides);
@@ -70,7 +83,7 @@ class Battlefleet {
 		return $val;
 	}
 
-	public static sumDiceRolled( $diceRolled ) {
+	public static function sumDiceRolled( $diceRolled ) {
 		$val = 0;
 
 		foreach ($diceRolled as $num => $count) {
