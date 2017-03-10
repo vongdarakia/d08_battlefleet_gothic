@@ -65,7 +65,7 @@ abstract class Spaceship {
 	}
 
 	public function __toString() {
-		return $this->_name . " ({$this->_x}, {$this->_y}) ";
+		return $this->_name . " ({$this->_x}, {$this->_y})";
 	}
 
 	public function getLength() {
