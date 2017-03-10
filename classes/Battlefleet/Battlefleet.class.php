@@ -33,7 +33,7 @@ class Battlefleet {
 			print("Starting current phase.\n");
 		switch ($_currentPhase) {
 			case 0:
-				OrderPhase::startPhase();
+				
 				break;
 			case 1:
 				MovementPhase::startPhase();

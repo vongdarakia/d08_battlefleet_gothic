@@ -7,15 +7,17 @@ class OrderPhase extends Phase {
 			print("Order phase started.\n");
 	}
 
-	function rollForMoreSpeed( $game, $ship ) {
-		$rolledVal = Battlefleet::rollDiceSum(1, 6);
+	function rollForMoreSpeed( $game, $numPP, $ship ) {
+		// if ($numPP)
+		// $rolledVal = Battlefleet::rollDiceSum($numPP, 6);
+
 	}
 
 	function rollForMoreFire( $game, $ship ) {
 
 	}
 
-	function roolForRepair( $game, $ship ) {
+	function rollForRepair( $game, $ship ) {
 
 	}
 }
