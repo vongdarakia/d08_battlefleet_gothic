@@ -1,5 +1,6 @@
 <?php
-require_once '../Battlefleet/Battlefleet.class.php'
+require_once '../Battlefleet/Battlefleet.class.php';
+require_once '../Weapon/Weapon.class.php';
 
 abstract class Spaceship {
 	private $_length = 1;
@@ -47,6 +48,12 @@ abstract class Spaceship {
 		if (array_key_exists('direction', $kwargs)) {
 			$this->_direction = $kwargs['direction'];
 		}
+		if (array_key_exists('x', $kwargs)) {
+			$this->_x = $kwargs['x'];
+		}
+		if (array_key_exists('y', $kwargs)) {
+			$this->_y = $kwargs['y'];
+		}
 	}
 
 	public function getLength() {
@@ -61,7 +68,7 @@ abstract class Spaceship {
 		return $this->_weapons;
 	}
 
-	// to do: more get functions
+	// todo: more get functions
 
 	public function spendPP( $speed, $shield, $weapon, $repair ) {
 		$pp = $speed + $shield + $repair;
