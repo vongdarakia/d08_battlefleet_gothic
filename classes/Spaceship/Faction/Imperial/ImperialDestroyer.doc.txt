@@ -3,8 +3,10 @@
 The ImperialDestroyer class is a Spaceship that is part of the Imperial faction.
 
 Usage:
-new ImperialDestroyer( $x, $y );
-x and y are the coordinates of the spaceship.
+new ImperialDestroyer( $x, $y, $name );
+$x and $y are the coordinates of the spaceship.
+$name is an optional parameter to set the name of the spaceship.
+By default, $name = 'Imperial Destroyer'.
 
 Size: 1x3 cases
 Hull points: 4
