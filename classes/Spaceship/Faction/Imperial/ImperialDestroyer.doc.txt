@@ -1,0 +1,16 @@
+
+<- ImperialDestroyer ----------------------------------------------------------
+The ImperialDestroyer class is a Spaceship that is part of the Imperial faction.
+
+Usage:
+new ImperialDestroyer( $x, $y );
+x and y are the coordinates of the spaceship.
+
+Size: 1x3 cases
+Hull points: 4
+PP: 10
+Speed: 18
+Handling: 3
+Shield: 0
+Weapons: Side laser batteries
+---------------------------------------------------------- ImperialDestroyer ->
