@@ -1,5 +1,5 @@
 <?php
-require_once '../../Spaceship.class.php';
+require_once __DIR__ . '/../../Spaceship.class.php';
 
 class Imperial extends Spaceship {
 	public static function doc() {

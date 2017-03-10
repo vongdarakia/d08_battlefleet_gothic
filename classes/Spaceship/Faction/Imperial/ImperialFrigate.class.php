@@ -1,5 +1,5 @@
 <?php
-require_once './Imperial.class.php';
+require_once 'Imperial.class.php';
 
 class ImperialFrigate extends Imperial {
 	public static function doc() {
