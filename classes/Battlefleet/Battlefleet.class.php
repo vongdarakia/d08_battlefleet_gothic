@@ -1,9 +1,10 @@
 <?php 
 // require_once('../Weapon/Weapon.class.php');
-require_once('Phase/OrderPhase.class.php');
-require_once('Phase/MovementPhase.class.php');
-require_once('Phase/ShootingPhase.class.php');
-require_once('Player.class.php');
+require_once 'Phase/OrderPhase.class.php';
+require_once 'Phase/MovementPhase.class.php';
+require_once 'Phase/ShootingPhase.class.php';
+require_once 'Player.class.php';
+require_once __DIR__ . '/../Spaceship/Spaceship.class.php';
 
 class Battlefleet {
 	public static $N = 0;
@@ -64,7 +65,7 @@ class Battlefleet {
 	}
 
 	public function getCurrentPlayer() {
-
+		return $this->_currentPlayer;
 	}
 
 	public static function rollDice( $numDice, $sides=6 ) {
