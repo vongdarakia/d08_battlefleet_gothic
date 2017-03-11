@@ -22,6 +22,9 @@ abstract class Spaceship {
 	private $_shield = 0; // shield
 	private $_extraSpeed = 0; // extra speed
 
+	private $_id;
+	private static $_idCounter = 0;
+
 	public static function doc() {
 		return file_get_contents('./Spaceship.doc.txt');
 	}
@@ -67,6 +70,8 @@ abstract class Spaceship {
 		if (array_key_exists('owner', $kwargs)) {
 			$this->_owner = $kwargs['owner'];
 		}
+		$this->_id = $this->_idCounter;
+		$this->_idCounter++;
 	}
 
 	public function __toString() {
@@ -176,16 +181,16 @@ abstract class Spaceship {
 		return $this->_hp <= 0;
 	}
 
-	public function addWeapon($weapon) {
-		if ($weapon instanceof Weapon) {
-			$this->_weapons[] = $weapon;
-		}
-		else {
-			echo "Not a weapon\n";
-		}
-	}
+	// public function addWeapon($weapon) {
+	// 	if ($weapon instanceof Weapon) {
+	// 		$this->_weapons[] = $weapon;
+	// 	}
+	// 	else {
+	// 		echo "Not a weapon\n";
+	// 	}
+	// }
 
-	public function setOwner( $owner ) {
+	public function setOwner( &$owner ) {
 		if ($owner instanceof Player) {
 			$this->_owner = $owner;
 		}
@@ -193,6 +198,8 @@ abstract class Spaceship {
 			// error
 		}
 	}
+
+	public function moveShip()
 
 	public function display() {
 		echo $this->_name . PHP_EOL;

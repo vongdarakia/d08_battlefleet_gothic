@@ -9,6 +9,9 @@ abstract class Weapon {
 	private $_long = 3; // max long range
 	private $_extraCharge = 0;
 
+	private $_id;
+	private static $_idCounter = 0;
+
 	public static function doc() {
 		return file_get_contents('./Weapon.doc.txt');
 	}
@@ -26,6 +29,8 @@ abstract class Weapon {
 		if (array_key_exists('long', $kwargs)) {
 			$this->_long = $kwargs['long'];
 		}
+		$this->_id = $this->_idCounter;
+		$this->_idCounter++;
 	}
 
 	public function display() {
