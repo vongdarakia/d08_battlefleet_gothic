@@ -27,17 +27,17 @@ class Battlefleet implements JsonSerializable {
 		$this->_playerTurn = 0;
 		$this->_gameSize = 500;
 		$this->_currentPlayer = new Player("Player 1");
-		// $ship = new ImperialFrigate($this->_currentPlayer, 0, 0);
+		$ship = new ImperialFrigate(0, 0);
 		
 
 		$this->_players = array();
 		$this->_players[] = $this->_currentPlayer;
 		$this->_players[] = new Player("Player 2");
-		// $ship2 = new ImperialFrigate($this->_players[1], 145, 99);
+		$ship2 = new ImperialFrigate(145, 99);
 
 
-		// $this->_players[0]->addShip($ship);
-		// $this->_players[1]->addShip($ship2);
+		$this->_players[0]->addShip($ship);
+		$this->_players[1]->addShip($ship2);
 
 		$this->_map = array();
 
