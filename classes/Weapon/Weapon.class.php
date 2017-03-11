@@ -24,5 +24,12 @@ abstract class Weapon {
 			$this->_long = $kwargs['long'];
 		}
 	}
+
+	public function display() {
+		echo "\n\tcharge: " . $this->_charge;
+		echo "\n\tshort: " . $this->_short;
+		echo "\n\tmiddle: " . $this->_middle;
+		echo "\n\tlong: " . $this->_long;
+	}
 }
 ?>

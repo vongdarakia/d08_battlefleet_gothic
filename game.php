@@ -9,7 +9,9 @@ require_once './classes/Spaceship/Faction/Imperial/ImperialFrigate.class.php';
 Battlefleet::$verbose = true;
 
 $bf = new Battlefleet();
-$bf->getCurrentPlayer()->addShip(new ImperialFrigate(0, 0));
+$ship = new ImperialFrigate(0, 0);
+// $ship = new Weapon(array("charge" => 5, "short" => 10, "middle" => 12, ""))
+$bf->getCurrentPlayer()->addShip();
 
 $bf->startPhase();
 
@@ -44,11 +46,11 @@ function selectShip($player) {
 		foreach ($player->getShips() as $key => $ship) {
 			echo "\t[{$key}] {$ship}\n";
 		}
-		// echo $bf->getCurrentPlayer() . ": ";
+		echo PHP_EOL;
 
-		$option = readline($bf->getCurrentPlayer() . ": ");
+		$option = readline($player . ": ");
 		if (array_key_exists($option, $ships)) {
-			spendPP($ships[$option]);
+			selectPPOption($ships[$option], $player);
 		}
 		else {
 			echo "Invalid option" . PHP_EOL;
@@ -63,9 +65,34 @@ function selectShip($player) {
 	}
 }
 
-function spendPP($ship) {
-	echo $ship;
+function selectPPOption($ship, $player) {
+	echo "\nYou've selected " . $ship . PHP_EOL . PHP_EOL;
+	echo "What do you want to do?\n";
+	echo "\t[0] Increase speed\n";
+	echo "\t[1] Increase shield power\n";
+	echo "\t[2] Increase weapon charges\n\n";
+	$option = readline($player . ": ");
+	promptPPSpendings($ship, $option, $player);
 }
+
+function promptPPSpendings($ship, $option, $player) {
+	// echo "\nHow much PP do you want to spend? ";
+	$pp = readline("\nHow much PP do you want to spend? ");
+	$pp = intval($pp);
+	if ($option == "0") {
+		echo "\nYou've spent " . $pp . " on more speed for your " . $ship . PHP_EOL . PHP_EOL;
+	}
+	else if ($option == "1") {
+		echo "\nYou've spent " . $pp . " on more shield for your " . $ship . PHP_EOL . PHP_EOL;
+	}
+	else if ($option == "2") {
+		echo "\nYou've spent " . $pp . " on more weapon charges for your " . $ship . PHP_EOL . PHP_EOL;
+	}
+
+	$ship->display();
+}
+
+
 
 function generateMap($width, $length) {
 
