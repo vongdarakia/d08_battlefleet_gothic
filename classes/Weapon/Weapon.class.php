@@ -62,22 +62,24 @@ abstract class Weapon extends Object {
 		$ver = ($shooter->getDirection() % 2) ? $shooter->getLength() : $shooter->getWidth();
 		$dirx = (2 - $shooter->getDirection()) % 2;
 		$diry = ($shooter->getDirection() - 1) % 2;
-		$startx = $shooter->getX() + floor((($dirx + 1) * ($hor - 1)) / 2);
-		$starty = $shooter->getY() + floor((($diry + 1) * ($ver - 1)) / 2);
+		$c = $shooter->getX() + floor((($dirx + 1) * ($hor - 1)) / 2);
+		$r = $shooter->getY() + floor((($diry + 1) * ($ver - 1)) / 2);
 		// not technically correct, just an approximation for the center of the ship
 		for ($dist = 1; $dist <= $this->_long; $dist++) {
-			// pseudocode for basic shooting:
-			// if ($startx, $starty) is in $ship
-			//      if $dist < $this->_short
-			//           $ship->takeDamage($shortDmg);
-			//      else if $dist < $this->_middle
-			//           $ship->takeDamage($middleDmg);
-			//      else if $dist < $this->_long
-			//           $ship->takeDamage($longDmg);
-			//      break;
-			//  }
-			$startx++;
-			$starty++;
+			$c += $dirx;
+			$r += $diry;
+			if ($map[$r][$c] !== null) {
+				if ($dist <= $this->_short) {
+					$map[$r][$c]->takeDamage($shortDmg);
+				}
+				else if ($dist <= $this->_middle) {
+					$map[$r][$c]->takeDamage($middleDmg);
+				}
+				else {
+					$map[$r][$c]->takeDamage($longDmg);
+				}
+				break;
+			}
 		}
 	}
 }
