@@ -163,9 +163,9 @@ class Battlefleet {
 		return $val;
 	}
 
-	public getData() {
+	// public getData() {
 		
-	}
+	// }
 }
 
 ?>
