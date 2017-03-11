@@ -15,7 +15,7 @@ Functions:
 get'Var'();
 Returns the value of the variable 'var'.
 
-spendPP( $speed, $shield, $weapon, $repair );
+spendPP( $speed, $shield, $weapons, $repair );
 Attempts to spend PP distributed among 4 categories.
 
 resetPP();

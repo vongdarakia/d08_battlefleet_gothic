@@ -16,6 +16,7 @@ abstract class Spaceship {
 	private $_name = 'placeholder name';
 	private $_x = 0;
 	private $_y = 0;
+	private $_owner;
 
 	private $_shield = 0; // shield
 	private $_extraSpeed = 0; // extra speed
