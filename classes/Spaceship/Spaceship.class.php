@@ -139,6 +139,8 @@ abstract class Spaceship {
 		}
 		$this->_extraSpeed += Battlefleet::rollDiceSum($speed);
 		$this->_shield += $shield;
+
+		// call weapon stuff
 		foreach ($this->_weapons as $i => $weapon) {
 			if (array_key_exists($i, $weapons)) {
 				$this->_weapons[$i]->addCharge($weapons[$i]);

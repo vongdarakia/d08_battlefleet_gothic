@@ -80,6 +80,19 @@ class Battlefleet {
 		return $this->_currentPlayer;
 	}
 
+	public function getAllShips() {
+		$ships = array();
+
+		foreach ($this->_players as $player_key => $player) {
+			$pShips = $player->getShips();
+			foreach ($pShips as $key => $ship) {
+				$ships[] = $ship;
+			}
+		}
+
+		return $ships;
+	}
+
 	public function clearMap() {
 		for ($i=0; $i < Battlefleet::MAP_LEN; $i++) {
 			for ($j=0; $j < Battlefleet::MAP_WIDTH; $j++) { 

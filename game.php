@@ -12,6 +12,7 @@ Battlefleet::$verbose = true;
 $bf = new Battlefleet();
 $ship = new ImperialFrigate(0, 0);
 $ship->addWeapon(new NauticalLance());
+
 $bf->getCurrentPlayer()->addShip($ship);
 
 $bf->startPhase();
@@ -23,6 +24,7 @@ while (true) {
 function selectPhaseOption1($bf) {
 	$option = readline("Phase 1 (order)\n"
 		. "\t[1] Select Ship\n"
+		. "\t[2] Damage Ship\n"
 		. "\t[m] Display Map\n"
 		. "\t[0] End Turn\n"
 		. $bf->getCurrentPlayer() . ": "
@@ -31,6 +33,14 @@ function selectPhaseOption1($bf) {
 	if ($option == "1") {
 		echo PHP_EOL;
 		selectShip($bf->getCurrentPlayer());
+	}
+
+	if ($option == "2") {
+		echo PHP_EOL;
+		echo "Ship took 2 damage\n";
+		$ship = $bf->getCurrentPlayer()->getShips()[0];
+		$ship->takeDamage(2);
+		$ship->display();
 	}
 
 	if ($option == "m") {
@@ -51,7 +61,7 @@ function selectShip($player) {
 
 		$option = readline($player . ": ");
 		if (array_key_exists($option, $ships)) {
-			selectPPOption($ships[$option], $player);
+			selectPPOption($option, $ships[$option], $player);
 		}
 		else {
 			echo "Invalid option" . PHP_EOL;
@@ -66,7 +76,7 @@ function selectShip($player) {
 	}
 }
 
-function selectPPOption($ship, $player) {
+function selectPPOption($shipIdx, $ship, $player) {
 	echo "\nYou've selected " . $ship . PHP_EOL . PHP_EOL;
 	echo "What do you want to do?\n";
 	echo "\t[0] Increase speed\n";
@@ -74,13 +84,15 @@ function selectPPOption($ship, $player) {
 	echo "\t[2] Increase weapon charges\n";
 	echo "\t[3] Repair ship (must be stationary)\n\n";
 	$option = readline($player . ": ");
-	promptPPSpendings($ship, $option, $player);
+	promptPPSpendings($shipIdx, $ship, $option, $player);
 }
 
-function promptPPSpendings($ship, $option, $player) {
+function promptPPSpendings($shipIdx, $ship, $option, $player) {
 	// echo "\nHow much PP do you want to spend? ";
 	$pp = readline("\nHow much PP do you want to spend? ");
 	$pp = intval($pp);
+	
+
 	if ($option == "0") {
 		echo "\nYou've spent " . $pp . " on more speed for your " . $ship . PHP_EOL . PHP_EOL;
 		$ship->spendPP( $pp, 0, [], 0 );
@@ -90,12 +102,14 @@ function promptPPSpendings($ship, $option, $player) {
 		$ship->spendPP( 0, $pp, [], 0 );
 	}
 	else if ($option == "2") {
+		$weapons = [0, 0];
+		$weapons[$shipIdx] = $pp;
 		echo "\nYou've spent " . $pp . " on more weapon charges for your " . $ship . PHP_EOL . PHP_EOL;
 		$ship->spendPP( 0, 0, [$pp], 0 );
 	}
 	else if ($option == "3") {
 		echo "\nYou've spent " . $pp . " on repairing your " . $ship . PHP_EOL . PHP_EOL;
-		$ship->spendPP( 0, 0, 0, $pp );
+		$ship->spendPP( 0, 0, [], $pp );
 	}
 
 	$ship->display();
