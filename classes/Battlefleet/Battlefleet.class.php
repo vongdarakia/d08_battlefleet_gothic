@@ -113,11 +113,15 @@ class Battlefleet {
 				echo "ships: {$ship->getX()}, {$ship->getY()} => {$x1}, {$y1} : " . count($ships) . " \n";
 				for ($r=$ship->getY(); $r != $y1; $r += $ship->getYDir()) { 
 					for ($c=$ship->getX(); $c != $x1; $c += $ship->getXDir()) { 
-						$this->_map[$r][$c] = "x";
+						$this->_map[$r][$c] = $ship;
 					}
 				}
 			}
 		}
+	}
+
+	public function getMap() {
+		return $this->_map;
 	}
 
 	public function displayMap() {

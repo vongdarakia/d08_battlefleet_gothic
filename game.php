@@ -11,9 +11,13 @@ Battlefleet::$verbose = true;
 
 $bf = new Battlefleet();
 $ship = new ImperialFrigate(0, 0);
-$ship->addWeapon(new NauticalLance());
-
+$ship2 = new ImperialFrigate(0, 0);
+// $ship->addWeapon(new NauticalLance());
+// $id = 0;
+// $id++;
+// echo $id;
 $bf->getCurrentPlayer()->addShip($ship);
+$bf->getCurrentPlayer()->addShip($ship2);
 
 $bf->startPhase();
 

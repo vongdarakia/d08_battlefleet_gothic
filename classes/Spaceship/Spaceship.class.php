@@ -1,9 +1,10 @@
 <?php
+require_once __DIR__ . '/../Battlefleet/Object.class.php';
 require_once __DIR__ . '/../Battlefleet/Battlefleet.class.php';
 require_once __DIR__ . '/../Battlefleet/Player.class.php';
 require_once __DIR__ . '/../Weapon/Weapon.class.php';
 
-abstract class Spaceship {
+abstract class Spaceship extends Object {
 	private $_length = 1;
 	private $_width = 1;
 	private $_hp = 1; // hull/health points
@@ -22,7 +23,6 @@ abstract class Spaceship {
 	private $_shield = 0; // shield
 	private $_extraSpeed = 0; // extra speed
 
-	private $_id;
 	private static $_idCounter = 0;
 
 	public static function doc() {
@@ -70,8 +70,8 @@ abstract class Spaceship {
 		if (array_key_exists('owner', $kwargs)) {
 			$this->_owner = $kwargs['owner'];
 		}
-		$this->_id = $this->_idCounter;
-		$this->_idCounter++;
+		parent::__construct(self::$_idCounter);
+		self::$_idCounter++;
 	}
 
 	public function __toString() {
@@ -199,11 +199,12 @@ abstract class Spaceship {
 		}
 	}
 
-	public function moveShip()
+	// public function moveShip()
 
 	public function display() {
 		echo $this->_name . PHP_EOL;
-		echo "\tx: " . $this->_x;
+		echo "\tid: " . $this->_id;
+		echo "\n\tx: " . $this->_x;
 		echo "\n\ty: " . $this->_y;
 		echo "\n\tdir: " . $this->_direction;
 		echo "\n\tcost: " . $this->_cost;

@@ -1,14 +1,20 @@
 <?php 
 
+require_once 'Object.class.php';
 require_once __DIR__ . '/../Spaceship/Spaceship.class.php';
 
-class Player {
+class Player extends Object{
 	private $_ships;
 	private $_playerName;
+
+	private static $_idCounter = 0;
 
 	public function __construct( $playerName ) {
 		$this->_ships = array();
 		$this->_playerName = $playerName;
+
+		parent::__construct(self::$_idCounter);
+		self::$_idCounter++;
 
 		if (Battlefleet::$verbose)
 			print("Player constructed.\n");

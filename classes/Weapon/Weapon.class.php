@@ -1,15 +1,15 @@
 <?php
+require_once __DIR__ . '/../Battlefleet/Object.class.php';
 require_once __DIR__ . '/../Battlefleet/Battlefleet.class.php';
 require_once __DIR__ . '/../Spaceship/Spaceship.class.php';
 
-abstract class Weapon {
+abstract class Weapon extends Object {
 	private $_charge = 0;
 	private $_short = 1; // max short range
 	private $_middle = 2; // max middle range
 	private $_long = 3; // max long range
 	private $_extraCharge = 0;
 
-	private $_id;
 	private static $_idCounter = 0;
 
 	public static function doc() {
@@ -29,8 +29,8 @@ abstract class Weapon {
 		if (array_key_exists('long', $kwargs)) {
 			$this->_long = $kwargs['long'];
 		}
-		$this->_id = $this->_idCounter;
-		$this->_idCounter++;
+		parent::__construct(self::$_idCounter);
+		self::$_idCounter++;
 	}
 
 	public function display() {
