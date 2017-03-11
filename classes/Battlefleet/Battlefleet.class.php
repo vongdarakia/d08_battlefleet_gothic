@@ -132,8 +132,8 @@ class Battlefleet implements JsonSerializable {
 			$ships = $player->getShips();
 			// echo "ships: " . count($ships) . " \n";
 			foreach ($ships as $key => $ship) {
-				$hor = ($ship->getDirection() % 2) ? $ship->getWidth() : $ship->getLength();
-				$ver = ($ship->getDirection() % 2) ? $ship->getLength() : $ship->getWidth();
+				$hor = $ship->getHor();
+				$ver = $ship->getVer();
 				$x = $ship->getX();
 				$y = $ship->getY();
 				for ($r = 0; $r < $ver; $r++) { 
