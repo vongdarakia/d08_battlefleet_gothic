@@ -140,7 +140,12 @@ abstract class Spaceship {
 		$this->_extraSpeed += Battlefleet::rollDiceSum($speed);
 		$this->_shield += $shield;
 		// call weapon stuff
-		if (Battlefleet::rollDice($repair)[6] > 0) {
+		$rolled = Battlefleet::rollDice($repair);
+		if (Battlefleet::$verbose) {
+			print("Dice rolled.\n");
+			print_r($rolled);
+		}
+		if ($rolled[6] > 0) {
 			$this->_hp = $this->_maxhp;
 		}
 		$this->_speed += $this->_extraSpeed;
