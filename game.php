@@ -44,17 +44,27 @@ function selectShip($player) {
 		foreach ($player->getShips() as $key => $ship) {
 			echo "\t[{$key}] {$ship}\n";
 		}
-		echo "\t[{$key}] {$ship}\n";
+		// echo $bf->getCurrentPlayer() . ": ";
 
 		$option = readline($bf->getCurrentPlayer() . ": ");
-		if ($option == "1") {
-			echo PHP_EOL;
-			selectShip($bf->getCurrentPlayer());
+		if (array_key_exists($option, $ships)) {
+			spendPP($ships[$option]);
 		}
+		else {
+			echo "Invalid option" . PHP_EOL;
+		}
+		// if ($option == "1") {
+		// 	echo PHP_EOL;
+			
+		// }
 	}
 	else {
 		echo "You have no ships\n\n";
 	}
+}
+
+function spendPP($ship) {
+	echo $ship;
 }
 
 function generateMap($width, $length) {

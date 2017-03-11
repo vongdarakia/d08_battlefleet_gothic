@@ -7,13 +7,13 @@ require_once 'Player.class.php';
 require_once __DIR__ . '/../Spaceship/Spaceship.class.php';
 
 class Battlefleet {
-	public static $N = 0;
-	public static $E = 1;
-	public static $S = 2;
-	public static $W = 3;
+	const N = 0;
+	const E = 1;
+	const S = 2;
+	const W = 3;
+	const MAP_LEN = 100;
+	const MAP_WIDTH = 150;
 	public static $verbose = false;
-	public static $MAP_LEN = 100;
-	public static $MAP_WIDTH = 150;
 
 	private $_currentPhase;
 	private $_playerTurn;
@@ -31,9 +31,9 @@ class Battlefleet {
 		$this->_players[] = new Player("Player 2");
 		$this->_map = array();
 
-		for ($i=0; $i < Battlefleet::$MAP_LEN; $i++) {
+		for ($i=0; $i < Battlefleet::MAP_LEN; $i++) {
 			$cols = array();
-			for ($j=0; $j < Battlefleet::$MAP_WIDTH; $j++) { 
+			for ($j=0; $j < Battlefleet::MAP_WIDTH; $j++) { 
 				$cols[] = ".";
 			}
 			$this->_map[] = $cols;
@@ -81,8 +81,8 @@ class Battlefleet {
 	}
 
 	public function clearMap() {
-		for ($i=0; $i < Battlefleet::$MAP_LEN; $i++) {
-			for ($j=0; $j < Battlefleet::$MAP_WIDTH; $j++) { 
+		for ($i=0; $i < Battlefleet::MAP_LEN; $i++) {
+			for ($j=0; $j < Battlefleet::MAP_WIDTH; $j++) { 
 				$cols[$i][$j] = ".";
 			}
 		}
@@ -108,9 +108,9 @@ class Battlefleet {
 	}
 
 	public function displayMap() {
-		for ($i=0; $i < Battlefleet::$MAP_LEN; $i++) {
+		for ($i=0; $i < Battlefleet::MAP_LEN; $i++) {
 			printf("%3d ", $i);
-			for ($j=0; $j < Battlefleet::$MAP_WIDTH; $j++) { 
+			for ($j=0; $j < Battlefleet::MAP_WIDTH; $j++) { 
 				echo $this->_map[$i][$j];
 			}
 			echo PHP_EOL;
