@@ -126,7 +126,7 @@ abstract class Spaceship {
 
 	// todo: more get functions
 
-	public function spendPP( $speed, $shield, $weapon, $repair ) {
+	public function spendPP( $speed, $shield, $weapons, $repair ) {
 		$pp = $speed + $shield + $repair;
 
 		foreach ($weapon as $key => $amount) {
@@ -136,21 +136,24 @@ abstract class Spaceship {
 			// error
 			return;
 		}
-		$this->_speed -= $this->_extraSpeed;
 		$this->_extraSpeed += Battlefleet::rollDiceSum($speed);
 		$this->_shield += $shield;
-		// call weapon stuff
+		foreach ($this->_weapons as $i => $weapon) {
+			if (array_key_exists($i, $weapons)) {
+				$this->_weapons[$i]->addCharge($weapons[$i]);
+			}
+		}
 		if (Battlefleet::rollDice($repair)[6] > 0) {
 			$this->_hp = $this->_maxhp;
 		}
-		$this->_speed += $this->_extraSpeed;
 	}
 
 	public function resetPP() {
-		$this->_speed -= $this->_extraSpeed;
 		$this->_extraSpeed = 0;
 		$this->_shield = 0;
-		// reset weapon stuff
+		foreach ($this->_weapons as $i => $weapon) {
+			$this->_weapons[$i]->resetCharge();
+		}
 	}
 
 	public function takeDamage( $d ) {
