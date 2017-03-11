@@ -5,23 +5,23 @@ require_once __DIR__ . '/../Battlefleet/Player.class.php';
 require_once __DIR__ . '/../Weapon/Weapon.class.php';
 
 abstract class Spaceship extends Object {
-	private $_length = 1;
-	private $_width = 1;
-	private $_hp = 1; // hull/health points
-	private $_maxhp = 1; // max hp
-	private $_pp = 0; // engine power/power points
-	private $_speed = 1; // maximum speed
-	private $_handle = 0; // minimum speed
-	private $_weapons = array();
-	private $_direction = Battlefleet::E; // 0 1 2 3 -> N E S W
-	private $_cost = 100;
-	private $_name = 'placeholder name';
-	private $_x = 0;
-	private $_y = 0;
-	private $_owner = null;
+	protected $_length = 1;
+	protected $_width = 1;
+	protected $_hp = 1; // hull/health points
+	protected $_maxhp = 1; // max hp
+	protected $_pp = 0; // engine power/power points
+	protected $_speed = 1; // maximum speed
+	protected $_handle = 0; // minimum speed
+	protected $_weapons = array();
+	protected $_direction = Battlefleet::E; // 0 1 2 3 -> N E S W
+	protected $_cost = 100;
+	protected $_name = 'placeholder name';
+	protected $_x = 0;
+	protected $_y = 0;
+	protected $_owner = null;
 
-	private $_shield = 0; // shield
-	private $_extraSpeed = 0; // extra speed
+	protected $_shield = 0; // shield
+	protected $_extraSpeed = 0; // extra speed
 
 	private static $_idCounter = 0;
 

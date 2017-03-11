@@ -4,11 +4,11 @@ require_once __DIR__ . '/../Battlefleet/Battlefleet.class.php';
 require_once __DIR__ . '/../Spaceship/Spaceship.class.php';
 
 abstract class Weapon extends Object {
-	private $_charge = 0;
-	private $_short = 1; // max short range
-	private $_middle = 2; // max middle range
-	private $_long = 3; // max long range
-	private $_extraCharge = 0;
+	protected $_charge = 0;
+	protected $_short = 1; // max short range
+	protected $_middle = 2; // max middle range
+	protected $_long = 3; // max long range
+	protected $_extraCharge = 0;
 
 	private static $_idCounter = 0;
 

@@ -3,7 +3,7 @@
 require_once 'Object.class.php';
 require_once __DIR__ . '/../Spaceship/Spaceship.class.php';
 
-class Player extends Object{
+class Player extends Object {
 	private $_ships;
 	private $_playerName;
 
