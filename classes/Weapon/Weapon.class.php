@@ -3,7 +3,7 @@ require_once __DIR__ . '/../Battlefleet/Object.class.php';
 require_once __DIR__ . '/../Battlefleet/Battlefleet.class.php';
 require_once __DIR__ . '/../Spaceship/Spaceship.class.php';
 
-abstract class Weapon extends Object {
+abstract class Weapon extends Object implements JsonSerializable {
 	protected $_charge = 0;
 	protected $_short = 1; // max short range
 	protected $_middle = 2; // max middle range
@@ -82,5 +82,16 @@ abstract class Weapon extends Object {
 			}
 		}
 	}
+
+	public function jsonSerialize() {
+        return (object)array(
+        	"_id" => $this->_id,
+        	"charge" => $this->_charge,
+			"short" => $this->_short,
+			"middle" => $this->_middle,
+			"long" => $this->_long,
+			"extraCharge" => $this->_extraCharge
+        );
+    }
 }
 ?>

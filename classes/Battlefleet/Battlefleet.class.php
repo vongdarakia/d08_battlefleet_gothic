@@ -6,7 +6,7 @@ require_once 'Phase/ShootingPhase.class.php';
 require_once 'Player.class.php';
 require_once __DIR__ . '/../Spaceship/Spaceship.class.php';
 
-class Battlefleet {
+class Battlefleet implements JsonSerializable {
 	const N = 0;
 	const E = 1;
 	const S = 2;
@@ -20,6 +20,7 @@ class Battlefleet {
 	private $_players;
 	private $_gameSize;
 	private $_map;
+	private $_currentPlayer;
 
 	public function __construct() {
 		$this->_currentPhase = 0;
@@ -166,6 +167,17 @@ class Battlefleet {
 	// public getData() {
 		
 	// }
+
+	public function jsonSerialize() {
+        return (object)array(
+        	"currentPhase" => $this->_currentPhase,
+			"playerTurn" => $this->_playerTurn,
+			"players" => $this->_players,
+			"gameSize" => $this->_gameSize,
+			"map" => $this->_map,
+			"currentPlayer" => $this->_currentPlayer
+        );
+    }
 }
 
 ?>

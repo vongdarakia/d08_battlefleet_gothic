@@ -3,7 +3,7 @@
 require_once 'Object.class.php';
 require_once __DIR__ . '/../Spaceship/Spaceship.class.php';
 
-class Player extends Object {
+class Player extends Object implements JsonSerializable {
 	private $_ships;
 	private $_playerName;
 
@@ -41,6 +41,14 @@ class Player extends Object {
 	public function getShips() {
 		return $this->_ships;
 	}
+
+	public function jsonSerialize() {
+        return (object)array(
+        	"_id" => $this->_id,
+        	"ships" => $this->_ships,
+			"playerName" => $this->_playerName
+        );
+    }
 }
 
 ?>

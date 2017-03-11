@@ -11,6 +11,6 @@
 	$ship2 = new ImperialFrigate(0, 0);
 	$bf->getCurrentPlayer()->addShip($ship);
 	$bf->getCurrentPlayer()->addShip($ship2);
-
+	// $ship->getData();
 	echo json_encode($bf);
 ?>

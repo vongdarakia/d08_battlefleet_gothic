@@ -4,7 +4,7 @@ require_once __DIR__ . '/../Battlefleet/Battlefleet.class.php';
 require_once __DIR__ . '/../Battlefleet/Player.class.php';
 require_once __DIR__ . '/../Weapon/Weapon.class.php';
 
-abstract class Spaceship extends Object {
+abstract class Spaceship extends Object implements JsonSerializable {
 	protected $_length = 1;
 	protected $_width = 1;
 	protected $_hp = 1; // hull/health points
@@ -249,5 +249,31 @@ abstract class Spaceship extends Object {
 			echo PHP_EOL;
 		}
 	}
+
+	public function getData() {
+		print_r($this);
+	}
+
+	public function jsonSerialize() {
+        return (object)array(
+        	"_id" => $this->_id,
+        	"length" => $this->_length,
+			"width" => $this->_width,
+			"hp" => $this->_hp,
+			"maxhp" => $this->_maxhp,
+			"pp" => $this->_pp,
+			"speed" => $this->_speed,
+			"handle" => $this->_handle,
+			"weapons" => $this->_weapons,
+			"direction" => $this->_direction,
+			"cost" => $this->_cost,
+			"name" => $this->_name,
+			"x" => $this->_x,
+			"y" => $this->_y,
+			"owner" => $this->_owner,
+			"shield" => $this->_shield,
+			"extraSpeed" => $this->_extraSpeed
+        );
+    }
 }
 ?>
