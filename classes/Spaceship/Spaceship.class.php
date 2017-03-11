@@ -16,7 +16,7 @@ abstract class Spaceship {
 	private $_name = 'placeholder name';
 	private $_x = 0;
 	private $_y = 0;
-	private $_owner;
+	private $_owner = null;
 
 	private $_shield = 0; // shield
 	private $_extraSpeed = 0; // extra speed
@@ -62,6 +62,9 @@ abstract class Spaceship {
 		}
 		if (array_key_exists('y', $kwargs)) {
 			$this->_y = $kwargs['y'];
+		}
+		if (array_key_exists('owner', $kwargs)) {
+			$this->_owner = $kwargs['owner'];
 		}
 	}
 
@@ -139,8 +142,6 @@ abstract class Spaceship {
 		}
 		$this->_extraSpeed += Battlefleet::rollDiceSum($speed);
 		$this->_shield += $shield;
-
-		// call weapon stuff
 		foreach ($this->_weapons as $i => $weapon) {
 			if (array_key_exists($i, $weapons)) {
 				$this->_weapons[$i]->addCharge($weapons[$i]);

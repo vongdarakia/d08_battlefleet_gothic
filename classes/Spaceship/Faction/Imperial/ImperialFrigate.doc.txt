@@ -3,7 +3,8 @@
 The ImperialFrigate class is a Spaceship that is part of the Imperial faction.
 
 Usage:
-new ImperialFrigate( $x, $y, $name );
+new ImperialFrigate( $owner, $x, $y, $name );
+$owner is the player that owns the spaceship.
 $x and $y are the coordinates of the spaceship.
 $name is an optional parameter to set the name of the spaceship.
 By default, $name = 'Imperial Frigate'.

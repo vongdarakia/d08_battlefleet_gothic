@@ -6,7 +6,7 @@ Usage:
 new Spaceship_child_class( $kwargs );
 
 The valid keys of $kwargs are:
-length, width, hp, pp, speed, handle, weapons, direction, cost, name, x, y
+length, width, hp, pp, speed, handle, weapons, direction, cost, name, x, y, owner
 
 If a key isn't set, its value is set to some default value.
 
