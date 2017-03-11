@@ -7,6 +7,7 @@ abstract class Weapon {
 	private $_short = 1; // max short range
 	private $_middle = 2; // max middle range
 	private $_long = 3; // max long range
+	private $_extraCharge = 0;
 
 	public static function doc() {
 		return file_get_contents('./Weapon.doc.txt');
@@ -34,8 +35,20 @@ abstract class Weapon {
 		echo "\n\tlong: " . $this->_long;
 	}
 
-	public function shoot( Spaceship $shooter, $charge, array $ships ) {
-		$charge += $this->_charge;
+	public function addCharge( $c ) {
+		$this->_extraCharge += $c;
+	}
+
+	public function resetCharge( $c ) {
+		$this->_extraCharge = 0;
+	}
+
+	public function shoot( $shooter, array $ships ) {
+		if (!($shooter instanceof Spaceship)) {
+			// error
+			return;
+		}
+		$charge = $this->_charge + $this->_extraCharge;
 		$roll = Battlefleet::rollDice($speed);
 		$longDmg = $roll[6];
 		$middleDmg = $longDmg + $roll[5];
