@@ -32,6 +32,7 @@ class Player extends Object implements JsonSerializable {
 	public function addShip( $ship ) {
 		if ($ship instanceof Spaceship) {
 			$this->_ships[] = $ship;
+			$ship->setOwner($this);
 		}
 		else {
 			echo "Can't add this object to players ships.";

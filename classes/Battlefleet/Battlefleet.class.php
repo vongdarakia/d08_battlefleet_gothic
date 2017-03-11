@@ -33,7 +33,7 @@ class Battlefleet implements JsonSerializable {
 		$this->_players = array();
 		$this->_players[] = $this->_currentPlayer;
 		$this->_players[] = new Player("Player 2");
-		$ship2 = new ImperialFrigate(145, 99);
+		$ship2 = new ImperialFrigate(149, 95);
 
 
 		$this->_players[0]->addShip($ship);
@@ -156,8 +156,10 @@ class Battlefleet implements JsonSerializable {
 			for ($j=0; $j < Battlefleet::MAP_WIDTH; $j++) { 
 				if ($this->_map[$i][$j] === null)
 					echo ".";
+				else if ($this->_map[$i][$j]->getOwner() === null)
+					echo " ";
 				else
-					echo $this->_map[$i][$j]->getID();
+					echo $this->_map[$i][$j]->getOwner()->getID();
 			}
 			echo PHP_EOL;
 		}

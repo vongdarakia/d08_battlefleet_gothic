@@ -119,6 +119,10 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		return $this->_ver;
 	}
 
+	public function getOwner() {
+		return $this->_owner;
+	}
+
 	/*public function getXDir() {
 		if ($this->_direction == Battlefleet::N || $this->_direction == Battlefleet::E)
 			return 1;
@@ -223,8 +227,8 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		else if ($dir > 0) {
 			$this->_direction = ($this->_direction + 1) % 4;
 		}
-		this->_hor = ($this->_direction % 2) ? $this->_width : $this->_length;
-		this->_ver = ($this->_direction % 2) ? $this->_length : $this->_width;
+		$this->_hor = ($this->_direction % 2) ? $this->_width : $this->_length;
+		$this->_ver = ($this->_direction % 2) ? $this->_length : $this->_width;
 	}
 
 	public function moveShip( $d, $map ) {

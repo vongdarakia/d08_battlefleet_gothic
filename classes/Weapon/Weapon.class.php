@@ -50,6 +50,14 @@ abstract class Weapon extends Object implements JsonSerializable {
 		echo "\n\tlong: " . $this->_long;
 	}
 
+	public function getOwner() {
+		return $this->_owner;
+	}
+
+	public function getShip() {
+		return $this->_ship;
+	}
+
 	public function setOwner( $owner ) {
 		if ($owner instanceof Player) {
 			$this->_owner = $owner;

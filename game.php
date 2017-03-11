@@ -10,8 +10,8 @@ require_once './classes/Weapon/NauticalLance.class.php';
 Battlefleet::$verbose = true;
 
 $bf = new Battlefleet();
-$ship = new ImperialFrigate($bf->getCurrentPlayer(), 0, 0);
-$ship2 = new ImperialFrigate($bf->getCurrentPlayer(), 10, 0);
+$ship = new ImperialFrigate(0, 10);
+$ship2 = new ImperialFrigate(10, 0);
 // $ship->addWeapon(new NauticalLance());
 // $id = 0;
 // $id++;
