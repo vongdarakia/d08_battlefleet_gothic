@@ -6,7 +6,7 @@ abstract class Object {
 		$this->_id = $id;
 	}
 
-	public function getID() {
+	final public function getID() {
 		return $this->_id;
 	}
 }
