@@ -11,7 +11,7 @@ Battlefleet::$verbose = true;
 
 $bf = new Battlefleet();
 $ship = new ImperialFrigate(0, 10);
-$ship2 = new ImperialFrigate(10, 0);
+$ship2 = new ImperialFrigate(10, 10);
 // $ship->addWeapon(new NauticalLance());
 // $id = 0;
 // $id++;
@@ -22,9 +22,11 @@ $bf->getCurrentPlayer()->addShip($ship);
 $bf->getCurrentPlayer()->addShip($ship2);
 $bf->updateMap();
 
-$ship->getWeapons()[0]->addCharge(10);
+$ship->getWeapons()[0]->addCharge(20);
 $ship->getWeapons()[0]->shoot($ship, $bf->getMap());
 echo $ship->getHP() . '  ' . $ship2->getHP() . PHP_EOL;
+$bf->updateShips();
+$bf->updateMap();
 
 $bf->startPhase();
 $ship2->display();

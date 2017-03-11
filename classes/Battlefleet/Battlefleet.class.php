@@ -33,7 +33,7 @@ class Battlefleet implements JsonSerializable {
 		$this->_players = array();
 		$this->_players[] = $this->_currentPlayer;
 		$this->_players[] = new Player("Player 2");
-		$ship2 = new ImperialFrigate(149, 95);
+		$ship2 = new ImperialFrigate(145, 99);
 
 
 		$this->_players[0]->addShip($ship);
@@ -108,9 +108,9 @@ class Battlefleet implements JsonSerializable {
 	public function updateShips() {
 		foreach ($this->_players as $player) {
 			$pShips = $player->getShips();
-			foreach ($pShips as $ship) {
+			foreach ($pShips as $key => $ship) {
 				if ($ship->isDead()) {
-					$player->removeShip($ship);
+					$player->removeShip($key);
 				}
 			}
 		}
@@ -120,7 +120,7 @@ class Battlefleet implements JsonSerializable {
 	public function clearMap() {
 		for ($i=0; $i < Battlefleet::MAP_LEN; $i++) {
 			for ($j=0; $j < Battlefleet::MAP_WIDTH; $j++) { 
-				$cols[$i][$j] = null;
+				$this->_map[$i][$j] = null;
 			}
 		}
 	}
@@ -138,7 +138,7 @@ class Battlefleet implements JsonSerializable {
 				$y = $ship->getY();
 				for ($r = 0; $r < $ver; $r++) { 
 					for ($c = 0; $c < $hor; $c++) { 
-						$this->_map[$r + $y][$c + $x] = $ship;
+						$this->_map[$y + $r][$x + $c] = $ship;
 					}
 				}
 			}

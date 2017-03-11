@@ -35,11 +35,11 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	public function __construct( array $kwargs ) {
 		if (array_key_exists('length', $kwargs)) {
 			$this->_length = $kwargs['length'];
-			$this->_hor = $this->_length;
+			$this->_ver = $this->_length;
 		}
 		if (array_key_exists('width', $kwargs)) {
 			$this->_width = $kwargs['width'];
-			$this->_ver = $this->_width;
+			$this->_hor = $this->_width;
 		}
 		if (array_key_exists('hp', $kwargs)) {
 			$this->_hp = $kwargs['hp'];
