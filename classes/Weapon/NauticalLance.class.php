@@ -11,8 +11,8 @@ class NauticalLance extends Weapon {
 		parent::display();
 	}
 
-	public function __construct() {
-		parent::__construct(array('charge' => 0, 'short' => 30, 'middle' => 60, 'long' => 90));
+	public function __construct( $owner = null, $ship = null ) {
+		parent::__construct(array('charge' => 0, 'short' => 30, 'middle' => 60, 'long' => 90, 'owner' => $owner, 'ship' => $ship));
 	}
 }
 ?>

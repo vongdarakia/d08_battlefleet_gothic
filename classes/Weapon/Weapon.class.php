@@ -9,6 +9,7 @@ abstract class Weapon extends Object implements JsonSerializable {
 	protected $_middle = 2; // max middle range
 	protected $_long = 3; // max long range
 	protected $_owner = null;
+	protected $_ship = null;
 
 	protected $_extraCharge = 0;
 
@@ -34,6 +35,9 @@ abstract class Weapon extends Object implements JsonSerializable {
 		if (array_key_exists('owner', $kwargs)) {
 			$this->_owner = $kwargs['owner'];
 		}
+		if (array_key_exists('ship', $kwargs)) {
+			$this->_ship = $kwargs['ship'];
+		}
 		parent::__construct(self::$_idCounter);
 		self::$_idCounter++;
 	}
@@ -45,9 +49,18 @@ abstract class Weapon extends Object implements JsonSerializable {
 		echo "\n\tlong: " . $this->_long;
 	}
 
-	public function setOwner( &$owner ) {
+	public function setOwner( $owner ) {
 		if ($owner instanceof Spaceship) {
 			$this->_owner = $owner;
+		}
+		else {
+			// error
+		}
+	}
+
+	public function setShip( $ship ) {
+		if ($ship instanceof Spaceship) {
+			$this->_ship = $ship;
 		}
 		else {
 			// error
