@@ -27,9 +27,18 @@ class Battlefleet implements JsonSerializable {
 		$this->_playerTurn = 0;
 		$this->_gameSize = 500;
 		$this->_currentPlayer = new Player("Player 1");
+		// $ship = new ImperialFrigate($this->_currentPlayer, 0, 0);
+		
+
 		$this->_players = array();
 		$this->_players[] = $this->_currentPlayer;
 		$this->_players[] = new Player("Player 2");
+		// $ship2 = new ImperialFrigate($this->_players[1], 145, 99);
+
+
+		// $this->_players[0]->addShip($ship);
+		// $this->_players[1]->addShip($ship2);
+
 		$this->_map = array();
 
 		for ($i=0; $i < Battlefleet::MAP_LEN; $i++) {
@@ -39,6 +48,8 @@ class Battlefleet implements JsonSerializable {
 			}
 			$this->_map[] = $cols;
 		}
+
+		$this->updateMap();
 
 		if (self::$verbose)
 			print($this . " constructed.\n");
@@ -119,7 +130,7 @@ class Battlefleet implements JsonSerializable {
 
 		foreach ($this->_players as $player_key => $player) {
 			$ships = $player->getShips();
-			echo "ships: " . count($ships) . " \n";
+			// echo "ships: " . count($ships) . " \n";
 			foreach ($ships as $key => $ship) {
 				$hor = ($ship->getDirection() % 2) ? $ship->getWidth() : $ship->getLength();
 				$ver = ($ship->getDirection() % 2) ? $ship->getLength() : $ship->getWidth();
@@ -132,6 +143,7 @@ class Battlefleet implements JsonSerializable {
 				}
 			}
 		}
+		// echo "done";
 	}
 
 	public function getMap() {
@@ -158,6 +170,10 @@ class Battlefleet implements JsonSerializable {
 				return $ship;
 		}
 		return null;
+	}
+
+	public function getPlayers() {
+		return $this->_players;
 	}
 
 	public static function rollDice( $numDice, $sides=6 ) {
@@ -190,13 +206,15 @@ class Battlefleet implements JsonSerializable {
 	// }
 
 	public function jsonSerialize() {
+		$ships = $this->getAllShips();
         return (object)array(
         	"currentPhase" => $this->_currentPhase,
 			"playerTurn" => $this->_playerTurn,
 			"players" => $this->_players,
 			"gameSize" => $this->_gameSize,
 			"map" => $this->_map,
-			"currentPlayer" => $this->_currentPlayer
+			"currentPlayer" => $this->_currentPlayer,
+			"ships" => $ships
         );
     }
 }
