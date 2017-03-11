@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../Battlefleet/Object.class.php';
 require_once __DIR__ . '/../Battlefleet/Battlefleet.class.php';
+require_once __DIR__ . '/../Battlefleet/Player.class.php';
 require_once __DIR__ . '/../Spaceship/Spaceship.class.php';
 
 abstract class Weapon extends Object implements JsonSerializable {
@@ -50,7 +51,7 @@ abstract class Weapon extends Object implements JsonSerializable {
 	}
 
 	public function setOwner( $owner ) {
-		if ($owner instanceof Spaceship) {
+		if ($owner instanceof Player) {
 			$this->_owner = $owner;
 		}
 		else {

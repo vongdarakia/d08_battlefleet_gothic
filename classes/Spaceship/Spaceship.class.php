@@ -292,7 +292,6 @@ abstract class Spaceship extends Object implements JsonSerializable {
 			"name" => $this->_name,
 			"x" => $this->_x,
 			"y" => $this->_y,
-			"owner" => $this->_owner,
 			"hor" => $this->_hor,
 			"ver" => $this->_ver,
 			"shield" => $this->_shield,
