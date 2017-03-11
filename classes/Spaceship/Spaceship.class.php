@@ -20,6 +20,9 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	protected $_y = 0;
 	protected $_owner = null;
 
+	protected $_hor = 1;
+	protected $_ver = 1;
+
 	protected $_shield = 0; // shield
 	protected $_extraSpeed = 0; // extra speed
 
@@ -32,9 +35,11 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	public function __construct( array $kwargs ) {
 		if (array_key_exists('length', $kwargs)) {
 			$this->_length = $kwargs['length'];
+			$this->_hor = $this->_length;
 		}
 		if (array_key_exists('width', $kwargs)) {
 			$this->_width = $kwargs['width'];
+			$this->_ver = $this->_width;
 		}
 		if (array_key_exists('hp', $kwargs)) {
 			$this->_hp = $kwargs['hp'];
@@ -107,11 +112,11 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	}
 
 	public function getHor() {
-		return ($this->_direction % 2) ? $this->_width : $this->_length;
+		return $this->_hor;
 	}
 
 	public function getVer() {
-		return ($this->_direction % 2) ? $this->_length : $this->_width;
+		return $this->_ver;
 	}
 
 	/*public function getXDir() {
@@ -218,6 +223,8 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		else if ($dir > 0) {
 			$this->_direction = ($this->_direction + 1) % 4;
 		}
+		this->_hor = ($this->_direction % 2) ? $this->_width : $this->_length;
+		this->_ver = ($this->_direction % 2) ? $this->_length : $this->_width;
 	}
 
 	public function moveShip( $d, $map ) {
@@ -286,6 +293,8 @@ abstract class Spaceship extends Object implements JsonSerializable {
 			"x" => $this->_x,
 			"y" => $this->_y,
 			"owner" => $this->_owner,
+			"hor" => $this->_hor,
+			"ver" => $this->_ver,
 			"shield" => $this->_shield,
 			"extraSpeed" => $this->_extraSpeed
         );
