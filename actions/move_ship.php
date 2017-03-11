@@ -11,6 +11,7 @@
 	if ($ship) {
 		$ship->turnShip($rot);
 		$ship->moveShip($distance, $game->getMap());
+		$game->updateMap();
 		saveGame($game, $gameFile);
 		header("Content-Type: application/json");
 		echo json_encode($game);
