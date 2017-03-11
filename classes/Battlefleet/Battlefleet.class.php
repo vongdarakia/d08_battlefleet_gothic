@@ -34,7 +34,7 @@ class Battlefleet {
 		for ($i=0; $i < Battlefleet::MAP_LEN; $i++) {
 			$cols = array();
 			for ($j=0; $j < Battlefleet::MAP_WIDTH; $j++) { 
-				$cols[] = ".";
+				$cols[] = null;
 			}
 			$this->_map[] = $cols;
 		}
