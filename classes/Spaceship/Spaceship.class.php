@@ -199,7 +199,33 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		}
 	}
 
-	// public function moveShip()
+	public function turnShip( $dir ) {
+		if ($dir < 0) {
+			$this->_direction = ($this->_direction + 3) % 4;
+		}
+		else if ($dir > 0) {
+			$this->_direction = ($this->_direction + 1) % 4;
+		}
+	}
+
+	public function moveShip( $d, &$map ) {
+		$hor = ($this->_direction % 2) ? $this->_width : $this->_length;
+		$ver = ($this->_direction % 2) ? $this->_length : $this->_width;
+		for ($r = 0; $r < $ver; $r++) {
+			for ($c = 0; $c < $hor; $c++) {
+				$map[$r + $this->_y][$c + $this->_x] = null;
+			}
+		}
+		$this->_x += d * ((2 - $shooter->getDirection()) % 2);
+		$this->_y += d * (($shooter->getDirection() - 1) % 2);
+		for ($r = 0; $r < $ver; $r++) {
+			for ($c = 0; $c < $hor; $c++) {
+				$map[$r + $this->_y][$c + $this->_x] = $this;
+			}
+		}
+		return true;
+		// returns false if collision
+	}
 
 	public function display() {
 		echo $this->_name . PHP_EOL;

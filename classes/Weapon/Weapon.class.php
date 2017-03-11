@@ -48,7 +48,7 @@ abstract class Weapon extends Object implements JsonSerializable {
 		$this->_extraCharge = 0;
 	}
 
-	public function shoot( $shooter, array $ships ) {
+	public function shoot( $shooter, &$map ) {
 		if (!($shooter instanceof Spaceship)) {
 			// error
 			return;
