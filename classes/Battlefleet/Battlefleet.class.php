@@ -84,14 +84,26 @@ class Battlefleet implements JsonSerializable {
 	public function getAllShips() {
 		$ships = array();
 
-		foreach ($this->_players as $player_key => $player) {
+		foreach ($this->_players as $player) {
 			$pShips = $player->getShips();
-			foreach ($pShips as $key => $ship) {
+			foreach ($pShips as $ship) {
 				$ships[] = $ship;
 			}
 		}
 
 		return $ships;
+	}
+
+	public function updateShips() {
+		foreach ($this->_players as $player) {
+			$pShips = $player->getShips();
+			foreach ($pShips as $ship) {
+				if ($ship->isDead()) {
+					$player->removeShip($ship);
+				}
+			}
+		}
+		this->updateMap();
 	}
 
 	public function clearMap() {
