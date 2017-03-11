@@ -96,7 +96,7 @@ class Battlefleet {
 	public function clearMap() {
 		for ($i=0; $i < Battlefleet::MAP_LEN; $i++) {
 			for ($j=0; $j < Battlefleet::MAP_WIDTH; $j++) { 
-				$cols[$i][$j] = ".";
+				$cols[$i][$j] = null;
 			}
 		}
 	}
@@ -108,8 +108,8 @@ class Battlefleet {
 			$ships = $player->getShips();
 			echo "ships: " . count($ships) . " \n";
 			foreach ($ships as $key => $ship) {
-				$x1 = $ship->getXEnd();
-				$y1 = $ship->getYEnd();
+				// $x1 = $ship->getXEnd();
+				// $y1 = $ship->getYEnd();
 				echo "ships: {$ship->getX()}, {$ship->getY()} => {$x1}, {$y1} : " . count($ships) . " \n";
 				for ($r=$ship->getY(); $r != $y1; $r += $ship->getYDir()) { 
 					for ($c=$ship->getX(); $c != $x1; $c += $ship->getXDir()) { 
@@ -128,7 +128,10 @@ class Battlefleet {
 		for ($i=0; $i < Battlefleet::MAP_LEN; $i++) {
 			printf("%3d ", $i);
 			for ($j=0; $j < Battlefleet::MAP_WIDTH; $j++) { 
-				echo $this->_map[$i][$j];
+				if ($this->_map[$i][$j] === null)
+					echo ".";
+				else
+					echo $this->_map[$i][$j]->getID();
 			}
 			echo PHP_EOL;
 		}
