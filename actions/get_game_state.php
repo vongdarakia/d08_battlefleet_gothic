@@ -6,11 +6,17 @@
 	require_once __DIR__ . '/../classes/Spaceship/Faction/Imperial/ImperialFrigate.class.php';
 	require_once __DIR__ . '/../classes/Weapon/NauticalLance.class.php';
 	
-	$bf = new Battlefleet();
-	$ship = new ImperialFrigate(0, 0);
-	$ship2 = new ImperialFrigate(0, 0);
-	$bf->getCurrentPlayer()->addShip($ship);
-	$bf->getCurrentPlayer()->addShip($ship2);
-	// $ship->getData();
+	// $bf = new Battlefleet();
+	// $ship = new ImperialFrigate(0, 0);
+	// $ship2 = new ImperialFrigate(0, 0);
+	// $bf->getCurrentPlayer()->addShip($ship);
+	// $bf->getCurrentPlayer()->addShip($ship2);
+
+
+	require_once 'game_save.php';
+
+	$bf =loadGame("../private/game");
+
 	echo json_encode($bf);
+
 ?>
