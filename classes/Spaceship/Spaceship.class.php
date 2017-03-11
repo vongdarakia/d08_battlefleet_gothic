@@ -136,8 +136,9 @@ abstract class Spaceship {
 			// error
 			return;
 		}
-		$this->_extraSpeed = Battlefleet::rollDiceSum($speed);
-		$this->_shield = $shield;
+		$this->_speed -= $this->_extraSpeed;
+		$this->_extraSpeed += Battlefleet::rollDiceSum($speed);
+		$this->_shield += $shield;
 		// call weapon stuff
 		if (Battlefleet::rollDice($repair)[6] > 0) {
 			$this->_hp = $this->_maxhp;
