@@ -6,7 +6,7 @@ Usage:
 new Weapon_child_class( $kwargs );
 
 The valid keys of $kwargs are:
-charge, short, middle, long
+charge, short, middle, long, owner, ship
 
 If a key isn't set, its value is set to some default value.
 --------------------------------------------------------------------- Weapon ->
