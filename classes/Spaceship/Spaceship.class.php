@@ -224,20 +224,20 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		if ($d < $this->_handle || $d > $this->_speed + $this->_extraSpeed) {
 			return false;
 		}
-		$hor = $this->getHor();
-		$ver = $this->getVer();
-		for ($r = 0; $r < $ver; $r++) {
-			for ($c = 0; $c < $hor; $c++) {
-				$map[$r + $this->_y][$c + $this->_x] = null;
-			}
-		}
+		// $hor = $this->getHor();
+		// $ver = $this->getVer();
+		// for ($r = 0; $r < $ver; $r++) {
+		// 	for ($c = 0; $c < $hor; $c++) {
+		// 		$map[$r + $this->_y][$c + $this->_x] = null;
+		// 	}
+		// }
 		$this->_x += $d * ((2 - $this->_direction) % 2);
 		$this->_y += $d * (($this->_direction - 1) % 2);
-		for ($r = 0; $r < $ver; $r++) {
-			for ($c = 0; $c < $hor; $c++) {
-				$map[$r + $this->_y][$c + $this->_x] = $this;
-			}
-		}
+		// for ($r = 0; $r < $ver; $r++) {
+		// 	for ($c = 0; $c < $hor; $c++) {
+		// 		$map[$r + $this->_y][$c + $this->_x] = $this;
+		// 	}
+		// }
 		return true;
 		// returns false if error
 	}
