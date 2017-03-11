@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../Battlefleet/Battlefleet.class.php';
+require_once __DIR__ . '/../Battlefleet/Player.class.php';
 require_once __DIR__ . '/../Weapon/Weapon.class.php';
 
 abstract class Spaceship {
@@ -181,6 +182,15 @@ abstract class Spaceship {
 		}
 		else {
 			echo "Not a weapon\n";
+		}
+	}
+
+	public function setOwner( $owner ) {
+		if ($owner instanceof Player) {
+			$this->_owner = $owner;
+		}
+		else {
+			// error
 		}
 	}
 
