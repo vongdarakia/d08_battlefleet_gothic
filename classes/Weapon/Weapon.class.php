@@ -85,8 +85,8 @@ abstract class Weapon extends Object implements JsonSerializable {
 		$longDmg = $roll[6];
 		$middleDmg = $longDmg + $roll[5];
 		$shortDmg = $middleDmg + $roll[4];
-		$hor = ($shooter->getDirection() % 2) ? $shooter->getWidth() : $shooter->getLength();
-		$ver = ($shooter->getDirection() % 2) ? $shooter->getLength() : $shooter->getWidth();
+		$hor = $shooter->getHor();
+		$ver = $shooter->getVer();
 		$dirx = (2 - $shooter->getDirection()) % 2;
 		$diry = ($shooter->getDirection() - 1) % 2;
 		$c = $shooter->getX() + floor((($dirx + 1) * ($hor - 1)) / 2);
