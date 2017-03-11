@@ -38,6 +38,14 @@ class Player extends Object implements JsonSerializable {
 		}
 	}
 
+	public function removeShip( $ship ) {
+		foreach ($this->_ships as $key => $val ) {
+			if ($val === $ship) {
+				unset($this->_ships[$key]);
+			}
+		}
+	}
+
 	public function getShips() {
 		return $this->_ships;
 	}
