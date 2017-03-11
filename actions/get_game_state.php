@@ -10,21 +10,28 @@
 	// require_once __DIR__ . '/../classes/Spaceship/Faction/Imperial/ImperialFrigate.class.php';
 	require_once __DIR__ . '/../classes/Weapon/NauticalLance.class.php';
 	require_once __DIR__ . '/../classes/Weapon/Weapon.class.php';
-	// $bf = new Battlefleet();
-	// $ship = new ImperialFrigate(0, 0);
-	// $ship2 = new ImperialFrigate(0, 0);
-	// $bf->getCurrentPlayer()->addShip($ship);
-	// $bf->getCurrentPlayer()->addShip($ship2);
-
-	require_once 'get_game.php';
-	// saveGame($bf, $gameFile);
-
-	$game = loadGame($gameFile);
+	$bf = new Battlefleet();
+	$ship = new ImperialFrigate($bf->getPlayers()[0], 0, 0);
+	$ship2 = new ImperialFrigate($bf->getPlayers()[1], 145, 99);
+	$bf->getPlayers()[0]->addShip($ship);
+	$bf->getPlayers()[1]->addShip($ship2);
+	$bf->updateMap();
+	// echo "huh";
+	// print_r($bf);
+	// require_once 'get_game.php';
+	require_once 'game_save.php';
+	saveGame($bf, '../private/game');
+	// echo "done";
+	// $game = loadGame($gameFile);
 
 	// require_once 'get_game.php';
 
 	// $bf =loadGame($gameFile);
-
-	echo json_encode($game);
+	// print ($bf);
+	// $bf->displayMap();
+	header("Content-Type: application/json");
+	echo json_encode($bf);
+	// echo $bf;
+	// echo "done";
 
 ?>
