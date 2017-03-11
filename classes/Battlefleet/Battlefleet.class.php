@@ -108,12 +108,13 @@ class Battlefleet {
 			$ships = $player->getShips();
 			echo "ships: " . count($ships) . " \n";
 			foreach ($ships as $key => $ship) {
-				// $x1 = $ship->getXEnd();
-				// $y1 = $ship->getYEnd();
-				echo "ships: {$ship->getX()}, {$ship->getY()} => {$x1}, {$y1} : " . count($ships) . " \n";
-				for ($r=$ship->getY(); $r != $y1; $r += $ship->getYDir()) { 
-					for ($c=$ship->getX(); $c != $x1; $c += $ship->getXDir()) { 
-						$this->_map[$r][$c] = $ship;
+				$hor = ($ship->getDirection() % 2) ? $ship->getWidth() : $ship->getLength();
+				$ver = ($ship->getDirection() % 2) ? $ship->getLength() : $ship->getWidth();
+				$x = $ship->getX();
+				$y = $ship->getY();
+				for ($r = 0; $r < $ver; $r++) { 
+					for ($c = 0; $c < $hor; $c++) { 
+						$this->_map[$r + $y][$c + $x] = $ship;
 					}
 				}
 			}
