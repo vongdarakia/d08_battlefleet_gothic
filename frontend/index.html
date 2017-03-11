@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Battlefleet Gothic</title>
+
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="Ex00 of Day08 of the PHP Piscine at 42">
+		<meta name="author" content="Hanu Kunduru">
+		<meta name="copyright" content="Hanu Kunduru">
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+		<link rel="stylesheet" href="rotate.css">
+		
+		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+		<script src="https://d3js.org/d3.v4.min.js"></script>
+
+		<style>
+			.grid {
+				display: inline-block;
+			}
+			.card {
+				box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+				transition: 0.3s;
+				width: 10%;
+				height: 30%;
+				border: 1px solid gray;
+				display: inline-block;
+				top: 20px;
+			}
+
+			.card-inset {
+				padding: 5px;
+				background-color: #eee;
+				box-shadow: 1px 1px 5px #555 inset;
+			}
+
+			.card:hover {
+				box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+			}
+
+			.card-inset:hover {
+				box-shadow: 1px 1px 5px #555 inset;
+			}
+
+			.container {
+				padding: 2px 16px;
+			}
+
+			.container li {
+				margin: 0;
+				font-size: 0.75em;
+				text-align: left;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="card">
+			<img src="ship1.jpg" alt="Avatar" style="width:100%">
+			<div class="container">
+			<h4><b>Despoiler Class Battleship</b></h4>
+			<ul>
+				<li>Hull Points : 0</li>
+				<li>Engine Power : 0</li>
+				<li>Speed : 0</li>
+				<li>Handling : 0</li>
+				<li>Shield : 0</li>
+				<li>Weapons : 0</li>
+			</ul>
+			</div>
+		</div>
+
+		<div class="grid"></div>
+
+		<div class="card card-inset">
+			<img src="ship2.jpg" alt="Avatar" style="width:100%">
+			<div class="container">
+			<h4><b>Retaliator Cruiser</b></h4>
+			<ul>
+				<li>Hull Points : 0</li>
+				<li>Engine Power : 0</li> 
+				<li>Speed : 0</li> 
+				<li>Handling : 0</li>
+				<li>Shield : 0</li> 
+				<li>Weapons : 0</li>
+			</ul>
+			</div>
+		</div>
+
+		<div>
+			<button type="button" class="btn btn-default">Default</button>
+
+			<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+			<button type="button" class="btn btn-primary">Primary</button>
+
+			<!-- Indicates a successful or positive action -->
+			<button type="button" class="btn btn-success">Success</button>
+
+			<!-- Contextual button for informational alert messages -->
+			<button type="button" class="btn btn-info">Info</button>
+
+			<!-- Indicates caution should be taken with this action -->
+			<button type="button" class="btn btn-warning">Warning</button>
+
+			<!-- Indicates a dangerous or potentially negative action -->
+			<button type="button" class="btn btn-danger">Danger</button>
+
+			<!-- Deemphasize a button by making it look like a link while maintaining button behavior -->
+			<button type="button" class="btn btn-link">Link</button>
+
+			<i class="material-icons">undo</i>
+			<i class="material-icons">redo</i>
+		</div>
+
+		<div class="container" style="text-align: left;">
+			<form>
+			  <div class="form-group">
+			    <label for="exampleInputEmail1">Email address</label>
+			    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+			    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleInputPassword1">Password</label>
+			    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleSelect1">Example select</label>
+			    <select class="form-control" id="exampleSelect1">
+			      <option>1</option>
+			      <option>2</option>
+			      <option>3</option>
+			      <option>4</option>
+			      <option>5</option>
+			    </select>
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleSelect2">Example multiple select</label>
+			    <select multiple class="form-control" id="exampleSelect2">
+			      <option>1</option>
+			      <option>2</option>
+			      <option>3</option>
+			      <option>4</option>
+			      <option>5</option>
+			    </select>
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleTextarea">Example textarea</label>
+			    <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleInputFile">File input</label>
+			    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+			    <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
+			  </div>
+			  <fieldset class="form-group">
+			    <legend>Radio buttons</legend>
+			    <div class="form-check">
+			      <label class="form-check-label">
+			        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+			        Option one is this and that&mdash;be sure to include why it's great
+			      </label>
+			    </div>
+			    <div class="form-check">
+			    <label class="form-check-label">
+			        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
+			        Option two can be something else and selecting it will deselect option one
+			      </label>
+			    </div>
+			    <div class="form-check disabled">
+			    <label class="form-check-label">
+			        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="option3" disabled>
+			        Option three is disabled
+			      </label>
+			    </div>
+			  </fieldset>
+			  <div class="form-check">
+			    <label class="form-check-label">
+			      <input type="checkbox" class="form-check-input">
+			      Check me out
+			    </label>
+			  </div>
+			  <button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+
+		<script src="grid-layout.js"></script>
+	</body>
+</html>
