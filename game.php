@@ -3,15 +3,16 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 date_default_timezone_set('America/Los_Angeles');
-require_once('./classes/Battlefleet/Battlefleet.class.php');
+require_once './classes/Battlefleet/Battlefleet.class.php';
 require_once './classes/Spaceship/Faction/Imperial/ImperialFrigate.class.php';
+require_once './classes/Weapon/NauticalLance.class.php';
 
 Battlefleet::$verbose = true;
 
 $bf = new Battlefleet();
 $ship = new ImperialFrigate(0, 0);
-// $ship = new Weapon(array("charge" => 5, "short" => 10, "middle" => 12, ""))
-$bf->getCurrentPlayer()->addShip();
+$ship->addWeapon(new NauticalLance());
+$bf->getCurrentPlayer()->addShip($ship);
 
 $bf->startPhase();
 
@@ -70,7 +71,8 @@ function selectPPOption($ship, $player) {
 	echo "What do you want to do?\n";
 	echo "\t[0] Increase speed\n";
 	echo "\t[1] Increase shield power\n";
-	echo "\t[2] Increase weapon charges\n\n";
+	echo "\t[2] Increase weapon charges\n";
+	echo "\t[3] Repair ship (must be stationary)\n\n";
 	$option = readline($player . ": ");
 	promptPPSpendings($ship, $option, $player);
 }
@@ -81,15 +83,24 @@ function promptPPSpendings($ship, $option, $player) {
 	$pp = intval($pp);
 	if ($option == "0") {
 		echo "\nYou've spent " . $pp . " on more speed for your " . $ship . PHP_EOL . PHP_EOL;
+		$ship->spendPP( $pp, 0, [], 0 );
 	}
 	else if ($option == "1") {
 		echo "\nYou've spent " . $pp . " on more shield for your " . $ship . PHP_EOL . PHP_EOL;
+		$ship->spendPP( 0, $pp, [], 0 );
 	}
 	else if ($option == "2") {
 		echo "\nYou've spent " . $pp . " on more weapon charges for your " . $ship . PHP_EOL . PHP_EOL;
+		$ship->spendPP( 0, 0, [$pp], 0 );
+	}
+	else if ($option == "3") {
+		echo "\nYou've spent " . $pp . " on repairing your " . $ship . PHP_EOL . PHP_EOL;
+		$ship->spendPP( 0, 0, 0, $pp );
 	}
 
 	$ship->display();
+	echo PHP_EOL;
+
 }
 
 

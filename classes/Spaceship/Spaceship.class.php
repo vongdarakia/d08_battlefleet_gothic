@@ -128,7 +128,8 @@ abstract class Spaceship {
 
 	public function spendPP( $speed, $shield, $weapon, $repair ) {
 		$pp = $speed + $shield + $repair;
-		foreach ($weapon as $amount) {
+
+		foreach ($weapon as $key => $amount) {
 			$pp += $amount;
 		}
 		if ($pp > $this->_pp) { 
@@ -186,7 +187,9 @@ abstract class Spaceship {
 		echo "\n\thull: " . $this->_hp;
 		echo "\n\tspeed: " . $this->_speed;
 		echo "\n\thandle: " . $this->_handle;
-		echo "\n\nWeapons:\n";
+		echo "\n\textra speed: " . $this->_extraSpeed;
+		echo "\n\tshield: " . $this->_shield;
+		echo "\n\nWeapons: of " . $this->_name . PHP_EOL;
 
 		foreach ($this->_weapons as $key => $weapon) {
 			echo PHP_EOL;
