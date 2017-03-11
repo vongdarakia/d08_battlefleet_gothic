@@ -15,7 +15,7 @@
 
 	require_once 'game_save.php';
 
-	$bf =loadGame("../private/game");
+	$bf =loadGame($gameFile);
 
 	echo json_encode($bf);
 
