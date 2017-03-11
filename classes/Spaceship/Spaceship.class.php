@@ -86,6 +86,10 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		return $this->_width;
 	}
 
+	public function getHP() {
+		return $this->_hp;
+	}
+
 	public function getWeapons() {
 		return $this->_weapons;
 	}

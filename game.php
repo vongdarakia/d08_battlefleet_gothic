@@ -10,8 +10,8 @@ require_once './classes/Weapon/NauticalLance.class.php';
 Battlefleet::$verbose = true;
 
 $bf = new Battlefleet();
-$ship = new ImperialFrigate(0, 0);
-$ship2 = new ImperialFrigate(0, 0);
+$ship = new ImperialFrigate($bf->getCurrentPlayer(), 0, 0);
+$ship2 = new ImperialFrigate($bf->getCurrentPlayer(), 10, 0);
 // $ship->addWeapon(new NauticalLance());
 // $id = 0;
 // $id++;
@@ -20,8 +20,14 @@ $ship2 = new ImperialFrigate(0, 0);
 
 $bf->getCurrentPlayer()->addShip($ship);
 $bf->getCurrentPlayer()->addShip($ship2);
+$bf->updateMap();
+
+$ship->getWeapons()[0]->addCharge(10);
+$ship->getWeapons()[0]->shoot($ship, $bf->getMap());
+echo $ship->getHP() . '  ' . $ship2->getHP() . PHP_EOL;
 
 $bf->startPhase();
+$ship2->display();
 
 while (true) {
 	selectPhaseOption1($bf);

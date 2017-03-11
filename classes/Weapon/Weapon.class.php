@@ -62,13 +62,13 @@ abstract class Weapon extends Object implements JsonSerializable {
 		$this->_extraCharge = 0;
 	}
 
-	public function shoot( $shooter, &$map ) {
+	public function shoot( $shooter, $map ) {
 		if (!($shooter instanceof Spaceship)) {
 			// error
 			return;
 		}
 		$charge = $this->_charge + $this->_extraCharge;
-		$roll = Battlefleet::rollDice($speed);
+		$roll = Battlefleet::rollDice($charge);
 		$longDmg = $roll[6];
 		$middleDmg = $longDmg + $roll[5];
 		$shortDmg = $middleDmg + $roll[4];
