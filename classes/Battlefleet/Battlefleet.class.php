@@ -151,6 +151,15 @@ class Battlefleet implements JsonSerializable {
 		}
 	}
 
+	public function getShipByID($shipID) {
+		$ships = $this->getAllShips();
+		foreach ($ships as $ship) {
+			if ($ship->getID() == $shipID)
+				return $ship;
+		}
+		return null;
+	}
+
 	public static function rollDice( $numDice, $sides=6 ) {
 		$diceRolled = array_fill(1, $sides, 0);
 		for ($i=0; $i < $numDice; $i++) {
