@@ -165,5 +165,34 @@ abstract class Spaceship {
 	public function isDead() {
 		return $this->_hp <= 0;
 	}
+
+	public function addWeapon($weapon) {
+		if ($weapon instanceof Weapon) {
+			$this->_weapons[] = $weapon;
+		}
+		else {
+			echo "Not a weapon\n";
+		}
+	}
+
+	public function display() {
+		echo $this->_name . PHP_EOL;
+		echo "\tx: " . $this->_x;
+		echo "\n\ty: " . $this->_y;
+		echo "\n\tdir: " . $this->_direction;
+		echo "\n\tcost: " . $this->_cost;
+		echo "\n\tlength: " . $this->_length;
+		echo "\n\twidth: " . $this->_width;
+		echo "\n\thull: " . $this->_hp;
+		echo "\n\tspeed: " . $this->_speed;
+		echo "\n\thandle: " . $this->_handle;
+		echo "\n\nWeapons:\n";
+
+		foreach ($this->_weapons as $key => $weapon) {
+			echo PHP_EOL;
+			$weapon->display();
+			echo PHP_EOL;
+		}
+	}
 }
 ?>

@@ -27,6 +27,13 @@ abstract class Weapon {
 		}
 	}
 
+	public function display() {
+		echo "\n\tcharge: " . $this->_charge;
+		echo "\n\tshort: " . $this->_short;
+		echo "\n\tmiddle: " . $this->_middle;
+		echo "\n\tlong: " . $this->_long;
+	}
+
 	public function shoot( Spaceship $shooter, $charge, array $ships ) {
 		$charge += $this->_charge;
 		$roll = Battlefleet::rollDice($speed);
