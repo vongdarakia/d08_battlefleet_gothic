@@ -1,0 +1,29 @@
+
+<- Spaceship ------------------------------------------------------------------
+The Spaceship class is an abstract class used to create specific spaceships.
+
+Usage:
+new Spaceship_child_class( $kwargs );
+
+The valid keys of $kwargs are:
+length, width, hp, pp, speed, handle, weapons, direction, cost, name, x, y, owner
+
+If a key isn't set, its value is set to some default value.
+
+Functions:
+
+get'Var'();
+Returns the value of the variable 'var'.
+
+spendPP( $speed, $shield, $weapons, $repair );
+Attempts to spend PP distributed among 4 categories.
+
+resetPP();
+Resets the temporary variables changed by spending PP.
+
+takeDamage( $d );
+Removes $d health from the ship.
+
+isDead();
+Returns true if the ship is dead, false otherwise.
+------------------------------------------------------------------ Spaceship ->

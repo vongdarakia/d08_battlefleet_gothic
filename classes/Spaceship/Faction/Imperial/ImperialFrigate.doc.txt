@@ -1,0 +1,22 @@
+
+<- ImperialFrigate ------------------------------------------------------------
+The ImperialFrigate class is a Spaceship that is part of the Imperial faction.
+
+Usage:
+new ImperialFrigate( $x, $y, $owner, $name );
+$x and $y are the coordinates of the spaceship.
+By default, $x = $y = 0.
+$owner is the player that owns the spaceship.
+By default, $owner = null.
+$name is an optional parameter to set the name of the spaceship.
+By default, $name = 'Imperial Frigate'.
+
+Size: 1x4 cases
+Hull points: 5
+PP: 10
+Speed: 15
+Handling: 4
+Shield: 0
+Weapons: Nautical lance (changed from side laser batteries because it hasn't
+been implemeneted yet)
+------------------------------------------------------------ ImperialFrigate ->
