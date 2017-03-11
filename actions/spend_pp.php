@@ -11,6 +11,7 @@
 	if ($ship) {
 		$game->spendPP($ppSpeed, $ppShield, $ppWeapon, $ppRepair);
 		saveGame($game, $gameFile);
+		header("Content-Type: application/json");
 		echo json_encode($game);
 	}
 	else {

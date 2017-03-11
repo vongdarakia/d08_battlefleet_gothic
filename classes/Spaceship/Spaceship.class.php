@@ -202,7 +202,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	// 	}
 	// }
 
-	public function setOwner( &$owner ) {
+	public function setOwner( $owner ) {
 		if ($owner instanceof Player) {
 			$this->_owner = $owner;
 		}
