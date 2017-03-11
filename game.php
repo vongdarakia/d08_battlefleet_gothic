@@ -16,6 +16,8 @@ $ship2 = new ImperialFrigate(0, 0);
 // $id = 0;
 // $id++;
 // echo $id;
+// $ship->moveShip(4, $bf->getMap());
+
 $bf->getCurrentPlayer()->addShip($ship);
 $bf->getCurrentPlayer()->addShip($ship2);
 
@@ -118,7 +120,6 @@ function promptPPSpendings($shipIdx, $ship, $option, $player) {
 
 	$ship->display();
 	echo PHP_EOL;
-
 }
 
 

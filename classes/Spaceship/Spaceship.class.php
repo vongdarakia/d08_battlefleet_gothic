@@ -208,7 +208,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		}
 	}
 
-	public function moveShip( $d, &$map ) {
+	public function moveShip( $d, $map ) {
 		if ($d < $this->_handle || $d > $this->_speed + $this->_extraSpeed) {
 			return false;
 		}
@@ -219,8 +219,8 @@ abstract class Spaceship extends Object implements JsonSerializable {
 				$map[$r + $this->_y][$c + $this->_x] = null;
 			}
 		}
-		$this->_x += d * ((2 - $shooter->getDirection()) % 2);
-		$this->_y += d * (($shooter->getDirection() - 1) % 2);
+		$this->_x += $d * ((2 - $this->_direction) % 2);
+		$this->_y += $d * (($this->_direction - 1) % 2);
 		for ($r = 0; $r < $ver; $r++) {
 			for ($c = 0; $c < $hor; $c++) {
 				$map[$r + $this->_y][$c + $this->_x] = $this;

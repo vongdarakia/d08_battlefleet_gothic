@@ -103,7 +103,7 @@ class Battlefleet implements JsonSerializable {
 				}
 			}
 		}
-		this->updateMap();
+		$this->updateMap();
 	}
 
 	public function clearMap() {
