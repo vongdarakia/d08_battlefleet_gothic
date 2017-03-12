@@ -262,6 +262,8 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		echo "\n\tcost: " . $this->_cost;
 		echo "\n\tlength: " . $this->_length;
 		echo "\n\twidth: " . $this->_width;
+		echo "\n\thorizontal: " . $this->_hor;
+		echo "\n\tvertical: " . $this->_ver;
 		echo "\n\thull: " . $this->_hp;
 		echo "\n\tspeed: " . $this->_speed;
 		echo "\n\thandle: " . $this->_handle;
