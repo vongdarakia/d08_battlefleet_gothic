@@ -3,7 +3,7 @@
 The NauticalLance class is a type of Weapon.
 
 Usage:
-new ImperialDestroyer( $owner, $ship );
+new NauticalLance( $owner, $ship );
 $owner is the player that owns the weapon.
 $ship is the ship that controls the weapon.
 By default, both are set to null.

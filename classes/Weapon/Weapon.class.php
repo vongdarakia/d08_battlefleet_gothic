@@ -6,7 +6,7 @@ require_once __DIR__ . '/../Spaceship/Spaceship.class.php';
 
 abstract class Weapon extends Object implements JsonSerializable {
 	protected $_charge = 0;
-	protected $_damage = 1;
+	protected $_damage = 1; // base damage
 	protected $_short = 30; // max short range
 	protected $_middle = 60; // max middle range
 	protected $_long = 90; // max long range
@@ -48,6 +48,7 @@ abstract class Weapon extends Object implements JsonSerializable {
 	}
 
 	public function display() {
+		echo get_class($this) . PHP_EOL;
 		echo "\tcharge: " . $this->_charge;
 		echo "\n\tshort: " . $this->_short;
 		echo "\n\tmiddle: " . $this->_middle;
@@ -91,22 +92,18 @@ abstract class Weapon extends Object implements JsonSerializable {
 	// This is a basic shoot function for weapons that shoot one straight line
 	// from the front of the ship.
 	// It should be changed for weapons that have different effects.
-	public function shoot( $shooter, $map ) {
-		if (!($shooter instanceof Spaceship)) {
-			// error
-			return;
-		}
+	public function shoot( $map ) {
 		$charge = $this->_charge + $this->_extraCharge;
 		$roll = Battlefleet::rollDice($charge);
 		$longDmg = $roll[6];
 		$middleDmg = $longDmg + $roll[5];
 		$shortDmg = $middleDmg + $roll[4];
-		$hor = $shooter->getHor();
-		$ver = $shooter->getVer();
-		$dirx = (2 - $shooter->getDirection()) % 2;
-		$diry = ($shooter->getDirection() - 1) % 2;
-		$c = $shooter->getX() + floor((($dirx + 1) * ($hor - 1)) / 2);
-		$r = $shooter->getY() + floor((($diry + 1) * ($ver - 1)) / 2);
+		$hor = $this->_ship->getHor();
+		$ver = $this->_ship->getVer();
+		$dirx = (2 - $this->_ship->getDirection()) % 2;
+		$diry = ($this->_ship->getDirection() - 1) % 2;
+		$c = $this->_ship->getX() + floor((($dirx + 1) * ($hor - 1)) / 2);
+		$r = $this->_ship->getY() + floor((($diry + 1) * ($ver - 1)) / 2);
 		// not technically correct, just an approximation for the center of the ship
 		for ($dist = 1; $dist <= $this->_long; $dist++) {
 			$c += $dirx;
