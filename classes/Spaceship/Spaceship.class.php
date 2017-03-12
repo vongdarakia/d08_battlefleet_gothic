@@ -29,7 +29,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	protected $_extraSpeed = 0; // extra speed
 	protected $_moveDecided = 0;
 	protected $_movedLastTurn = 0;
-	protected $_stationary = 1;
+	protected $_stationary = true;
 
 	private static $_idCounter = 0;
 
@@ -128,11 +128,23 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		return $this->_owner;
 	}
 
+	public function isStationary() {
+		return $this->_stationary;
+	}
+
 	public function setStationary( $status ) {
-		if ($status != 0 && $status != 1)
+		if ($status != false && $status != true)
 			return false;
 		$this->_stationary = $status;
 		return true;
+	}
+
+	public function setDirection( $direction ) {
+		if ($direction >= 0 && $direction <= 3) {
+			$this->_direction = $direction;
+			return true;
+		}
+		return false;
 	}
 
 	/*public function getXDir() {
@@ -167,13 +179,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		return $this->_y;
 	}*/
 
-	public function setDirection( $direction ) {
-		if ($direction >= 0 && $direction <= 3) {
-			$this->_direction = $direction;
-			return true;
-		}
-		return false;
-	}
+	
 
 	// todo: more get functions
 
@@ -256,14 +262,8 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		$inty = $y + (($orient + 1) % 3 == 0) * $ver;
 
 		// Set the direction for collision of checking
-		if ($orient != 1)
-			$x_sign = -1;
-		else
-			$x_sign = 1;
-		if ($orient == 0)
-			$y_sign = -1;
-		else
-			$y_sign = 1;
+		$x_sign = ($orient != 1) ? -1 : 1;
+		$y_sign = ($orient == 0) ? -1 : 1;
 
 		// Check for collisions
 		if ($orient % 2 == 1) {
@@ -338,19 +338,21 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		}
 		
 		// Check map border collisions
-		if ($intx > MAP_WIDTH || $inty > MAP_LEN || $x0 < 0 || $y0 < 0)
+		if ($intx > Battlefleet::MAP_WIDTH || $inty > Battlefleet::MAP_LEN || $x0 < 0 || $y0 < 0)
 			return -1;
 
 		// Still flying =)
 		return 1;
 	}
 
-	public function turnShip( $dir, $map ) {
+	public function turnShip( $rot, $map ) {
 		
-		if ($dir != 1 && $dir != -1)
+		if ($rot != 1 && $rot != -1)
 			return false;
+		if ($rot == 0)
+			return true;
 
-		if ($dir < 0) {
+		if ($rot < 0) {
 			$orient = ($this->_direction + 3) % 4;
 		}
 		else if ($dir > 0) {
@@ -361,7 +363,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		$x = $this->_x;
 		$y = $this->_y;
 
-		$valid = isMoveValid( $map, $orient, $x, $y );
+		$valid = $this->isMoveValid( $map, $orient, $x, $y );
 
 		if ($valid == 1 ) {
 			// Change ship attributes
@@ -380,18 +382,18 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	}
 
 	public function moveShip( $d, $map ) {
-		if (($this->_stationary == 0 && $d < $this->_handle) 
+		if ((!$this->_stationary && $d < $this->_handle) 
 			|| $this->_movedDist + $d > $this->_speed + $this->_extraSpeed) {
 			return false;
 		}
-		else if ($this->_stationary == 1 && $d == 0)
+		else if ($this->_stationary && $d == 0)
 			return true;
 		$x = $this->_x + $d * ((2 - $this->_direction) % 2);
 		$y = $this->_y + $d * (($this->_direction - 1) % 2);
 
-		$valid = isMoveValid( $map, $this->_direction, $x, $y );
+		$valid = $this->isMoveValid( $map, $this->_direction, $x, $y);
 
-		if ($valid == 1 ) {
+		if ($valid == 1) {
 			// Change ship attributes
 			$this->_x = $x;
 			$this->_y = $y;
@@ -453,25 +455,26 @@ abstract class Spaceship extends Object implements JsonSerializable {
 
 	public function jsonSerialize() {
         return (object)array(
-        	"_id" => $this->_id,
-        	"length" => $this->_length,
-			"width" => $this->_width,
-			"hp" => $this->_hp,
-			"maxhp" => $this->_maxhp,
-			"pp" => $this->_pp,
-			"speed" => $this->_speed,
-			"handle" => $this->_handle,
-			"weapons" => $this->_weapons,
-			"direction" => $this->_direction,
-			"cost" => $this->_cost,
-			"name" => $this->_name,
-			"x" => $this->_x,
-			"y" => $this->_y,
-			"hor" => $this->_hor,
-			"ver" => $this->_ver,
-			"shield" => $this->_shield,
-			"extraSpeed" => $this->_extraSpeed,
-			"maxSpeed" => $this->_
+        	"_id" 		=> $this->_id,
+        	"length" 	=> $this->_length,
+			"width" 	=> $this->_width,
+			"hp" 		=> $this->_hp,
+			"maxhp" 	=> $this->_maxhp,
+			"pp"		=> $this->_pp,
+			// "speed" 	=> $this->_speed,
+			// "handle" => $this->_handle,
+			"weapons"	=> $this->_weapons,
+			"direction"	=> $this->_direction,
+			"cost" 		=> $this->_cost,
+			"name" 		=> $this->_name,
+			"x" 		=> $this->_x,
+			"y" 		=> $this->_y,
+			// "hor" 		=> $this->_hor,
+			// "ver"		=> $this->_ver,
+			"shield" 	=> $this->_shield,
+			// "extraSpeed" => $this->_extraSpeed,
+			"maxSpeed" 	=> ($this->_extraSpeed + $this->_speed),
+			"minSpeed" 	=> ($this->_stationary ? 0 : $this->_handle)
         );
     }
 }

@@ -7,6 +7,12 @@ $shipID = intval($_POST['ship_id']);
 $ship = $game->getShipByID($shipID);
 
 if ($ship) {
+	// If ship is not stationary, that means it moved the previous turn.
+	// so we have to move straight the distance of its handle value.
+	if (!$ship->isStationary()) {
+		$ship->moveShip($ship->getHandle(), $game->getMap());
+	}
+
 	$ship->turnShip($rot);
 
 	if ($dist === 0) {

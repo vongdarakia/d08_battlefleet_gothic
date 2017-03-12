@@ -96,14 +96,12 @@ class Battlefleet implements JsonSerializable {
 	}
 
 	public function endTurn() {
-		
 		$this->_gameTurn++;
 
 		$this->_currentPlayer = $this->_players[$this->_gameTurn % count($this->_players)];
 		if ($this->_gameTurn % count($this->_players) == 0) {
 			$this->nextPhase();
 		}
-
 	}
 
 	public function getCurrentPhase() {
@@ -230,7 +228,7 @@ class Battlefleet implements JsonSerializable {
 	public function jsonSerialize() {
         return (object)array(
         	"currentPhase" => $this->_currentPhase,
-			"playerTurn" => $this->_gameTurn,
+			"gameTurn" => $this->_gameTurn,
 			"players" => $this->_players,
 			"gameSize" => $this->_gameSize,
 			"map" => $this->_map,
