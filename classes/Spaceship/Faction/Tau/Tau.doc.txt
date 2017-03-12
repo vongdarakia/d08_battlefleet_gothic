@@ -1,0 +1,7 @@
+
+<- Tau ----------------------------------------------------------------------
+The Tau class is for spaceships that belong to the Spaceship class
+that are part of the Tau faction.
+
+Usage is identical to the Spaceship class.
+---------------------------------------------------------------------- Tau ->
