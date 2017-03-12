@@ -247,7 +247,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		}
 	}
 
-	private function isMoveValid ( $map, $orient, $x, $y ) {
+	private function collided ( $map, $orient, $x, $y ) {
 		//Setup env
 		$direction = $this->_direction;
 		$x0 = $this->_x;
@@ -291,7 +291,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 						// Set $map_val and this ship to stationary;
 						$this->_stationary = 1;
 						$map_val->setStationary(1);
-						return 0;
+						return 1;
 					}
 					else if ($map_val == "0") {
 						$obstacle_hit = 1;
@@ -326,7 +326,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 						// Set $map_val and this ship to stationary;
 						$this->_stationary = 1;
 						$map_val->setStationary(1);
-						return 0;
+						return 1;
 					}
 					else if ($map_val == "0") {
 						$obstacle_hit = 1;
@@ -342,7 +342,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 			return -1;
 
 		// Still flying =)
-		return 1;
+		return 0;
 	}
 
 	public function turnShip( $rot, $map ) {
@@ -363,26 +363,25 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		$x = $this->_x;
 		$y = $this->_y;
 
-		$valid = $this->isMoveValid( $map, $orient, $x, $y );
+		$collided = $this->collided( $map, $orient, $x, $y );
 
-		if ($valid == 1 ) {
+		if ($collided == 0) {
 			// Change ship attributes
 			$this->_x = $x;
 			$this->_y = $y;
 			$this->_direction = $orient;
 			$this->_hor = ($this->_direction % 2) ? $this->_width : $this->_length;
 			$this->_ver = ($this->_direction % 2) ? $this->_length : $this->_width;
-			return true;
 		}
-		else if ($valid == -1) {
+		else if ($collided == -1) {
 			// Ship destroyed
 			$this->_hp = -1;
 		}
-		return false;
+		return true;
 	}
 
 	public function moveShip( $d, $map ) {
-		if ((!$this->_stationary && $d < $this->_handle) 
+		if ((!$this->_stationary && $this->_movedDist + $d < $this->_handle) 
 			|| $this->_movedDist + $d > $this->_speed + $this->_extraSpeed) {
 			return false;
 		}
@@ -391,24 +390,28 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		$x = $this->_x + $d * ((2 - $this->_direction) % 2);
 		$y = $this->_y + $d * (($this->_direction - 1) % 2);
 
-		$valid = $this->isMoveValid( $map, $this->_direction, $x, $y);
+		$collided = $this->collided( $map, $this->_direction, $x, $y);
 
-		if ($valid == 1) {
+		if ($collided == 0) {
 			// Change ship attributes
 			$this->_x = $x;
 			$this->_y = $y;
 			$this->_movedDist += $d;
-			if ($d != $this->_handle)
-				$this->_stationary = 0;
+
+			if ($this->_stationary && $this->_movedDist > 0)
+				$this->_stationary = false;
+
+			if ($this->_movedDist != $this->_handle)
+				$this->_stationary = false;
 			else
-				$this->_stationary = 1;
+				$this->_stationary = true;
 			return true;
 		}
-		else if ($valid == -1) {
+		else if ($collided == -1) {
 			// Ship destroyed
 			$this->_hp = -1;
 		}
-		// In case of valid == 0 ship attributes are set within isMoveValid function
+		// In case of valid == 0 ship attributes are set within collided function
 		return false;
 	}
 
