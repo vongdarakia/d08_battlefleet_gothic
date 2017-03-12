@@ -27,8 +27,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 
 	protected $_shield = 0; // shield
 	protected $_extraSpeed = 0; // extra speed
-	protected $_moveDecided = 0;
-	protected $_movedLastTurn = 0;
+	protected $_moveDecided = false;
 	protected $_stationary = true;
 
 	private static $_idCounter = 0;
@@ -205,10 +204,11 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		}
 	}
 
-	public function resetPP() {
+	public function resetStats() {
 		$this->_extraSpeed = 0;
 		$this->_shield = 0;
-		$this->
+		$this->_movedDist = 0;
+		$this->_moveDecided = false;
 		foreach ($this->_weapons as $i => $weapon) {
 			$this->_weapons[$i]->resetCharge();
 		}
@@ -237,6 +237,14 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	// 		echo "Not a weapon\n";
 	// 	}
 	// }
+
+	public function setMoveDecided( $val ) {
+		if ($val == 0 || $val == 1) {
+			$this->_moveDecided = $val;
+			return true;
+		}
+		return false;
+	}
 
 	public function setOwner( $owner ) {
 		if ($owner instanceof Player) {
