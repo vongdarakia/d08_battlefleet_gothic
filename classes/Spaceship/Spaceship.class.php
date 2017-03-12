@@ -27,6 +27,9 @@ abstract class Spaceship extends Object implements JsonSerializable {
 
 	protected $_shield = 0; // shield
 	protected $_extraSpeed = 0; // extra speed
+	protected $_moveDecided = 0;
+	protected $_movedLastTurn = 0;
+	protected $_stationary = 1;
 
 	private static $_idCounter = 0;
 
@@ -164,6 +167,14 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		return $this->_y;
 	}*/
 
+	public function setDirection( $direction ) {
+		if ($direction >= 0 && $direction <= 3) {
+			$this->_direction = $direction;
+			return true;
+		}
+		return false;
+	}
+
 	// todo: more get functions
 
 	public function spendPP( $speed, $shield, $weapons, $repair ) {
@@ -191,6 +202,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	public function resetPP() {
 		$this->_extraSpeed = 0;
 		$this->_shield = 0;
+		$this->
 		foreach ($this->_weapons as $i => $weapon) {
 			$this->_weapons[$i]->resetCharge();
 		}
@@ -398,6 +410,10 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		return false;
 	}
 
+	public function setMoved( $val ) {
+		$this->_moved = $val;
+	}
+
 	public function display() {
 		echo $this->_name . PHP_EOL;
 		echo "\tid: " . $this->_id;
@@ -407,6 +423,8 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		echo "\n\tcost: " . $this->_cost;
 		echo "\n\tlength: " . $this->_length;
 		echo "\n\twidth: " . $this->_width;
+		echo "\n\thorizontal: " . $this->_hor;
+		echo "\n\tvertical: " . $this->_ver;
 		echo "\n\thull: " . $this->_hp;
 		echo "\n\tspeed: " . $this->_speed;
 		echo "\n\thandle: " . $this->_handle;
@@ -419,6 +437,14 @@ abstract class Spaceship extends Object implements JsonSerializable {
 			$weapon->display();
 			echo PHP_EOL;
 		}
+	}
+
+	public function getWeaponByID($weaponID) {
+		foreach ($this->_weapons as $weapon) {
+			if ($weapon->getID() == $weaponID)
+				return $weapon;
+		}
+		return null;
 	}
 
 	public function getData() {
@@ -444,7 +470,8 @@ abstract class Spaceship extends Object implements JsonSerializable {
 			"hor" => $this->_hor,
 			"ver" => $this->_ver,
 			"shield" => $this->_shield,
-			"extraSpeed" => $this->_extraSpeed
+			"extraSpeed" => $this->_extraSpeed,
+			"maxSpeed" => $this->_
         );
     }
 }

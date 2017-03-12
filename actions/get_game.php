@@ -1,6 +1,6 @@
 <?php 
-	require_once 'game_save.php';
+require_once 'game_save.php';
 
-	$gameFile = "../private/game";
-	$game = loadGame($gameFile);
+$gameFile = "../private/game";
+$game = loadGame($gameFile);
 ?>

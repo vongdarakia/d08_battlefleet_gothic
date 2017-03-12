@@ -3,12 +3,13 @@
 The NauticalLance class is a type of Weapon.
 
 Usage:
-new ImperialDestroyer( $owner, $ship );
+new NauticalLance( $owner, $ship );
 $owner is the player that owns the weapon.
 $ship is the ship that controls the weapon.
 By default, both are set to null.
 
 Charges: 0
+Damage: 1
 Short Range: 1 to 30 cells
 Middle Range: 31 to 60 cells
 Long Range: 61 to 90 cells

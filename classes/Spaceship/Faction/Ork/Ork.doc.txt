@@ -1,0 +1,7 @@
+
+<- Ork ----------------------------------------------------------------------
+The Ork class is for spaceships that belong to the Spaceship class
+that are part of the Ork faction.
+
+Usage is identical to the Spaceship class.
+---------------------------------------------------------------------- Ork ->

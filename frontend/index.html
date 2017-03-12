@@ -12,7 +12,7 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
 		<link rel="stylesheet" href="rotate.css">
 		
-		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
 		<script src="https://d3js.org/d3.v4.min.js"></script>
@@ -22,7 +22,7 @@
 				display: inline-block;
 			}
 			.card {
-				box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+				box-shadow: 4px 8px 16px 0 rgba(0,0,0,0.2);
 				transition: 0.3s;
 				width: 10%;
 				height: 30%;
@@ -34,15 +34,15 @@
 			.card-inset {
 				padding: 5px;
 				background-color: #eee;
-				box-shadow: 1px 1px 5px #555 inset;
+				box-shadow: 1px 1px 10px #555 inset;
 			}
 
 			.card:hover {
-				box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+				box-shadow: 8px 16px 25px 0 rgba(0,0,0,0.2);
 			}
 
 			.card-inset:hover {
-				box-shadow: 1px 1px 5px #555 inset;
+				box-shadow: 1px 1px 20px #555 inset;
 			}
 
 			.container {
@@ -61,7 +61,7 @@
 		<div class="card">
 			<img src="ship1.jpg" alt="Avatar" style="width:100%">
 			<div class="container">
-			<h4><b>Despoiler Class Battleship</b></h4>
+			<h5><b>Despoiler Class Battleship</b></h5>
 			<ul>
 				<li>Hull Points : 0</li>
 				<li>Engine Power : 0</li>
@@ -78,7 +78,7 @@
 		<div class="card card-inset">
 			<img src="ship2.jpg" alt="Avatar" style="width:100%">
 			<div class="container">
-			<h4><b>Retaliator Cruiser</b></h4>
+			<h5><b>Retaliator Cruiser</b></h5>
 			<ul>
 				<li>Hull Points : 0</li>
 				<li>Engine Power : 0</li> 
@@ -187,5 +187,6 @@
 		</div>
 
 		<script src="grid-layout.js"></script>
+		<script src="get-data.js"></script>
 	</body>
 </html>
