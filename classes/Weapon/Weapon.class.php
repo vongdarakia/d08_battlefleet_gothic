@@ -6,9 +6,10 @@ require_once __DIR__ . '/../Spaceship/Spaceship.class.php';
 
 abstract class Weapon extends Object implements JsonSerializable {
 	protected $_charge = 0;
-	protected $_short = 1; // max short range
-	protected $_middle = 2; // max middle range
-	protected $_long = 3; // max long range
+	protected $_damage = 1;
+	protected $_short = 30; // max short range
+	protected $_middle = 60; // max middle range
+	protected $_long = 90; // max long range
 	protected $_owner = null;
 	protected $_ship = null;
 
@@ -23,6 +24,9 @@ abstract class Weapon extends Object implements JsonSerializable {
 	public function __construct( array $kwargs ) {
 		if (array_key_exists('charge', $kwargs)) {
 			$this->_charge = $kwargs['charge'];
+		}
+		if (array_key_exists('damage', $kwargs)) {
+			$this->_damage = $kwargs['damage'];
 		}
 		if (array_key_exists('short', $kwargs)) {
 			$this->_short = $kwargs['short'];
@@ -84,6 +88,9 @@ abstract class Weapon extends Object implements JsonSerializable {
 		$this->_extraCharge = 0;
 	}
 
+	// This is a basic shoot function for weapons that shoot one straight line
+	// from the front of the ship.
+	// It should be changed for weapons that have different effects.
 	public function shoot( $shooter, $map ) {
 		if (!($shooter instanceof Spaceship)) {
 			// error
@@ -106,13 +113,13 @@ abstract class Weapon extends Object implements JsonSerializable {
 			$r += $diry;
 			if ($map[$r][$c] !== null) {
 				if ($dist <= $this->_short) {
-					$map[$r][$c]->takeDamage($shortDmg);
+					$map[$r][$c]->takeDamage($shortDmg * $this->_damage);
 				}
 				else if ($dist <= $this->_middle) {
-					$map[$r][$c]->takeDamage($middleDmg);
+					$map[$r][$c]->takeDamage($middleDmg * $this->_damage);
 				}
 				else {
-					$map[$r][$c]->takeDamage($longDmg);
+					$map[$r][$c]->takeDamage($longDmg * $this->_damage);
 				}
 				break;
 			}
