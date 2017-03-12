@@ -47,6 +47,11 @@ class Player extends Object implements JsonSerializable {
 	}
 
 	public function getShips() {
+		$ships = array();
+		foreach ($this->_ships as $ship) {
+			if (!$ship->isDead())
+				$ships[] = $ship;
+		}
 		return $this->_ships;
 	}
 
