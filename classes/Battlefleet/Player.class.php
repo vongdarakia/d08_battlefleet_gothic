@@ -17,7 +17,7 @@ class Player extends Object implements JsonSerializable {
 		self::$_idCounter++;
 
 		if (Battlefleet::$verbose)
-			print("Player constructed.\n");
+			printf("Player: %s constructed.\n", $this->_playerName);
 	}
 
 	public function __toString() {

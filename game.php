@@ -1,4 +1,5 @@
 <?php 
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -25,17 +26,18 @@ $bf->updateMap();
 $ship->getWeapons()[0]->addCharge(20);
 $ship->getWeapons()[0]->shoot($ship, $bf->getMap());
 echo $ship->getHP() . '  ' . $ship2->getHP() . PHP_EOL;
-$bf->updateShips();
+// $bf->updateShips();
 $bf->updateMap();
 
 $bf->startPhase();
 $ship2->display();
-
+echo "1\n";
 while (true) {
-	selectPhaseOption1($bf);
+	if (!(selectPhaseOption1($bf)))
+		$bf->nextPhase() ;
 }
 
-function selectPhaseOption1($bf) {
+function selectPhaseOption1( $bf ) {
 	$option = readline("Phase 1 (order)\n"
 		. "\t[1] Select Ship\n"
 		. "\t[2] Damage Ship\n"
@@ -46,7 +48,7 @@ function selectPhaseOption1($bf) {
 
 	if ($option == "1") {
 		echo PHP_EOL;
-		selectShip($bf->getCurrentPlayer());
+		selectShip($bf->getCurrentPlayer(), $bf->getCurrentPhase(), $bf);
 	}
 
 	if ($option == "2") {
@@ -62,9 +64,13 @@ function selectPhaseOption1($bf) {
 		$bf->updateMap();
 		$bf->displayMap();
 	}
+
+	if ($option == "0")
+		return 0;
+	return 1;
 }
 
-function selectShip($player) {
+function selectShip( $player, $phase, $bf ) {
 	$ships = $player->getShips();
 	if (count($ships) > 0) {
 		echo "Select ship:\n";
@@ -75,7 +81,10 @@ function selectShip($player) {
 
 		$option = readline($player . ": ");
 		if (array_key_exists($option, $ships)) {
-			selectPPOption($option, $ships[$option], $player);
+			if ($phase == 0)
+				selectPPOption($option, $ships[$option], $player);
+			else if ($phase == 1)
+				selectMove($option, $ships[$option], $bf);
 		}
 		else {
 			echo "Invalid option" . PHP_EOL;
@@ -89,6 +98,48 @@ function selectShip($player) {
 		echo "You have no ships\n\n";
 	}
 }
+
+function selectMove( $shipIdx, $ship, $bf) {
+	while (True) {
+		$option = readline("Select Move\n"
+			. "\t[1] Turn Ship\n"
+			. "\t[2] Move Ship\n"
+			. "\t[m] Display Map\n"
+			. "\t[0] End Turn\n"
+			. $bf->getCurrentPlayer() . ": "
+		);
+
+		if ($option == "1") {
+			echo PHP_EOL;
+			$dir = readline("Select direction (1 or -1)\n"
+				. $bf->getCurrentPlayer() . ": "
+			);
+			if ($dir == "1" || $dir == "-1")
+				$ship->turnShip($dir);
+			else
+				echo "Error: direction must be 1 or -1\n";
+		}
+
+		else if ($option == "2" ) {
+			echo PHP_EOL;
+			$dist = intval(readline("Select distance\n"
+				. $bf->getCurrentPlayer() . ": "
+			));
+			echo $dist . " selected" . PHP_EOL;
+			$ship->moveShip($dist, $bf->getMap());
+		}
+
+		else if ($option == "m") {
+			echo PHP_EOL;
+			$bf->updateMap();
+			$bf->displayMap();
+		}
+
+		else
+			break ;
+	}
+}
+
 
 function selectPPOption($shipIdx, $ship, $player) {
 	echo "\nYou've selected " . $ship . PHP_EOL . PHP_EOL;

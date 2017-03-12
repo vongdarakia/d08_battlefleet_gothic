@@ -22,6 +22,8 @@ abstract class Spaceship extends Object implements JsonSerializable {
 
 	protected $_hor = 1;
 	protected $_ver = 1;
+	protected $_stationary = 1;
+	protected $_movedDist = 0; 
 
 	protected $_shield = 0; // shield
 	protected $_extraSpeed = 0; // extra speed
@@ -123,6 +125,13 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		return $this->_owner;
 	}
 
+	public function setStationary( $status ) {
+		if ($status != 0 && $status != 1)
+			return false;
+		$this->_stationary = $status;
+		return true;
+	}
+
 	/*public function getXDir() {
 		if ($this->_direction == Battlefleet::N || $this->_direction == Battlefleet::E)
 			return 1;
@@ -220,37 +229,173 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		}
 	}
 
-	public function turnShip( $dir ) {
+	private function isMoveValid ( $map, $orient, $x, $y ) {
+		//Setup env
+		$direction = $this->_direction;
+		$x0 = $this->_x;
+		$y0 = $this->_y;
+		$hor = ($orient % 2) ? $this->_width : $this->_length;
+		$ver = ($orient % 2) ? $this->_length : $this->_width;
+
+		// Checking interval;
+		$x0 = $this->_x + ($orient % 3 == 0) * $hor;
+		$intx = $x + ($orient % 3 != 0) * $hor;
+		$y0 = $this->_y + (($orient + 1) % 3 != 0) * $ver;
+		$inty = $y + (($orient + 1) % 3 == 0) * $ver;
+
+		// Set the direction for collision of checking
+		if ($orient != 1)
+			$x_sign = -1;
+		else
+			$x_sign = 1;
+		if ($orient == 0)
+			$y_sign = -1;
+		else
+			$y_sign = 1;
+
+		// Check for collisions
+		if ($orient % 2 == 1) {
+			for ($c = $x0; ($c - $intx) * $x_sign > 0; $c += $x_sign) {
+				for ($r = $y0; ($r - $inty) * $y_sign > 0; $r += $y_sign) {
+					$map_val = $map[$r + $this->_y][$c + $this->_x];
+					if ($map_val instanceof Ship && $map_val != $this) {
+						$obstacle_hit = 0;
+						if ($orient == $this->direction) {
+														
+							$x = $c - ($orient == 1) ? $hor : 1;
+							$this->_movedDist += abs($this->_x - $x);
+							
+							// Check and take damage
+							if ($this->_movedDist > $this->_handle) {
+								$temp = $this->_hp;
+								$this->takeDamage($map_val->getHP());
+								$map_val->takeDamage($temp);
+							}
+
+							// Stop here
+							$this->_x = $x;
+						}		
+
+						// Set $map_val and this ship to stationary;
+						$this->_stationary = 1;
+						$map_val->setStationary(1);
+						return 0;
+					}
+					else if ($map_val == "0") {
+						$obstacle_hit = 1;
+					}
+				}
+				if ($obstacle_hit == 1)
+					return -1;
+			}
+		}
+		else {
+			for ($r = $y0; ($r - $inty) * $y_sign > 0; $r += $y_sign) {
+				for ($c = $x0; ($c - $intx) * $x_sign > 0; $c += $x_sign) {
+					$map_val = $map[$r + $this->_y][$c + $this->_x];
+					if ($map_val instanceof Ship && $map_val != $this) {
+						$obstacle_hit = 0;
+						if ($orient == $this->direction) {
+														
+							$y = $r - ($orient == 2) ? $ver : 1;
+							$this->_movedDist += abs($this->_y - $y);
+							
+							// Check and take damage
+							if ($this->_movedDist > $this->_handle) {
+								$temp = $this->_hp;
+								$this->takeDamage($map_val->getHP());
+								$map_val->takeDamage($temp);
+							}
+
+							// Stop here
+							$this->_y = $y;
+						}		
+
+						// Set $map_val and this ship to stationary;
+						$this->_stationary = 1;
+						$map_val->setStationary(1);
+						return 0;
+					}
+					else if ($map_val == "0") {
+						$obstacle_hit = 1;
+					}
+				}
+				if ($obstacle_hit == 1)
+					return -1;
+			}
+		}
+		
+		// Check map border collisions
+		if ($intx > MAP_WIDTH || $inty > MAP_LEN || $x0 < 0 || $y0 < 0)
+			return -1;
+
+		// Still flying =)
+		return 1;
+	}
+
+	public function turnShip( $dir, $map ) {
+		
+		if ($dir != 1 && $dir != -1)
+			return false;
+
 		if ($dir < 0) {
-			$this->_direction = ($this->_direction + 3) % 4;
+			$orient = ($this->_direction + 3) % 4;
 		}
 		else if ($dir > 0) {
-			$this->_direction = ($this->_direction + 1) % 4;
+			$orient = ($this->_direction + 1) % 4;
 		}
-		$this->_hor = ($this->_direction % 2) ? $this->_width : $this->_length;
-		$this->_ver = ($this->_direction % 2) ? $this->_length : $this->_width;
+
+		// Rotation around top left point (not around the center)
+		$x = $this->_x;
+		$y = $this->_y;
+
+		$valid = isMoveValid( $map, $orient, $x, $y );
+
+		if ($valid == 1 ) {
+			// Change ship attributes
+			$this->_x = $x;
+			$this->_y = $y;
+			$this->_direction = $orient;
+			$this->_hor = ($this->_direction % 2) ? $this->_width : $this->_length;
+			$this->_ver = ($this->_direction % 2) ? $this->_length : $this->_width;
+			return true;
+		}
+		else if ($valid == -1) {
+			// Ship destroyed
+			$this->_hp = -1;
+		}
+		return false;
 	}
 
 	public function moveShip( $d, $map ) {
-		if ($d < $this->_handle || $d > $this->_speed + $this->_extraSpeed) {
+		if (($this->_stationary == 0 && $d < $this->_handle) 
+			|| $this->_movedDist + $d > $this->_speed + $this->_extraSpeed) {
 			return false;
 		}
-		// $hor = $this->getHor();
-		// $ver = $this->getVer();
-		// for ($r = 0; $r < $ver; $r++) {
-		// 	for ($c = 0; $c < $hor; $c++) {
-		// 		$map[$r + $this->_y][$c + $this->_x] = null;
-		// 	}
-		// }
-		$this->_x += $d * ((2 - $this->_direction) % 2);
-		$this->_y += $d * (($this->_direction - 1) % 2);
-		// for ($r = 0; $r < $ver; $r++) {
-		// 	for ($c = 0; $c < $hor; $c++) {
-		// 		$map[$r + $this->_y][$c + $this->_x] = $this;
-		// 	}
-		// }
-		return true;
-		// returns false if error
+		else if ($this->_stationary == 1 && $d == 0)
+			return true;
+		$x = $this->_x + $d * ((2 - $this->_direction) % 2);
+		$y = $this->_y + $d * (($this->_direction - 1) % 2);
+
+		$valid = isMoveValid( $map, $this->_direction, $x, $y );
+
+		if ($valid == 1 ) {
+			// Change ship attributes
+			$this->_x = $x;
+			$this->_y = $y;
+			$this->_movedDist += $d;
+			if ($d != $this->_handle)
+				$this->_stationary = 0;
+			else
+				$this->_stationary = 1;
+			return true;
+		}
+		else if ($valid == -1) {
+			// Ship destroyed
+			$this->_hp = -1;
+		}
+		// In case of valid == 0 ship attributes are set within isMoveValid function
+		return false;
 	}
 
 	public function display() {

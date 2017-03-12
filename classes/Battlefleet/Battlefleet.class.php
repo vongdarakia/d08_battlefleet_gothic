@@ -27,17 +27,17 @@ class Battlefleet implements JsonSerializable {
 		$this->_playerTurn = 0;
 		$this->_gameSize = 500;
 		$this->_currentPlayer = new Player("Player 1");
-		$ship = new ImperialFrigate(0, 0);
+		// $ship = new ImperialFrigate(0, 0);
 		
 
 		$this->_players = array();
 		$this->_players[] = $this->_currentPlayer;
 		$this->_players[] = new Player("Player 2");
-		$ship2 = new ImperialFrigate(145, 99);
+		// $ship2 = new ImperialFrigate(145, 99);
 
 
-		$this->_players[0]->addShip($ship);
-		$this->_players[1]->addShip($ship2);
+		// $this->_players[0]->addShip($ship);
+		// $this->_players[1]->addShip($ship2);
 
 		$this->_map = array();
 
@@ -86,6 +86,10 @@ class Battlefleet implements JsonSerializable {
 
 	public function startGame() {
 
+	}
+
+	public function getCurrentPhase() {
+		return $this->_currentPhase;
 	}
 
 	public function getCurrentPlayer() {
@@ -159,7 +163,7 @@ class Battlefleet implements JsonSerializable {
 				else if ($this->_map[$i][$j]->getOwner() === null)
 					echo " ";
 				else
-					echo $this->_map[$i][$j]->getOwner()->getID();
+					echo $this->_map[$i][$j]->getID();
 			}
 			echo PHP_EOL;
 		}
