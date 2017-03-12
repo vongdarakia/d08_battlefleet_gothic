@@ -398,21 +398,17 @@ abstract class Spaceship extends Object implements JsonSerializable {
 			$this->_y = $y;
 			$this->_movedDist += $d;
 
-			if ($this->_stationary && $this->_movedDist > 0)
-				$this->_stationary = false;
-
 			if ($this->_movedDist != $this->_handle)
 				$this->_stationary = false;
 			else
 				$this->_stationary = true;
-			return true;
 		}
 		else if ($collided == -1) {
 			// Ship destroyed
 			$this->_hp = -1;
 		}
-		// In case of valid == 0 ship attributes are set within collided function
-		return false;
+		// In case of collided == 1 ship attributes are set within collided function
+		return true;
 	}
 
 	public function setMoved( $val ) {
