@@ -130,8 +130,11 @@ class Battlefleet implements JsonSerializable {
 
 		foreach ($this->_players as $player_key => $player) {
 			$ships = $player->getShips();
-			// echo "ships: " . count($ships) . " \n";
+			
 			foreach ($ships as $key => $ship) {
+				if ($ship->isDead()) {
+					continue;
+				}
 				$hor = $ship->getHor();
 				$ver = $ship->getVer();
 				$x = $ship->getX();
@@ -143,7 +146,6 @@ class Battlefleet implements JsonSerializable {
 				}
 			}
 		}
-		// echo "done";
 	}
 
 	public function getMap() {
@@ -203,20 +205,14 @@ class Battlefleet implements JsonSerializable {
 		return $val;
 	}
 
-	// public getData() {
-		
-	// }
-
 	public function jsonSerialize() {
-		$ships = $this->getAllShips();
         return (object)array(
         	"currentPhase" => $this->_currentPhase,
 			"playerTurn" => $this->_playerTurn,
 			"players" => $this->_players,
 			"gameSize" => $this->_gameSize,
 			"map" => $this->_map,
-			"currentPlayer" => $this->_currentPlayer,
-			"ships" => $ships
+			"currentPlayer" => $this->_currentPlayer
         );
     }
 }

@@ -41,7 +41,8 @@ class Player extends Object implements JsonSerializable {
 
 	public function removeShip( $key ) {
 		if (array_key_exists($key, $this->_ships)) {
-			unset($this->_ships[$key]);
+			// unset($this->_ships[$key]);
+			splice($key, 1, 1);
 		}
 	}
 

@@ -8,13 +8,14 @@
 	
 	if ($ship) {
 		$ship->turnShip($rot);
-		
+
 		if ($dist === 0) {
 			$ship->setMoved(false);
 			return ;
 		}
 		
 		$ship->moveShip($distance, $game->getMap());
+
 		$game->updateMap();
 		saveGame($game, $gameFile);
 		header("Content-Type: application/json");
