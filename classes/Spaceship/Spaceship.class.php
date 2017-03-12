@@ -20,15 +20,8 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	protected $_y = 0;
 	protected $_owner = null;
 
-	protected $_hor = 1;
-	protected $_ver = 1;
-	protected $_stationary = 1;
-	protected $_movedDist = 0; 
-
 	protected $_shield = 0; // shield
 	protected $_extraSpeed = 0; // extra speed
-	protected $_moveDecided = false;
-	protected $_stationary = true;
 
 	private static $_idCounter = 0;
 
@@ -39,11 +32,9 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	public function __construct( array $kwargs ) {
 		if (array_key_exists('length', $kwargs)) {
 			$this->_length = $kwargs['length'];
-			$this->_ver = $this->_length;
 		}
 		if (array_key_exists('width', $kwargs)) {
 			$this->_width = $kwargs['width'];
-			$this->_hor = $this->_width;
 		}
 		if (array_key_exists('hp', $kwargs)) {
 			$this->_hp = $kwargs['hp'];
@@ -116,34 +107,11 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	}
 
 	public function getHor() {
-		return $this->_hor;
+		return ($this->_direction % 2) ? $this->_width : $this->_length;
 	}
 
 	public function getVer() {
-		return $this->_ver;
-	}
-
-	public function getOwner() {
-		return $this->_owner;
-	}
-
-	public function isStationary() {
-		return $this->_stationary;
-	}
-
-	public function setStationary( $status ) {
-		if ($status != false && $status != true)
-			return false;
-		$this->_stationary = $status;
-		return true;
-	}
-
-	public function setDirection( $direction ) {
-		if ($direction >= 0 && $direction <= 3) {
-			$this->_direction = $direction;
-			return true;
-		}
-		return false;
+		return ($this->_direction % 2) ? $this->_length : $this->_width;
 	}
 
 	/*public function getXDir() {
@@ -178,8 +146,6 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		return $this->_y;
 	}*/
 
-	
-
 	// todo: more get functions
 
 	public function spendPP( $speed, $shield, $weapons, $repair ) {
@@ -204,11 +170,9 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		}
 	}
 
-	public function resetStats() {
+	public function resetPP() {
 		$this->_extraSpeed = 0;
 		$this->_shield = 0;
-		$this->_movedDist = 0;
-		$this->_moveDecided = false;
 		foreach ($this->_weapons as $i => $weapon) {
 			$this->_weapons[$i]->resetCharge();
 		}
@@ -238,14 +202,6 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	// 	}
 	// }
 
-	public function setMoveDecided( $val ) {
-		if ($val == 0 || $val == 1) {
-			$this->_moveDecided = $val;
-			return true;
-		}
-		return false;
-	}
-
 	public function setOwner( $owner ) {
 		if ($owner instanceof Player) {
 			$this->_owner = $owner;
@@ -255,172 +211,35 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		}
 	}
 
-	private function collided ( $map, $orient, $x, $y ) {
-		//Setup env
-		$direction = $this->_direction;
-		$x0 = $this->_x;
-		$y0 = $this->_y;
-		$hor = ($orient % 2) ? $this->_width : $this->_length;
-		$ver = ($orient % 2) ? $this->_length : $this->_width;
-
-		// Checking interval;
-		$x0 = $this->_x + ($orient % 3 == 0) * $hor;
-		$intx = $x + ($orient % 3 != 0) * $hor;
-		$y0 = $this->_y + (($orient + 1) % 3 != 0) * $ver;
-		$inty = $y + (($orient + 1) % 3 == 0) * $ver;
-
-		// Set the direction for collision of checking
-		$x_sign = ($orient != 1) ? -1 : 1;
-		$y_sign = ($orient == 0) ? -1 : 1;
-
-		// Check for collisions
-		if ($orient % 2 == 1) {
-			for ($c = $x0; ($c - $intx) * $x_sign > 0; $c += $x_sign) {
-				for ($r = $y0; ($r - $inty) * $y_sign > 0; $r += $y_sign) {
-					$map_val = $map[$r + $this->_y][$c + $this->_x];
-					if ($map_val instanceof Ship && $map_val != $this) {
-						$obstacle_hit = 0;
-						if ($orient == $this->direction) {
-														
-							$x = $c - ($orient == 1) ? $hor : 1;
-							$this->_movedDist += abs($this->_x - $x);
-							
-							// Check and take damage
-							if ($this->_movedDist > $this->_handle) {
-								$temp = $this->_hp;
-								$this->takeDamage($map_val->getHP());
-								$map_val->takeDamage($temp);
-							}
-
-							// Stop here
-							$this->_x = $x;
-						}		
-
-						// Set $map_val and this ship to stationary;
-						$this->_stationary = 1;
-						$map_val->setStationary(1);
-						return 1;
-					}
-					else if ($map_val == "0") {
-						$obstacle_hit = 1;
-					}
-				}
-				if ($obstacle_hit == 1)
-					return -1;
-			}
-		}
-		else {
-			for ($r = $y0; ($r - $inty) * $y_sign > 0; $r += $y_sign) {
-				for ($c = $x0; ($c - $intx) * $x_sign > 0; $c += $x_sign) {
-					$map_val = $map[$r + $this->_y][$c + $this->_x];
-					if ($map_val instanceof Ship && $map_val != $this) {
-						$obstacle_hit = 0;
-						if ($orient == $this->direction) {
-														
-							$y = $r - ($orient == 2) ? $ver : 1;
-							$this->_movedDist += abs($this->_y - $y);
-							
-							// Check and take damage
-							if ($this->_movedDist > $this->_handle) {
-								$temp = $this->_hp;
-								$this->takeDamage($map_val->getHP());
-								$map_val->takeDamage($temp);
-							}
-
-							// Stop here
-							$this->_y = $y;
-						}		
-
-						// Set $map_val and this ship to stationary;
-						$this->_stationary = 1;
-						$map_val->setStationary(1);
-						return 1;
-					}
-					else if ($map_val == "0") {
-						$obstacle_hit = 1;
-					}
-				}
-				if ($obstacle_hit == 1)
-					return -1;
-			}
-		}
-		
-		// Check map border collisions
-		if ($intx > Battlefleet::MAP_WIDTH || $inty > Battlefleet::MAP_LEN || $x0 < 0 || $y0 < 0)
-			return -1;
-
-		// Still flying =)
-		return 0;
-	}
-
-	public function turnShip( $rot, $map ) {
-		
-		if ($rot != 1 && $rot != -1)
-			return false;
-		if ($rot == 0)
-			return true;
-
-		if ($rot < 0) {
-			$orient = ($this->_direction + 3) % 4;
+	public function turnShip( $dir ) {
+		if ($dir < 0) {
+			$this->_direction = ($this->_direction + 3) % 4;
 		}
 		else if ($dir > 0) {
-			$orient = ($this->_direction + 1) % 4;
+			$this->_direction = ($this->_direction + 1) % 4;
 		}
-
-		// Rotation around top left point (not around the center)
-		$x = $this->_x;
-		$y = $this->_y;
-
-		$collided = $this->collided( $map, $orient, $x, $y );
-
-		if ($collided == 0) {
-			// Change ship attributes
-			$this->_x = $x;
-			$this->_y = $y;
-			$this->_direction = $orient;
-			$this->_hor = ($this->_direction % 2) ? $this->_width : $this->_length;
-			$this->_ver = ($this->_direction % 2) ? $this->_length : $this->_width;
-		}
-		else if ($collided == -1) {
-			// Ship destroyed
-			$this->_hp = -1;
-		}
-		return true;
 	}
 
 	public function moveShip( $d, $map ) {
-		if ((!$this->_stationary && $this->_movedDist + $d < $this->_handle) 
-			|| $this->_movedDist + $d > $this->_speed + $this->_extraSpeed) {
+		if ($d < $this->_handle || $d > $this->_speed + $this->_extraSpeed) {
 			return false;
 		}
-		else if ($this->_stationary && $d == 0)
-			return true;
-		$x = $this->_x + $d * ((2 - $this->_direction) % 2);
-		$y = $this->_y + $d * (($this->_direction - 1) % 2);
-
-		$collided = $this->collided( $map, $this->_direction, $x, $y);
-
-		if ($collided == 0) {
-			// Change ship attributes
-			$this->_x = $x;
-			$this->_y = $y;
-			$this->_movedDist += $d;
-
-			if ($this->_movedDist != $this->_handle)
-				$this->_stationary = false;
-			else
-				$this->_stationary = true;
-		}
-		else if ($collided == -1) {
-			// Ship destroyed
-			$this->_hp = -1;
-		}
-		// In case of collided == 1 ship attributes are set within collided function
+		// $hor = $this->getHor();
+		// $ver = $this->getVer();
+		// for ($r = 0; $r < $ver; $r++) {
+		// 	for ($c = 0; $c < $hor; $c++) {
+		// 		$map[$r + $this->_y][$c + $this->_x] = null;
+		// 	}
+		// }
+		$this->_x += $d * ((2 - $this->_direction) % 2);
+		$this->_y += $d * (($this->_direction - 1) % 2);
+		// for ($r = 0; $r < $ver; $r++) {
+		// 	for ($c = 0; $c < $hor; $c++) {
+		// 		$map[$r + $this->_y][$c + $this->_x] = $this;
+		// 	}
+		// }
 		return true;
-	}
-
-	public function setMoved( $val ) {
-		$this->_moved = $val;
+		// returns false if error
 	}
 
 	public function display() {
@@ -432,8 +251,6 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		echo "\n\tcost: " . $this->_cost;
 		echo "\n\tlength: " . $this->_length;
 		echo "\n\twidth: " . $this->_width;
-		echo "\n\thorizontal: " . $this->_hor;
-		echo "\n\tvertical: " . $this->_ver;
 		echo "\n\thull: " . $this->_hp;
 		echo "\n\tspeed: " . $this->_speed;
 		echo "\n\thandle: " . $this->_handle;
@@ -448,40 +265,29 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		}
 	}
 
-	public function getWeaponByID($weaponID) {
-		foreach ($this->_weapons as $weapon) {
-			if ($weapon->getID() == $weaponID)
-				return $weapon;
-		}
-		return null;
-	}
-
 	public function getData() {
 		print_r($this);
 	}
 
 	public function jsonSerialize() {
         return (object)array(
-        	"_id" 		=> $this->_id,
-        	"length" 	=> $this->_length,
-			"width" 	=> $this->_width,
-			"hp" 		=> $this->_hp,
-			"maxhp" 	=> $this->_maxhp,
-			"pp"		=> $this->_pp,
-			// "speed" 	=> $this->_speed,
-			// "handle" => $this->_handle,
-			"weapons"	=> $this->_weapons,
-			"direction"	=> $this->_direction,
-			"cost" 		=> $this->_cost,
-			"name" 		=> $this->_name,
-			"x" 		=> $this->_x,
-			"y" 		=> $this->_y,
-			// "hor" 		=> $this->_hor,
-			// "ver"		=> $this->_ver,
-			"shield" 	=> $this->_shield,
-			// "extraSpeed" => $this->_extraSpeed,
-			"maxSpeed" 	=> ($this->_extraSpeed + $this->_speed),
-			"minSpeed" 	=> ($this->_stationary ? 0 : $this->_handle)
+        	"_id" => $this->_id,
+        	"length" => $this->_length,
+			"width" => $this->_width,
+			"hp" => $this->_hp,
+			"maxhp" => $this->_maxhp,
+			"pp" => $this->_pp,
+			"speed" => $this->_speed,
+			"handle" => $this->_handle,
+			"weapons" => $this->_weapons,
+			"direction" => $this->_direction,
+			"cost" => $this->_cost,
+			"name" => $this->_name,
+			"x" => $this->_x,
+			"y" => $this->_y,
+			"owner" => $this->_owner,
+			"shield" => $this->_shield,
+			"extraSpeed" => $this->_extraSpeed
         );
     }
 }
