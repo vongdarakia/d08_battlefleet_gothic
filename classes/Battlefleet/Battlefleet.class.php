@@ -16,7 +16,7 @@ class Battlefleet implements JsonSerializable {
 	public static $verbose = false;
 
 	private $_currentPhase;
-	private $_playerTurn;
+	private $_gameTurn;
 	private $_players;
 	private $_gameSize;
 	private $_map;
@@ -24,7 +24,7 @@ class Battlefleet implements JsonSerializable {
 
 	public function __construct() {
 		$this->_currentPhase = 0;
-		$this->_playerTurn = 0;
+		$this->_gameTurn = 0;
 		$this->_gameSize = 500;
 		$this->_currentPlayer = new Player("Player 1");
 		$ship = new ImperialFrigate(0, 0);
@@ -60,32 +60,49 @@ class Battlefleet implements JsonSerializable {
 		return "Battlefleet";
 	}
 
-	public function startPhase() {
-		if (self::$verbose)
-			print("Starting current phase.\n");
-		switch ($this->_currentPhase) {
-			case 0:
-				if (Battlefleet::$verbose)
-					print("Order phase started.\n");
-				break;
-			case 1:
-				if (Battlefleet::$verbose)
-					print("Movement phase started.\n");
-				break;
-			case 2:
-				if (Battlefleet::$verbose)
-					print("Shooting phase started.\n");
-				break;
-			default:
-				echo "End Game" . PHP_EOL;
-		}
-	}
+	// public function startPhase() {
+	// 	if (self::$verbose)
+	// 		print("Starting current phase.\n");
+	// 	switch ($this->_currentPhase) {
+	// 		case 0:
+	// 			if (Battlefleet::$verbose)
+	// 				print("Order phase started.\n");
+	// 			// Reset everything.
+	// 			break;
+	// 		case 1:
+	// 			if (Battlefleet::$verbose)
+	// 				print("Movement phase started.\n");
+
+	// 			break;
+	// 		case 2:
+	// 			if (Battlefleet::$verbose)
+	// 				print("Shooting phase started.\n");
+	// 			break;
+	// 		default:
+	// 			echo "End Game" . PHP_EOL;
+	// 	}
+	// }
 
 	public function nextPhase() {
 		$this->_currentPhase = ($this->_currentPhase + 1) % 3;
+
+		// Reset all ships if starting first phase.
+		if ($this->_currentPhase == 0) {
+			$ships = $this->getAllShips();
+			foreach ($ships as $key => $ship) {
+				$ship->resetPP();
+			}
+		}
 	}
 
 	public function endTurn() {
+		
+		$this->_gameTurn++;
+
+		$this->_currentPlayer = $this->_players[$this->_gameTurn % count($this->_players)];
+		if ($this->_gameTurn % count($this->_players) == 0) {
+			$this->nextPhase();
+		}
 
 	}
 
@@ -209,7 +226,7 @@ class Battlefleet implements JsonSerializable {
 	public function jsonSerialize() {
         return (object)array(
         	"currentPhase" => $this->_currentPhase,
-			"playerTurn" => $this->_playerTurn,
+			"playerTurn" => $this->_gameTurn,
 			"players" => $this->_players,
 			"gameSize" => $this->_gameSize,
 			"map" => $this->_map,

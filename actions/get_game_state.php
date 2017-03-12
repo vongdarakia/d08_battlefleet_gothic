@@ -1,16 +1,18 @@
 <?php 
-	error_reporting(E_ALL);
-	ini_set('display_errors', 1);
-	date_default_timezone_set('America/Los_Angeles');
-	require_once __DIR__ . '/../classes/Battlefleet/Battlefleet.class.php';
-	require_once __DIR__ . '/../classes/Battlefleet/Object.class.php';
-	require_once __DIR__ . '/../classes/Battlefleet/Player.class.php';
-	require_once __DIR__ . '/../classes/Spaceship/Spaceship.class.php';
-	require_once __DIR__ . '/../classes/Spaceship/Faction/Imperial/ImperialFrigate.class.php';
-	require_once __DIR__ . '/../classes/Weapon/NauticalLance.class.php';
-	require_once __DIR__ . '/../classes/Weapon/Weapon.class.php';
-	require_once 'get_game.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+date_default_timezone_set('America/Los_Angeles');
 
-	header("Content-Type: application/json");
-	echo json_encode($game);
+// Need to require these so that these classes can get rendered for the game object.
+require_once __DIR__ . '/../classes/Battlefleet/Battlefleet.class.php';
+require_once __DIR__ . '/../classes/Battlefleet/Object.class.php';
+require_once __DIR__ . '/../classes/Battlefleet/Player.class.php';
+require_once __DIR__ . '/../classes/Spaceship/Spaceship.class.php';
+require_once __DIR__ . '/../classes/Spaceship/Faction/Imperial/ImperialFrigate.class.php';
+require_once __DIR__ . '/../classes/Weapon/NauticalLance.class.php';
+require_once __DIR__ . '/../classes/Weapon/Weapon.class.php';
+require_once 'get_game.php';
+
+header("Content-Type: application/json");
+echo json_encode($game);
 ?>

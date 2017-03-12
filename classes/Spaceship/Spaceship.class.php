@@ -25,7 +25,9 @@ abstract class Spaceship extends Object implements JsonSerializable {
 
 	protected $_shield = 0; // shield
 	protected $_extraSpeed = 0; // extra speed
-	protected $_moved = 0;
+	protected $_moveDecided = 0;
+	protected $_movedLastTurn = 0;
+	protected $_stationary = 1;
 
 	private static $_idCounter = 0;
 
@@ -191,6 +193,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	public function resetPP() {
 		$this->_extraSpeed = 0;
 		$this->_shield = 0;
+		$this->
 		foreach ($this->_weapons as $i => $weapon) {
 			$this->_weapons[$i]->resetCharge();
 		}
@@ -290,6 +293,14 @@ abstract class Spaceship extends Object implements JsonSerializable {
 			$weapon->display();
 			echo PHP_EOL;
 		}
+	}
+
+	public function getWeaponByID($weaponID) {
+		foreach ($this->_weapons as $weapon) {
+			if ($weapon->getID() == $weaponID)
+				return $weapon;
+		}
+		return null;
 	}
 
 	public function getData() {
