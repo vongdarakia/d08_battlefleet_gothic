@@ -156,6 +156,14 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		return $this->_y;
 	}*/
 
+	public function setDirection( $direction ) {
+		if ($direction >= 0 && $direction <= 3) {
+			$this->_direction = $direction;
+			return true;
+		}
+		return false;
+	}
+
 	// todo: more get functions
 
 	public function spendPP( $speed, $shield, $weapons, $repair ) {
@@ -307,7 +315,8 @@ abstract class Spaceship extends Object implements JsonSerializable {
 			"hor" => $this->_hor,
 			"ver" => $this->_ver,
 			"shield" => $this->_shield,
-			"extraSpeed" => $this->_extraSpeed
+			"extraSpeed" => $this->_extraSpeed,
+			"maxSpeed" => $this->_
         );
     }
 }

@@ -33,7 +33,8 @@ class Battlefleet implements JsonSerializable {
 		$this->_players = array();
 		$this->_players[] = $this->_currentPlayer;
 		$this->_players[] = new Player("Player 2");
-		$ship2 = new ImperialFrigate(145, 99);
+		$ship2 = new ImperialFrigate(146, 99);
+		$ship2->setDirection();
 
 
 		$this->_players[0]->addShip($ship);
@@ -84,7 +85,7 @@ class Battlefleet implements JsonSerializable {
 		$this->_currentPhase = ($this->_currentPhase + 1) % 3;
 	}
 
-	public function startGame() {
+	public function endTurn() {
 
 	}
 
