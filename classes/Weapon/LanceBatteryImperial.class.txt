@@ -1,0 +1,18 @@
+
+<- Imperial Lance Battery --------------------------------------------------------------
+The LanceBatteryImperial class is a type of Weapon.
+
+Usage:
+new LanceBatteryImperial( $owner, $ship );
+$owner is the player that owns the weapon.
+$ship is the ship that controls the weapon.
+By default, both are set to null.
+
+Charges: 0
+Short Range: 1 to 30 cells
+Middle Range: 31 to 60 cells
+Long Range: 61 to 90 cells
+Effect Zone: A straight line or column 1 cell wide that start from the front of the
+ship.
+https://www.bfgawiki.com/wiki/Lance_Battery_(Imperial_Navy)
+-------------------------------------------------------------- LanceBatteryImperial ->
