@@ -3,6 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 date_default_timezone_set('America/Los_Angeles');
+require_once './actions/game_save.php';
 require_once './classes/Battlefleet/Battlefleet.class.php';
 require_once './classes/Spaceship/Faction/Imperial/ImperialFrigate.class.php';
 require_once './classes/Weapon/NauticalLance.class.php';
@@ -27,6 +28,8 @@ $ship->getWeapons()[0]->shoot($ship, $bf->getMap());
 echo $ship->getHP() . '  ' . $ship2->getHP() . PHP_EOL;
 $bf->updateShips();
 $bf->updateMap();
+
+saveGame($bf, './private/game');
 
 $bf->startPhase();
 $ship2->display();

@@ -62,8 +62,6 @@ d3.selectAll(".row:first-child .square").style("stroke-width", "0.5");
 d3.selectAll(".square:nth-child(10n)").style("stroke-width", "0.5");
 d3.selectAll(".square:first-child").style("stroke-width", "0.5");
 
-// d3.selectAll(".row:nth-child(5) .square:nth-child(11)").style("fill", "#2C93E8");
-
 $(document).ready(function(){
     $("#post-data").click(function(e) {
         e.preventDefault();
