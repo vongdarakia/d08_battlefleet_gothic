@@ -1,0 +1,22 @@
+
+<- MacroCanon -----------------------------------------------------------------
+The MacroCanon class is a type of Weapon.
+
+Usage:
+new MacroCanon( $ship, $owner );
+$owner is the player that owns the weapon.
+$ship is the ship that controls the weapon.
+By default, both are set to null.
+
+Charges: 0
+Short Range: 1 to 10 cells
+Middle Range: 11 to 20 cells
+Long Range: 21 to 30 cells
+Effect Zone: A straing line or columns of 1 cell wide that start from the front of
+the ship.
+Special: The explosion of the amo reaches multiple boxes. The center of the
+explosion is located on the closest target’s hit cell from the shooter. The
+explosion covers "a circle" of 9 cells.
+Each target covered, even partially by the "circle" receives a number of damage
+points matching the dice throw. Useful to vaporize the fleet of fast little scouts.
+----------------------------------------------------------------- MacroCanon ->

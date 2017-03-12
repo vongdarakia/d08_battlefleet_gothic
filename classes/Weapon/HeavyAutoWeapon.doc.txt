@@ -3,12 +3,13 @@
 The HeavyAutoWeapon class is a type of Weapon.
 
 Usage:
-new HeavyAutoWeapon( $owner, $ship );
+new HeavyAutoWeapon( $ship, $owner );
 $owner is the player that owns the weapon.
 $ship is the ship that controls the weapon.
 By default, both are set to null.
 
 Charges: 5
+Damage: 2
 Short Range: 1 to 3 cells
 Middle Range: 4 to 7 cells
 Long Range: 8 to 10 cells
