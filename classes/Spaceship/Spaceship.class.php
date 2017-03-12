@@ -25,6 +25,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 
 	protected $_shield = 0; // shield
 	protected $_extraSpeed = 0; // extra speed
+	protected $_moved = 0;
 
 	private static $_idCounter = 0;
 
@@ -249,8 +250,13 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		// 		$map[$r + $this->_y][$c + $this->_x] = $this;
 		// 	}
 		// }
+		$this->_moved = true;
 		return true;
 		// returns false if error
+	}
+
+	public function setMoved( $val ) {
+		$this->_moved = $val;
 	}
 
 	public function display() {

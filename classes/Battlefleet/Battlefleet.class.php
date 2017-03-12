@@ -108,15 +108,9 @@ class Battlefleet implements JsonSerializable {
 	public function updateShips() {
 		foreach ($this->_players as $player) {
 			$pShips = $player->getShips();
-<<<<<<< HEAD
 			foreach ($pShips as $key => $ship) {
 				if ($ship->isDead()) {
 					$player->removeShip($key);
-=======
-			foreach ($pShips as $ship) {
-				if ($ship->isDead()) {
-					$player->removeShip($ship);
->>>>>>> 9a0b856a2c4b16078a144bbffdd65c6fbee62564
 				}
 			}
 		}
@@ -126,11 +120,7 @@ class Battlefleet implements JsonSerializable {
 	public function clearMap() {
 		for ($i=0; $i < Battlefleet::MAP_LEN; $i++) {
 			for ($j=0; $j < Battlefleet::MAP_WIDTH; $j++) { 
-<<<<<<< HEAD
 				$this->_map[$i][$j] = null;
-=======
-				$cols[$i][$j] = null;
->>>>>>> 9a0b856a2c4b16078a144bbffdd65c6fbee62564
 			}
 		}
 	}
@@ -148,11 +138,7 @@ class Battlefleet implements JsonSerializable {
 				$y = $ship->getY();
 				for ($r = 0; $r < $ver; $r++) { 
 					for ($c = 0; $c < $hor; $c++) { 
-<<<<<<< HEAD
 						$this->_map[$y + $r][$x + $c] = $ship;
-=======
-						$this->_map[$r + $y][$c + $x] = $ship;
->>>>>>> 9a0b856a2c4b16078a144bbffdd65c6fbee62564
 					}
 				}
 			}
@@ -170,15 +156,10 @@ class Battlefleet implements JsonSerializable {
 			for ($j=0; $j < Battlefleet::MAP_WIDTH; $j++) { 
 				if ($this->_map[$i][$j] === null)
 					echo ".";
-<<<<<<< HEAD
 				else if ($this->_map[$i][$j]->getOwner() === null)
 					echo " ";
 				else
 					echo $this->_map[$i][$j]->getOwner()->getID();
-=======
-				else
-					echo $this->_map[$i][$j]->getID();
->>>>>>> 9a0b856a2c4b16078a144bbffdd65c6fbee62564
 			}
 			echo PHP_EOL;
 		}
