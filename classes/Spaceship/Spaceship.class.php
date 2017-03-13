@@ -372,8 +372,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	}
 
 	public function turnShip( $rot, $map ) {
-		
-		if ($rot != 1 && $rot != -1)
+		if (($rot != 1 && $rot != -1) || $this->_moveDecided)
 			return false;
 		if ($rot == 0)
 			return true;
@@ -403,6 +402,9 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		else if ($collided == -1) {
 			// Ship destroyed
 			$this->_hp = -1;
+		}
+		else {
+			$this->_moveDecided = true;
 		}
 		return true;
 	}
