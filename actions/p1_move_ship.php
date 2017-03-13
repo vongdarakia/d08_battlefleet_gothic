@@ -1,11 +1,11 @@
 <?php 
 require_once 'get_game.php';
 
-$playerID = isset($_POST['player_id']) ? intval($_POST['player_id']) : 0;
-playerCheck($game, $playerID);
+// $playerID = isset($_GET['player_id']) ? intval($_GET['player_id']) : 0;
+// playerCheck($game, $playerID);
 
-$dist = isset($_POST['distance']) ? intval($_POST['distance']) : 0; 
-$shipID = isset($_POST['ship_id']) ? intval($_POST['ship_id']) : 0; 
+$dist = isset($_GET['distance']) ? intval($_GET['distance']) : 0; 
+$shipID = isset($_GET['ship_id']) ? intval($_POST['ship_id']) : 0; 
 $ship = $game->getShipByID($shipID);
 
 if ($ship) {
