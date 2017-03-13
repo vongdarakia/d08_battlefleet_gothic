@@ -92,37 +92,6 @@ abstract class Weapon extends Object implements JsonSerializable {
 	// This is a basic shoot function for weapons that shoot one straight line
 	// from the front of the ship.
 	// It should be changed for weapons that have different effects.
-	// public function shoot( $map ) {
-	// 	$charge = $this->_charge + $this->_extraCharge;
-	// 	$roll = Battlefleet::rollDice($charge);
-	// 	$longDmg = $roll[6];
-	// 	$middleDmg = $longDmg + $roll[5];
-	// 	$shortDmg = $middleDmg + $roll[4];
-	// 	$hor = $this->_ship->getHor();
-	// 	$ver = $this->_ship->getVer();
-	// 	$dirx = (2 - $this->_ship->getDirection()) % 2;
-	// 	$diry = ($this->_ship->getDirection() - 1) % 2;
-	// 	$c = $this->_ship->getX() + floor((($dirx + 1) * ($hor - 1)) / 2);
-	// 	$r = $this->_ship->getY() + floor((($diry + 1) * ($ver - 1)) / 2);
-	// 	// not technically correct, just an approximation for the center of the ship
-	// 	for ($dist = 1; $dist <= $this->_long; $dist++) {
-	// 		$c += $dirx;
-	// 		$r += $diry;
-	// 		if (Battlefleet::inMap($r, $c) && $map[$r][$c] !== null) {
-	// 			if ($dist <= $this->_short) {
-	// 				$map[$r][$c]->takeDamage($shortDmg * $this->_damage);
-	// 			}
-	// 			else if ($dist <= $this->_middle) {
-	// 				$map[$r][$c]->takeDamage($middleDmg * $this->_damage);
-	// 			}
-	// 			else {
-	// 				$map[$r][$c]->takeDamage($longDmg * $this->_damage);
-	// 			}
-	// 			return [$r, $c]; // Used for MacroCanon
-	// 		}
-	// 	}
-	// 	return null;
-	// }
 
 	public function shoot( $map, $disp=0 ) {
 		$charge = $this->_charge + $this->_extraCharge;
