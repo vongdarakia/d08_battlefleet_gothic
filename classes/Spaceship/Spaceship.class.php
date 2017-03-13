@@ -29,7 +29,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	protected $_moveDecided = false;
 	protected $_stationary = true;
 
-	private static $_idCounter = 0;
+	private static $_idCounter = 1;
 
 	public static function doc() {
 		return file_get_contents('./Spaceship.doc.txt');
@@ -411,7 +411,8 @@ abstract class Spaceship extends Object implements JsonSerializable {
 
 	public function moveShip( $d, $map ) {
 		if ((!$this->_stationary && $this->_movedDist + $d < $this->_handle) 
-			|| $this->_movedDist + $d > $this->_speed + $this->_extraSpeed) {
+			|| $this->_movedDist + $d > $this->_speed + $this->_extraSpeed
+			|| $this->_moveDecided) {
 			return false;
 		}
 		else if ($this->_stationary && $d == 0)

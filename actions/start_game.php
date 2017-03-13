@@ -13,7 +13,7 @@ require_once __DIR__ . '/../classes/Weapon/NauticalLance.class.php';
 require_once __DIR__ . '/../classes/Weapon/Weapon.class.php';
 require_once 'game_save.php';
 
-$bf = new Battlefleet();	
+$bf = new Battlefleet();
 saveGame($bf, '../private/game');
 header("Content-Type: application/json");
 echo json_encode($bf);

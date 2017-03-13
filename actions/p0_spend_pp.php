@@ -5,6 +5,7 @@ $ppSpeed = intval($_POST['speed']);
 $ppShield = intval($_POST['shield']);
 $ppWeapon = intval($_POST['weapon']);
 $ppRepair = intval($_POST['repair']);
+$playerId = intval($_POST['player_id']);
 
 $ship = $game->getShipById(intval($_POST['ship_id']));
 if ($ship) {
