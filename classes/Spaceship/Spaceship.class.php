@@ -27,6 +27,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	protected $_shield = 0; // shield
 	protected $_extraSpeed = 0; // extra speed
 	protected $_moveDecided = false;
+	protected $_turnAllowed = true;
 	protected $_stationary = true;
 
 	private static $_idCounter = 1;
@@ -216,6 +217,10 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		$this->_shield = 0;
 		$this->_movedDist = 0;
 		$this->_moveDecided = false;
+		if ($this->_stationary == true)
+			$this->_turnAllowed = true;
+		else
+			$this->_turnAllowed = false;
 		foreach ($this->_weapons as $i => $weapon) {
 			$this->_weapons[$i]->resetCharge();
 		}
@@ -373,10 +378,10 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	}
 
 	public function turnShip( $rot, $map ) {
-		if (($rot != 1 && $rot != -1) || $this->_moveDecided)
-			return false;
 		if ($rot == 0)
 			return true;
+		if (($rot != 1 && $rot != -1) || $this->_moveDecided || !($this->_turnAllowed))
+			return false;
 
 		$orient = $this->_direction;
 		if ($rot < 0) {
@@ -407,6 +412,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		else {
 			$this->_moveDecided = true;
 		}
+		$this->_turnAllowed = false;
 		return true;
 	}
 
@@ -428,7 +434,8 @@ abstract class Spaceship extends Object implements JsonSerializable {
 			$this->_x = $x;
 			$this->_y = $y;
 			$this->_movedDist += $d;
-
+			if ($d >= $this->_handle)
+				$this->_turnAllowed = true;
 			if ($this->_movedDist != $this->_handle)
 				$this->_stationary = false;
 			else
