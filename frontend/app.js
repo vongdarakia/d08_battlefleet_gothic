@@ -17,10 +17,7 @@ app.controller('myCtrl', ['$scope', '$http', '$state', function($scope, $http, $
     };
 
     function updateGame(response) {
-        d3.selectAll(".row:nth-child(10n) .square").style("stroke-width", "0.5");
-        d3.selectAll(".row:first-child .square").style("stroke-width", "0.5");
-        d3.selectAll(".square:nth-child(10n)").style("stroke-width", "0.5");
-        d3.selectAll(".square:first-child").style("stroke-width", "0.5");
+        d3.selectAll(".row .square").style("fill", "white");
         $scope.gameState = response.data;
         var players = $scope.gameState.players;
         for (var p = 0; p < $scope.gameState.players.length; p++) {
@@ -62,7 +59,7 @@ app.controller('myCtrl', ['$scope', '$http', '$state', function($scope, $http, $
         $scope.p2 = {
             minSpeed : $scope.gameState.players[$scope.currentPlayer].ships[$scope.currentShip].minSpeed,
             maxSpeed : $scope.gameState.players[$scope.currentPlayer].ships[$scope.currentShip].maxSpeed,
-            distance : 0,
+            distance : $scope.gameState.players[$scope.currentPlayer].ships[$scope.currentShip].minSpeed,
             turn : 0,
             adddist : function(n) {
                 if (( n > 0 && $scope.p2.distance < $scope.p2.maxSpeed) || ( n < 0 && $scope.p2.distance > $scope.p2.minSpeed)) {
@@ -119,10 +116,9 @@ app.controller('myCtrl', ['$scope', '$http', '$state', function($scope, $http, $
         }).then(function successCallback(response) {
             console.log(response);
             updateGame(response);
-            $scope.currentPhase = 1.5;
         }, function errorCallback(response) {
             console.log("error");
-            console.log(response);
+            $scope.p2.error = response.data;
         });
     };
 
@@ -142,7 +138,7 @@ app.controller('myCtrl', ['$scope', '$http', '$state', function($scope, $http, $
             updateGame(response);
         }, function errorCallback(response) {
             console.log("error");
-            console.log(response);
+            $scope.p2.error = response.data;
         });
     };
 
@@ -158,7 +154,7 @@ app.controller('myCtrl', ['$scope', '$http', '$state', function($scope, $http, $
         } else {
             $scope.currentPlayer = 0;
             $scope.currentShip = 0;
-            $scope.currentPhase = 3;
+            $scope.currentPhase = 1;
         };
     };
 }]);

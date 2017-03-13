@@ -10,7 +10,7 @@ class MacroCanon extends Weapon {
 		parent::__construct(array('charge' => 0, 'damage' => 1, 'short' => 10, 'middle' => 20, 'long' => 30, 'owner' => $owner, 'ship' => $ship));
 	}
 
-	public function shoot( $map ) {
+	public function shoot( $map, $disp = 0 ) {
 		$hit = parent::shoot($map);
  		if ($hit === null) {
  			return $hit;
