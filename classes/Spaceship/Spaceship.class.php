@@ -29,7 +29,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	protected $_moveDecided = false;
 	protected $_stationary = true;
 
-	private static $_idCounter = 0;
+	private static $_idCounter = 1;
 
 	public static function doc() {
 		return file_get_contents('./Spaceship.doc.txt');
@@ -192,7 +192,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	public function spendPP( $speed, $shield, $weapons, $repair ) {
 		$pp = $speed + $shield + $repair;
 
-		foreach ($weapon as $key => $amount) {
+		foreach ($weapons as $key => $amount) {
 			$pp += $amount;
 		}
 		if ($pp > $this->_pp) { 
@@ -373,8 +373,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	}
 
 	public function turnShip( $rot, $map ) {
-		
-		if ($rot != 1 && $rot != -1)
+		if (($rot != 1 && $rot != -1) || $this->_moveDecided)
 			return false;
 		if ($rot == 0)
 			return true;
@@ -405,12 +404,16 @@ abstract class Spaceship extends Object implements JsonSerializable {
 			// Ship destroyed
 			$this->_hp = -1;
 		}
+		else {
+			$this->_moveDecided = true;
+		}
 		return true;
 	}
 
 	public function moveShip( $d, $map ) {
 		if ((!$this->_stationary && $this->_movedDist + $d < $this->_handle) 
-			|| $this->_movedDist + $d > $this->_speed + $this->_extraSpeed) {
+			|| $this->_movedDist + $d > $this->_speed + $this->_extraSpeed
+			|| $this->_moveDecided) {
 			return false;
 		}
 		else if ($this->_stationary && $d == 0)
@@ -489,7 +492,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 			"maxhp" 	=> $this->_maxhp,
 			"pp"		=> $this->_pp,
 			"speed" 	=> $this->_speed,
-			"handle" => $this->_handle,
+			"handle" 	=> $this->_handle,
 			"weapons"	=> $this->_weapons,
 			"direction"	=> $this->_direction,
 			"cost" 		=> $this->_cost,

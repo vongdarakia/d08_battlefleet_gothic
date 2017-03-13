@@ -7,7 +7,7 @@ class Player extends Object implements JsonSerializable {
 	private $_ships;
 	private $_playerName;
 
-	private static $_idCounter = 0;
+	private static $_idCounter = 1;
 
 	public function __construct( $playerName ) {
 		$this->_ships = array();
@@ -37,6 +37,10 @@ class Player extends Object implements JsonSerializable {
 		else {
 			echo "Can't add this object to players ships.";
 		}
+	}
+
+	public function getName() {
+		return $this->_playerName;
 	}
 
 	public function removeShip( $key ) {

@@ -187,7 +187,7 @@ class Battlefleet implements JsonSerializable {
 		}
 	}
 
-	public function getShipByID($shipID) {
+	public function getShipByID( $shipID ) {
 		$ships = $this->getAllShips();
 		foreach ($ships as $ship) {
 			if ($ship->getID() == $shipID)
@@ -196,8 +196,21 @@ class Battlefleet implements JsonSerializable {
 		return null;
 	}
 
+	public function getPlayerByID( $playerID ) {
+		foreach ($this->_players as $player) {
+			if ($player->getID() == $playerID)
+				return $player;
+		}
+		return null;
+	}
+
 	public function getPlayers() {
 		return $this->_players;
+	}
+
+	public function isPlayerTurn( $playerID ) {
+		$player = $this->getPlayerByID($playerID);
+		return ($player && $this->_currentPlayer->getName() == $player->getName());
 	}
 
 	public static function rollDice( $numDice, $sides=6 ) {
