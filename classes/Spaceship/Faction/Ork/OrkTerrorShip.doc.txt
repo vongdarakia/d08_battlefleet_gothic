@@ -1,0 +1,20 @@
+
+<- OrkTerrorShip --------------------------------------------------------------
+The OrkTerrorShip class is a Spaceship that is part of the Ork faction.
+
+Usage:
+new OrkTerrorShip( $x, $y, $owner, $name );
+$x and $y are the coordinates of the spaceship.
+By default, $x = $y = 0.
+$owner is the player that owns the spaceship.
+By default, $owner = null.
+$name is an optional parameter to set the name of the spaceship.
+By default, $name = 'Ork Terror Ship'.
+
+Size: 1x5 cases
+Hull points: 6
+PP: 10
+Speed: 12
+Handling: 4
+Weapons: Macro Canon, Heavy Automatic Weapon
+-------------------------------------------------------------- OrkTerrorShip ->
