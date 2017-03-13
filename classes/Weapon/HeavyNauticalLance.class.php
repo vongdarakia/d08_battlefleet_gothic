@@ -12,7 +12,7 @@ class HeavyNauticalLance extends Weapon {
 
 	// shooting is in the same format as the default Weapon class
 	// charge and roll calculations are done inside the for loop
-	public function shoot( $map ) {
+	public function shoot( $map, $dist = 0 ) {
 		if (!$this->_ship->isStationary()) { 
 			// can't shoot if not stationary
 			return null;
