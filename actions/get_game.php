@@ -7,6 +7,7 @@ require_once __DIR__ . '/../classes/Battlefleet/Object.class.php';
 require_once __DIR__ . '/../classes/Battlefleet/Player.class.php';
 require_once __DIR__ . '/../classes/Spaceship/Spaceship.class.php';
 require_once __DIR__ . '/../classes/Spaceship/Faction/Imperial/ImperialFrigate.class.php';
+require_once __DIR__ . '/../classes/Spaceship/Faction/Imperial/ImperialIronclad.class.php';
 require_once __DIR__ . '/../classes/Weapon/NauticalLance.class.php';
 require_once __DIR__ . '/../classes/Weapon/Weapon.class.php';
 

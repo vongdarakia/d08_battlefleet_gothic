@@ -122,10 +122,10 @@ class Battlefleet implements JsonSerializable {
 				}
 			}
 			$this->updateShips();
-			// $ships = $this->getAllShips();
-			// foreach ($this->_players as $player) {
+			$ships = $this->getAllShips();
+			foreach ($this->_players as $player) {
 				
-			// }
+			}
 		}
 	}
 
