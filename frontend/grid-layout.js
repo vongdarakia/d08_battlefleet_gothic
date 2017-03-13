@@ -48,14 +48,14 @@ var column = row.selectAll(".square")
     .attr("height", function(d) { return d.height; })
     .style("fill", "#fff")
     .style("stroke", "gray")
-    .style("stroke-width", "0.2")
-    .on('click', function(d) {
-        d.click ++;
-        if ((d.click)%4 == 0 ) { d3.select(this).style("fill","#fff"); }
-        if ((d.click)%4 == 1 ) { d3.select(this).style("fill","#2C93E8"); }
-        if ((d.click)%4 == 2 ) { d3.select(this).style("fill","#F56C4E"); }
-        if ((d.click)%4 == 3 ) { d3.select(this).style("fill","#838690"); }
-    });
+    .style("stroke-width", "0.2");
+    // .on('click', function(d) {
+    //     d.click ++;
+    //     if ((d.click)%4 == 0 ) { d3.select(this).style("fill","#fff"); }
+    //     if ((d.click)%4 == 1 ) { d3.select(this).style("fill","#2C93E8"); }
+    //     if ((d.click)%4 == 2 ) { d3.select(this).style("fill","#F56C4E"); }
+    //     if ((d.click)%4 == 3 ) { d3.select(this).style("fill","#838690"); }
+    // });
 
 d3.selectAll(".row:nth-child(10n) .square").style("stroke-width", "0.5");
 d3.selectAll(".row:first-child .square").style("stroke-width", "0.5");
