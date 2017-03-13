@@ -32,22 +32,17 @@ app.controller('myCtrl', ['$scope', '$http', '$state', function($scope, $http, $
                 draw_ship(x, y, h, v, p);
             }
         }
-        // draw_obstacles($scope.gameState.map);
+        draw_obstacles($scope.gameState.obstacles);
         resetp1();
         resetp2();
     };
 
-    // function draw_obstacles(map) {
-    //     console.log(map);
-    //     for (var i = 0; i < 100; i++) {
-    //         for (var j = 0; j < 150; j++) {
-    //             console.log(map[i][j], i, j);
-    //             // if (map[i][j] == 'x') {
-    //             //     d3.selectAll(".row:nth-child("+ i + 1 +") .square:nth-child("+ i + 1 +")").style("fill", "grey");
-    //             // }
-    //         }
-    //     }
-    // }
+    function draw_obstacles(obs) {
+        for (var i = 0; i < obs.length; i++) {
+            console.log(obs[i]);
+            d3.selectAll(".row:nth-child("+ (obs[i][0] + 1) +") .square:nth-child("+ (obs[i][1] + 1) +")").style("fill", "grey");
+        }
+    }
 
     $http.get("/d08/actions/get_game_state.php")
     .then(function(response) {
