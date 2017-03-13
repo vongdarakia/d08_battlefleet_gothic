@@ -96,22 +96,22 @@
 				</div>
 
 				<div>
-					<i class="material-icons" ng-click="p1.usepp(1, 'speed')">arrow_forward</i>
+					<i class="material-icons" ng-click="p2.adddist(1)">arrow_forward</i>
 					<div class="p1control">
-						<div class="value-button" id="decrease" ng-click="p1.usepp(-1, 'speed')" value="Decrease Value">-</div>
-						<input type="number" id="number" ng-value="p1.speed" />
-						<div class="value-button" id="increase" ng-click="p1.usepp(1, 'speed')" value="Increase Value">+</div>
+						<div class="value-button" id="decrease" ng-click="p2.adddist(-1)" value="Decrease Value">-</div>
+						<input type="number" id="number" ng-value="p2.distance" />
+						<div class="value-button" id="increase" ng-click="p2.adddist(1)" value="Increase Value">+</div>
 						<p>Distance to Move</p>
 					</div>
 					<p></p>
-					<button type="button" class="btn btn-primary" ng-click="sendp2()">Move Ship</button>
+					<button type="button" class="btn btn-primary" ng-click="sendp2move()">Move Ship</button>
 				</div>
 
 				<hr>
 				<div>
 					<p>Turn Ship</p>
-					<i class="material-icons">undo</i>
-					<i class="material-icons">redo</i>
+					<i class="material-icons" ng-click="p2.turn = -1; sendp2turn();">undo</i>
+					<i class="material-icons" ng-click="p2.turn = 1; sendp2turn();">redo</i>
 				</div>
 				<hr>
 				<p></p>
