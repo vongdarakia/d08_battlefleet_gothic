@@ -3,6 +3,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 date_default_timezone_set('America/Los_Angeles');
 
+$gameFile = "../private/game";
+
 function sendOK( $msg = "" ) {
 	header("HTTP/1.1 200 OK");
 	echo $msg;

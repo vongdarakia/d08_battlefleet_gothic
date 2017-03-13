@@ -10,6 +10,5 @@ require_once __DIR__ . '/../classes/Spaceship/Faction/Imperial/ImperialFrigate.c
 require_once __DIR__ . '/../classes/Weapon/NauticalLance.class.php';
 require_once __DIR__ . '/../classes/Weapon/Weapon.class.php';
 
-$gameFile = "../private/game";
 $game = loadGame($gameFile);
 ?>

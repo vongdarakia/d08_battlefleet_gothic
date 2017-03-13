@@ -1,7 +1,10 @@
 <?php 
 require_once 'essentials.php';
 
-function saveGame($game, $gameFile) {
+function saveGame($game, $gameFile, $gameDir = "../private") {
+	if (!file_exists($gameDir)) {
+		mkdir($gameDir);
+	}
 	$game = serialize($game);
 	file_put_contents($gameFile, $game);
 }
