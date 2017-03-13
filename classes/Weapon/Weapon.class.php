@@ -108,7 +108,7 @@ abstract class Weapon extends Object implements JsonSerializable {
 		for ($dist = 1; $dist <= $this->_long; $dist++) {
 			$c += $dirx;
 			$r += $diry;
-			if ($r >= 0 && $r < Battlefleet::MAP_LEN && $c >= 0 && $c $map[$r][$c] !== null) {
+			if (Battlefleet::inMap($r, $c) && $map[$r][$c] !== null) {
 				if ($dist <= $this->_short) {
 					$map[$r][$c]->takeDamage($shortDmg * $this->_damage);
 				}

@@ -282,8 +282,8 @@ abstract class Spaceship extends Object implements JsonSerializable {
 
 		// Check for collisions
 		if ($orient % 2 == 1) {
-			echo "x0: " . $x0 . " | intx: " . $intx . " | sign_x: ". $sign_x . PHP_EOL
-			. "y0: " . $y0 . " | inty: " . $inty . " | sign_y: ". $sign_y. PHP_EOL;
+			// echo "x0: " . $x0 . " | intx: " . $intx . " | sign_x: ". $sign_x . PHP_EOL
+			// . "y0: " . $y0 . " | inty: " . $inty . " | sign_y: ". $sign_y. PHP_EOL;
 			for ($c = $x0; ($intx - $c) * $x_sign > 0; $c += $x_sign) {
 				$obstacle_hit = 0;
 				for ($r = $y0; ($inty - $r) * $y_sign > 0; $r += $y_sign) {
@@ -322,8 +322,8 @@ abstract class Spaceship extends Object implements JsonSerializable {
 			}
 		}
 		else {
-			echo "y0: " . $y0 . " | inty: " . $inty . " | sign_y: ". $y_sign. PHP_EOL
-			. "x0: " . $x0 . " | intx: " . $intx . " | sign_x: ". $x_sign . PHP_EOL;
+			// echo "y0: " . $y0 . " | inty: " . $inty . " | sign_y: ". $y_sign. PHP_EOL
+			// . "x0: " . $x0 . " | intx: " . $intx . " | sign_x: ". $x_sign . PHP_EOL;
 			for ($r = $y0; ($inty - $r) * $y_sign > 0; $r += $y_sign) {
 				$obstacle_hit = 0;
 				for ($c = $x0; ($intx - $c) * $x_sign > 0; $c += $x_sign) {
@@ -487,18 +487,18 @@ abstract class Spaceship extends Object implements JsonSerializable {
 			"hp" 		=> $this->_hp,
 			"maxhp" 	=> $this->_maxhp,
 			"pp"		=> $this->_pp,
-			// "speed" 	=> $this->_speed,
-			// "handle" => $this->_handle,
+			"speed" 	=> $this->_speed,
+			"handle" => $this->_handle,
 			"weapons"	=> $this->_weapons,
 			"direction"	=> $this->_direction,
 			"cost" 		=> $this->_cost,
 			"name" 		=> $this->_name,
 			"x" 		=> $this->_x,
 			"y" 		=> $this->_y,
-			// "hor" 		=> $this->_hor,
-			// "ver"		=> $this->_ver,
+			"hor" 		=> $this->_hor,
+			"ver"		=> $this->_ver,
 			"shield" 	=> $this->_shield,
-			// "extraSpeed" => $this->_extraSpeed,
+			"extraSpeed" => $this->_extraSpeed,
 			"maxSpeed" 	=> ($this->_extraSpeed + $this->_speed),
 			"minSpeed" 	=> ($this->_stationary ? 0 : $this->_handle)
         );
