@@ -23,7 +23,72 @@
 		<script src="app.js"></script>
 	</head>
 
-	<body ng-controller="myCtrl">
+	<body ng-controller="myCtrl" ng-cloak>
+		<div class="container">
+			<div class="grid col-9"></div>
+
+			<div class="p1 col-3" ng-show="currentPhase == 0">
+				<button type="button" class="btn btn-primary" ng-click="currentPhase = 1">Start Game</button>
+			</div>
+
+			<div class="p1 col-3" ng-show="currentPhase == 1">
+				<div class="info">
+					<h2>Order Phase</h2>
+					<p>Player : {{ gameState.players[currentPlayer].playerName }}</p>
+					<p>Phase : {{ currentPhase }}</p>
+					<p>Ship : {{ currentShip }}</p>
+					<p>Power Points Available : {{ pp }}</p>
+				</div>
+
+				<div>
+					<i class="material-icons" ng-click="p1.usepp(1, 'speed')">fast_forward</i>
+					<div class="p1control">
+						<div class="value-button" id="decrease" ng-click="p1.usepp(-1, 'speed')" value="Decrease Value">-</div>
+						<input type="number" id="number" ng-value="p1.speed" disabled />
+						<div class="value-button" id="increase" ng-click="p1.usepp(1, 'speed')" value="Increase Value">+</div>
+						<p>Speed</p>
+					</div>
+				</div>
+
+				<div>
+					<i class="material-icons" ng-click="p1.usepp(1, 'shield')">verified_user</i>
+					<div class="p1control">
+						<div class="value-button" id="decrease" ng-click="p1.usepp(-1, 'shield')" value="Decrease Value">-</div>
+						<input type="number" id="number" ng-value="p1.shield" disabled />
+						<div class="value-button" id="increase" ng-click="p1.usepp(1, 'shield')" value="Increase Value">+</div>
+						<p>Shield</p>
+					</div>
+				</div>
+
+				<div>
+					<i class="material-icons" ng-click="p1.usepp(1, 'weapon')">camera</i>
+					<div class="p1control">
+						<div class="value-button" id="decrease" ng-click="p1.usepp(-1, 'weapon')" value="Decrease Value">-</div>
+						<input type="number" id="number" ng-value="p1.weapon" disabled />
+						<div class="value-button" id="increase" ng-click="p1.usepp(1, 'weapon')" value="Increase Value">+</div>
+						<p>Weapons</p>
+					</div>
+				</div>
+
+				<div>
+					<i class="material-icons" ng-click="p1.usepp(1, 'repair')">error_outline</i>
+					<div class="p1control">
+						<div class="value-button" id="decrease" ng-click="p1.usepp(-1, 'repair')" value="Decrease Value">-</div>
+						<input type="number" id="number" ng-value="p1.repair" disabled />
+						<div class="value-button" id="increase" ng-click="p1.usepp(1, 'repair')" value="Increase Value">+</div>
+						<p>Repair</p>
+					</div>
+				</div>
+
+				<p></p>
+				<button type="button" class="btn btn-info" ng-click="sendp1()">Allocate Power Points</button>
+			</div>
+		</div>
+
+		<script src="grid-layout.js"></script>
+		<script src="incdec.js"></script>
+	</body>
+</html>
 <!-- 		<div class="card">
 			<img src="ship1.jpg" alt="Avatar" style="width:100%">
 			<div class="container">
@@ -38,8 +103,6 @@
 			</ul>
 			</div>
 		</div> -->
-
-		<div class="grid"></div>
 
 <!-- 		<div class="card card-inset">
 			<img src="ship2.jpg" alt="Avatar" style="width:100%">
@@ -56,7 +119,6 @@
 			</div>
 		</div> -->
 
-		<div>
 <!-- 			<button type="button" class="btn btn-default">Default</button>
 			<button type="button" class="btn btn-primary">Primary</button>
 			<button type="button" class="btn btn-success">Success</button>
@@ -65,56 +127,11 @@
 			<button type="button" class="btn btn-danger">Danger</button>
 			<button type="button" class="btn btn-link">Link</button> -->
 
-			<i class="material-icons">undo</i>
+<!-- 			<i class="material-icons">undo</i>
 			<i class="material-icons">redo</i>
-			<a href="#/phase1">test</a>
-			<div class="container phase1">
-				<div class="row">
-					<p>Player	: {{ currentPlayer }}</p>
-					<p>Phase : {{ currentPhase }}</p>
-					<p>Ship : {{ currentShip }}</p>
-					<p>PP Available : {{ pp }}</p>
-				</div>
-				<div class="row">
-<!-- 					<i class="material-icons">fast_forward</i>
- -->					<span>Speed</span>
-					<div class="p1control">
-						<div class="value-button" id="decrease" ng-click="p1.usepp(-1, 'speed')" value="Decrease Value">-</div>
-						<input type="number" id="number" ng-value="p1.speed" disabled />
-						<div class="value-button" id="increase" ng-click="p1.usepp(1, 'speed')" value="Increase Value">+</div>
-					</div>
-				</div>
-				<div class="row">
-<!-- 					<i class="material-icons">verified_user</i>
- -->					<span>Shield</span>
-					<div class="p1control">
-						<div class="value-button" id="decrease" ng-click="p1.usepp(-1, 'shield')" value="Decrease Value">-</div>
-						<input type="number" id="number" ng-value="p1.shield" disabled />
-						<div class="value-button" id="increase" ng-click="p1.usepp(1, 'shield')" value="Increase Value">+</div>
-					</div>
-				</div>
-				<div class="row">
-<!-- 					<i class="material-icons">camera</i>
- -->					<span>Weapons</span>
-					<div class="p1control">
-						<div class="value-button" id="decrease" ng-click="p1.usepp(-1, 'weapon')" value="Decrease Value">-</div>
-						<input type="number" id="number" ng-value="p1.weapon" disabled />
-						<div class="value-button" id="increase" ng-click="p1.usepp(1, 'weapon')" value="Increase Value">+</div>
-					</div>
-				</div>
-				<div class="row">
-<!-- 					<i class="material-icons">error_outline</i>
- -->					<span>Repair</span>
-					<div class="p1control">
-						<div class="value-button" id="decrease" ng-click="p1.usepp(-1, 'repair')" value="Decrease Value">-</div>
-						<input type="number" id="number" ng-value="p1.repair" disabled />
-						<div class="value-button" id="increase" ng-click="p1.usepp(1, 'repair')" value="Increase Value">+</div>
-					</div>
-				</div>
-			</div>
-		</div>
+ -->
 
-		<div class="container" style="text-align: left;">
+		<!-- <div class="container" style="text-align: left;">
 			<form>
 			  <div class="form-group">
 			    <label for="exampleInputEmail1">Email address</label>
@@ -184,9 +201,5 @@
 			  <button type="submit" class="btn btn-primary">Submit</button>
 			</form>
 		</div>
+ -->
 
-		<script src="grid-layout.js"></script>
-		<script src="get-data.js"></script>
-		<script src="incdec.js"></script>
-	</body>
-</html>
