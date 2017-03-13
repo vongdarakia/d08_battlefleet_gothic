@@ -118,9 +118,9 @@ class Battlefleet implements JsonSerializable {
 			foreach ($ships as $ship) {
 				if ($ship->isStationary())
 					continue ;
-				$diff = $ship->getMovedDist() - $ship->getHandle();
-				if ($diff < 0)
-					$ship->moveShip( $diff, $this->getMap() );
+				$diff = $ship->getHandle() - $ship->getMovedDist();
+				if ($diff > 0)
+					$ship->moveShip( $ship->getHandle(), $this->getMap() );
 			}
 
 			foreach ($ships as $ship) {
