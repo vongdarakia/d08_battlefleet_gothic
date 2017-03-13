@@ -14,9 +14,13 @@ app.controller('myCtrl', ['$scope', '$http', '$state', function($scope, $http, $
                 d3.selectAll(".row:nth-child("+ j +") .square:nth-child("+ i +")").style("fill", color);
             }
         }
-    }
+    };
 
     function updateGame(response) {
+        d3.selectAll(".row:nth-child(10n) .square").style("stroke-width", "0.5");
+        d3.selectAll(".row:first-child .square").style("stroke-width", "0.5");
+        d3.selectAll(".square:nth-child(10n)").style("stroke-width", "0.5");
+        d3.selectAll(".square:first-child").style("stroke-width", "0.5");
         $scope.gameState = response.data;
         var players = $scope.gameState.players;
         for (var p = 0; p < $scope.gameState.players.length; p++) {
@@ -31,7 +35,8 @@ app.controller('myCtrl', ['$scope', '$http', '$state', function($scope, $http, $
             }
         }
         resetp1();
-    }
+        resetp2();
+    };
 
     $http.get("/d08/actions/get_game_state.php")
     .then(function(response) {
@@ -51,7 +56,21 @@ app.controller('myCtrl', ['$scope', '$http', '$state', function($scope, $http, $
                 }
             }
         };
-    }
+    };
+
+    function resetp2() {
+        $scope.p2 = {
+            minSpeed : $scope.gameState.players[$scope.currentPlayer].ships[$scope.currentShip].minSpeed,
+            maxSpeed : $scope.gameState.players[$scope.currentPlayer].ships[$scope.currentShip].maxSpeed,
+            distance : 0,
+            turn : 0,
+            adddist : function(n) {
+                if (( n > 0 && $scope.p2.distance < $scope.p2.maxSpeed) || ( n < 0 && $scope.p2.distance > $scope.p2.minSpeed)) {
+                    $scope.p2.distance += n;
+                }
+            }
+        };
+    };
 
     $scope.sendp1 = function() {
         var inData = {
@@ -85,5 +104,61 @@ app.controller('myCtrl', ['$scope', '$http', '$state', function($scope, $http, $
             console.log("error");
             console.log(response);
         });
+    };
+
+    $scope.sendp2move = function() {
+        var inData = {
+            'distance' : $scope.p2.distance,
+            'ship_id': $scope.gameState.players[$scope.currentPlayer].ships[$scope.currentShip]['_id'] };
+
+        $http({
+            url: "/d08/actions/p1_move_ship.php",
+            method: "GET",
+            headers: {'Content-Type': "application/x-www-form-urlencoded"},
+            params: inData
+        }).then(function successCallback(response) {
+            console.log(response);
+            updateGame(response);
+            $scope.currentPhase = 1.5;
+        }, function errorCallback(response) {
+            console.log("error");
+            console.log(response);
+        });
+    };
+
+    $scope.sendp2turn = function() {
+        console.log($scope.p2.turn);
+        var inData = {
+            'rotation' : $scope.gameState.players[$scope.currentPlayer]['_id'],
+            'ship_id': $scope.gameState.players[$scope.currentPlayer].ships[$scope.currentShip]['_id'] };
+
+        $http({
+            url: "/d08/actions/p1_turn_ship.php",
+            method: "GET",
+            headers: {'Content-Type': "application/x-www-form-urlencoded"},
+            params: inData
+        }).then(function successCallback(response) {
+            console.log(response);
+            updateGame(response);
+        }, function errorCallback(response) {
+            console.log("error");
+            console.log(response);
+        });
+    };
+
+    $scope.sendp2 = function() {
+        $scope.currentPhase = 1.5;
+        if ($scope.currentShip < $scope.gameState.players[$scope.currentPlayer].ships.length - 1) {
+            $scope.currentShip++;
+            $scope.currentPhase = 2;
+        } else if ( $scope.currentPlayer < $scope.gameState.players.length - 1 ) {
+            $scope.currentPlayer++;
+            $scope.currentShip = 0;
+            $scope.currentPhase = 2;
+        } else {
+            $scope.currentPlayer = 0;
+            $scope.currentShip = 0;
+            $scope.currentPhase = 3;
+        };
     };
 }]);

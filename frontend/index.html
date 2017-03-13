@@ -90,53 +90,32 @@
 					<p><strong>Player</strong> : {{ gameState.players[currentPlayer].playerName }}</p>
 					<p><strong>Ship</strong> : {{ gameState.players[currentPlayer].ships[currentShip].name }}</p>
 					<hr>
-					<p><i>Min Distance Allowed</i> : {{ minDistance }}</p>
-					<p><i>Max Distance Allowed</i> : {{ maxDistance }}</p>
+					<p><i>Min Distance Allowed</i> : {{ p2.minSpeed }}</p>
+					<p><i>Max Distance Allowed</i> : {{ p2.maxSpeed }}</p>
 					<hr>
 				</div>
 
 				<div>
-					<i class="material-icons" ng-click="p1.usepp(1, 'speed')">arrow_forward</i>
+					<i class="material-icons" ng-click="p2.adddist(1)">arrow_forward</i>
 					<div class="p1control">
-						<div class="value-button" id="decrease" ng-click="p1.usepp(-1, 'speed')" value="Decrease Value">-</div>
-						<input type="number" id="number" ng-value="p1.speed" disabled />
-						<div class="value-button" id="increase" ng-click="p1.usepp(1, 'speed')" value="Increase Value">+</div>
-						<p>Speed</p>
+						<div class="value-button" id="decrease" ng-click="p2.adddist(-1)" value="Decrease Value">-</div>
+						<input type="number" id="number" ng-value="p2.distance" />
+						<div class="value-button" id="increase" ng-click="p2.adddist(1)" value="Increase Value">+</div>
+						<p>Distance to Move</p>
 					</div>
+					<p></p>
+					<button type="button" class="btn btn-primary" ng-click="sendp2move()">Move Ship</button>
 				</div>
 
+				<hr>
 				<div>
-					<i class="material-icons" ng-click="p1.usepp(1, 'shield')">verified_user</i>
-					<div class="p1control">
-						<div class="value-button" id="decrease" ng-click="p1.usepp(-1, 'shield')" value="Decrease Value">-</div>
-						<input type="number" id="number" ng-value="p1.shield" disabled />
-						<div class="value-button" id="increase" ng-click="p1.usepp(1, 'shield')" value="Increase Value">+</div>
-						<p>Shield</p>
-					</div>
+					<p>Turn Ship</p>
+					<i class="material-icons" ng-click="p2.turn = -1; sendp2turn();">undo</i>
+					<i class="material-icons" ng-click="p2.turn = 1; sendp2turn();">redo</i>
 				</div>
-
-				<div>
-					<i class="material-icons" ng-click="p1.usepp(1, 'weapon')">camera</i>
-					<div class="p1control">
-						<div class="value-button" id="decrease" ng-click="p1.usepp(-1, 'weapon')" value="Decrease Value">-</div>
-						<input type="number" id="number" ng-value="p1.weapon" disabled />
-						<div class="value-button" id="increase" ng-click="p1.usepp(1, 'weapon')" value="Increase Value">+</div>
-						<p>Weapons</p>
-					</div>
-				</div>
-
-				<div>
-					<i class="material-icons" ng-click="p1.usepp(1, 'repair')">error_outline</i>
-					<div class="p1control">
-						<div class="value-button" id="decrease" ng-click="p1.usepp(-1, 'repair')" value="Decrease Value">-</div>
-						<input type="number" id="number" ng-value="p1.repair" disabled />
-						<div class="value-button" id="increase" ng-click="p1.usepp(1, 'repair')" value="Increase Value">+</div>
-						<p>Repair</p>
-					</div>
-				</div>
-
+				<hr>
 				<p></p>
-				<button type="button" class="btn btn-info" ng-click="sendp1()">Allocate Power Points</button>
+				<button type="button" class="btn btn-danger" ng-click="sendp2()">End Turn</button>
 			</div>
 		</div>
 
@@ -181,10 +160,6 @@
 			<button type="button" class="btn btn-warning">Warning</button>
 			<button type="button" class="btn btn-danger">Danger</button>
 			<button type="button" class="btn btn-link">Link</button> -->
-
-<!-- 			<i class="material-icons">undo</i>
-			<i class="material-icons">redo</i>
- -->
 
 		<!-- <div class="container" style="text-align: left;">
 			<form>
