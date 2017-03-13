@@ -22,7 +22,6 @@ abstract class Spaceship extends Object implements JsonSerializable {
 
 	protected $_hor = 1;
 	protected $_ver = 1;
-	protected $_stationary = 1;
 	protected $_movedDist = 0; 
 
 	protected $_shield = 0; // shield
@@ -125,6 +124,14 @@ abstract class Spaceship extends Object implements JsonSerializable {
 
 	public function getOwner() {
 		return $this->_owner;
+	}
+
+	public function getMovedDist() {
+		return $this->_movedDist;
+	}
+
+	public function getSpeed() {
+		return $this->_speed + $this->_extraSpeed;
 	}
 
 	public function isStationary() {
@@ -270,17 +277,22 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		$inty = $y + (($orient + 1) % 3 == 0) * $ver;
 
 		// Set the direction for collision of checking
-		$x_sign = ($orient != 1) ? -1 : 1;
+		$x_sign = ($orient == 3) ? -1 : 1;
 		$y_sign = ($orient == 0) ? -1 : 1;
 
 		// Check for collisions
 		if ($orient % 2 == 1) {
-			for ($c = $x0; ($c - $intx) * $x_sign > 0; $c += $x_sign) {
-				for ($r = $y0; ($r - $inty) * $y_sign > 0; $r += $y_sign) {
-					$map_val = $map[$r + $this->_y][$c + $this->_x];
-					if ($map_val instanceof Ship && $map_val != $this) {
+			echo "x0: " . $x0 . " | intx: " . $intx . " | sign_x: ". $sign_x . PHP_EOL
+			. "y0: " . $y0 . " | inty: " . $inty . " | sign_y: ". $sign_y. PHP_EOL;
+			for ($c = $x0; ($intx - $c) * $x_sign > 0; $c += $x_sign) {
+				$obstacle_hit = 0;
+				for ($r = $y0; ($inty - $r) * $y_sign > 0; $r += $y_sign) {
+					$map_val = $map[$r][$c];
+					// echo "Map val: " . $map_val . PHP_EOL;
+					if ($map_val instanceof Spaceship && $map_val !== $this) {
+						// echo "HIT!\n";
 						$obstacle_hit = 0;
-						if ($orient == $this->direction) {
+						if ($orient == $this->_direction) {
 														
 							$x = $c - ($orient == 1) ? $hor : 1;
 							$this->_movedDist += abs($this->_x - $x);
@@ -297,8 +309,8 @@ abstract class Spaceship extends Object implements JsonSerializable {
 						}		
 
 						// Set $map_val and this ship to stationary;
-						$this->_stationary = 1;
-						$map_val->setStationary(1);
+						$this->_stationary = true;
+						$map_val->setStationary(True);
 						return 1;
 					}
 					else if ($map_val == "0") {
@@ -310,12 +322,17 @@ abstract class Spaceship extends Object implements JsonSerializable {
 			}
 		}
 		else {
-			for ($r = $y0; ($r - $inty) * $y_sign > 0; $r += $y_sign) {
-				for ($c = $x0; ($c - $intx) * $x_sign > 0; $c += $x_sign) {
-					$map_val = $map[$r + $this->_y][$c + $this->_x];
-					if ($map_val instanceof Ship && $map_val != $this) {
+			echo "y0: " . $y0 . " | inty: " . $inty . " | sign_y: ". $y_sign. PHP_EOL
+			. "x0: " . $x0 . " | intx: " . $intx . " | sign_x: ". $x_sign . PHP_EOL;
+			for ($r = $y0; ($inty - $r) * $y_sign > 0; $r += $y_sign) {
+				$obstacle_hit = 0;
+				for ($c = $x0; ($intx - $c) * $x_sign > 0; $c += $x_sign) {
+					$map_val = $map[$r][$c];
+					// echo "Map val: " . $map_val . PHP_EOL;
+					if ($map_val instanceof Spaceship && $map_val !== $this) {
+						// echo "HIT!\n";
 						$obstacle_hit = 0;
-						if ($orient == $this->direction) {
+						if ($orient == $this->_direction) {
 														
 							$y = $r - ($orient == 2) ? $ver : 1;
 							$this->_movedDist += abs($this->_y - $y);
@@ -332,8 +349,8 @@ abstract class Spaceship extends Object implements JsonSerializable {
 						}		
 
 						// Set $map_val and this ship to stationary;
-						$this->_stationary = 1;
-						$map_val->setStationary(1);
+						$this->_stationary = true;
+						$map_val->setStationary(True);
 						return 1;
 					}
 					else if ($map_val == "0") {
@@ -346,7 +363,8 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		}
 		
 		// Check map border collisions
-		if ($intx > Battlefleet::MAP_WIDTH || $inty > Battlefleet::MAP_LEN || $x0 < 0 || $y0 < 0)
+		if (max($intx, $x0) > Battlefleet::MAP_WIDTH || max($inty, $y0) > Battlefleet::MAP_LEN
+			|| min($intx, $x0) < 0 || min($inty, $y0) < 0)
 			return -1;
 
 		// Still flying =)
@@ -360,10 +378,11 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		if ($rot == 0)
 			return true;
 
+		$orient = $this->_direction;
 		if ($rot < 0) {
 			$orient = ($this->_direction + 3) % 4;
 		}
-		else if ($dir > 0) {
+		else if ($rot > 0) {
 			$orient = ($this->_direction + 1) % 4;
 		}
 

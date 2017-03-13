@@ -12,8 +12,8 @@ require_once './classes/Weapon/NauticalLance.class.php';
 Battlefleet::$verbose = true;
 
 $bf = new Battlefleet();
-$ship = new ImperialFrigate(0, 10);
-$ship2 = new ImperialFrigate(10, 10);
+$ship = new ImperialFrigate(5, 70);
+$ship2 = new ImperialFrigate(5, 75);
 // $ship->addWeapon(new NauticalLance());
 // $id = 0;
 // $id++;
@@ -25,16 +25,16 @@ $bf->getCurrentPlayer()->addShip($ship2);
 $bf->updateMap();
 
 $ship->getWeapons()[0]->addCharge(20);
-$ship->getWeapons()[0]->shoot($ship, $bf->getMap());
+$ship->getWeapons()[0]->shoot($bf->getMap());
 echo $ship->getHP() . '  ' . $ship2->getHP() . PHP_EOL;
 // $bf->updateShips();
 $bf->updateMap();
 
 saveGame($bf, './private/game');
 
-$bf->startPhase();
 $ship2->display();
 echo "1\n";
+$bf->nextPhase();
 while (true) {
 	if (!(selectPhaseOption1($bf)))
 		$bf->nextPhase() ;
@@ -107,6 +107,7 @@ function selectMove( $shipIdx, $ship, $bf) {
 		$option = readline("Select Move\n"
 			. "\t[1] Turn Ship\n"
 			. "\t[2] Move Ship\n"
+			. "\t[i] Ship status\n"
 			. "\t[m] Display Map\n"
 			. "\t[0] End Turn\n"
 			. $bf->getCurrentPlayer() . ": "
@@ -117,9 +118,7 @@ function selectMove( $shipIdx, $ship, $bf) {
 			$dir = readline("Select direction (1 or -1)\n"
 				. $bf->getCurrentPlayer() . ": "
 			);
-			if ($dir == "1" || $dir == "-1")
-				$ship->turnShip($dir);
-			else
+			if (!($ship->turnShip($dir, $bf->getMap())))
 				echo "Error: direction must be 1 or -1\n";
 		}
 
@@ -136,6 +135,13 @@ function selectMove( $shipIdx, $ship, $bf) {
 			echo PHP_EOL;
 			$bf->updateMap();
 			$bf->displayMap();
+		}
+
+		else if ($option == "i") {
+			echo PHP_EOL;
+			echo "HP: " . $ship->getHP() . PHP_EOL
+			. "Speed: " . $ship->getSpeed() . PHP_EOL
+			. "Moved Dist: ". $ship->getMovedDist() . PHP_EOL;
 		}
 
 		else
