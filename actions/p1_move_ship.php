@@ -5,7 +5,7 @@ require_once 'get_game.php';
 // playerCheck($game, $playerID);
 
 $dist = isset($_GET['distance']) ? intval($_GET['distance']) : 0; 
-$shipID = isset($_GET['ship_id']) ? intval($_POST['ship_id']) : 0; 
+$shipID = isset($_GET['ship_id']) ? intval($_GET['ship_id']) : 0; 
 $ship = $game->getShipByID($shipID);
 
 if ($ship) {

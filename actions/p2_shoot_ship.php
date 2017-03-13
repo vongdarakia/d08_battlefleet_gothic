@@ -10,20 +10,15 @@ $ship 		= $game->getShipByID($shipID);
 
 if ($ship) {
 	$weapon = $ship->getWeaponByID($weaponID);
-	$player2 = $game->getPlayerByID(2);
-	$ship2 = $player2->getShips()[0];
-	$ship2->setXY(5, 0);
-	$game->updateMap();
-	// print_r($ship);
-	// print_r($ship2);
-	// exit();
+	// $player2 = $game->getPlayerByID(2);
+	// $ship2 = $player2->getShips()[0];
+	// $ship2->setXY(5, 0);
+	// $game->updateMap();
+
 	if ($weapon) {
-		// $weapon->
 		if ($weapon->shoot($game->getMap())) {
 			$game->updateMap();
 			saveGame($game, $gameFile);
-			$game->displayMap();
-			$ship2->display();
 			sendOK("Shot something!");
 		}
 		sendError("Can't shoot");
