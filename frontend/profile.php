@@ -7,7 +7,7 @@ if (!file_exists("../private/passwd"))
 }
 $arr = unserialize(file_get_contents("../private/passwd"));
 if ($_GET["user"] !== NULL) {
-	foreach ($arr as &$acc)
+	foreach ($arr as $acc)
 	{
 		if ($acc["login"] === $_GET["user"])
 		{
