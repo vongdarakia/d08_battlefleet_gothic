@@ -26,7 +26,6 @@ function gridData() {
 }
 
 var gridData = gridData();    
-console.log(gridData);
 
 var grid = d3.select(".grid")
     .append("svg")
