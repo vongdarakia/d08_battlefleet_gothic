@@ -117,7 +117,7 @@ class Battlefleet implements JsonSerializable {
 
 			foreach ($ships as $ship) {
 				if (!$ship->isDead()) {
-					$ship->getWeapon()[0]->shoot($this->getMap());
+					$ship->getWeapons()[0]->shoot($this->getMap());
 					$this->updateMap();
 				}
 			}

@@ -41,7 +41,7 @@ $ship2->display();
 // $bf->nextPhase();
 while (true) {
 	if (!(selectPhaseOption1($bf)))
-		$bf->nextPhase() ;
+		$bf->endTurn() ;
 }
 
 function selectPhaseOption1( $bf ) {
