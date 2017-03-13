@@ -28,6 +28,9 @@ class HeavyNauticalLance extends Weapon {
 			$c += $dirx;
 			$r += $diry;
 			if (Battlefleet::inMap($r, $c) && $map[$r][$c] !== null) {
+				if ($map[$r][$c] === "x") {
+					return null;
+				}
 				$charge = $this->_charge + $this->_extraCharge;
 				$roll = Battlefleet::rollDice($charge);
 				$longDmg = $roll[6];

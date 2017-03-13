@@ -144,6 +144,9 @@ abstract class Weapon extends Object implements JsonSerializable {
 			$r += $diry;
 			// Should check for a ship not anything non empty
 			if (Battlefleet::inMap($r, $c) && $map[$r][$c] !== null) {
+				if ($map[$r][$c] === "x") {
+					return null;
+				}
 				if ($dist <= $this->_short) {
 					if ($disp)
 						echo "Ship " . $map[$r][$c]."takes damage: ".($shortDmg * $this->_damage) . PHP_EOL;
