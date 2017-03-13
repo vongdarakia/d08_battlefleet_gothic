@@ -92,9 +92,11 @@ abstract class Weapon extends Object implements JsonSerializable {
 	// This is a basic shoot function for weapons that shoot one straight line
 	// from the front of the ship.
 	// It should be changed for weapons that have different effects.
-	public function shoot( $map ) {
+	public function new_shoot( $map, $disp = 0) {
 		$charge = $this->_charge + $this->_extraCharge;
 		$roll = Battlefleet::rollDice($charge);
+		//display rool
+		($disp) ? print_r($roll) : 0;
 		$longDmg = $roll[6];
 		$middleDmg = $longDmg + $roll[5];
 		$shortDmg = $middleDmg + $roll[4];
@@ -108,14 +110,21 @@ abstract class Weapon extends Object implements JsonSerializable {
 		for ($dist = 1; $dist <= $this->_long; $dist++) {
 			$c += $dirx;
 			$r += $diry;
+			// Should check for a ship not anything non empty
 			if (Battlefleet::inMap($r, $c) && $map[$r][$c] !== null) {
 				if ($dist <= $this->_short) {
+					if ($disp)
+						echo "Ship " . $map[$r][$c]."takes damage: ".($shortDmg * $this->_damage) . PHP_EOL;
 					$map[$r][$c]->takeDamage($shortDmg * $this->_damage);
 				}
 				else if ($dist <= $this->_middle) {
+					if ($disp)
+						echo "Ship ".$map[$r][$c]."takes damage: ".($middleDmg * $this->_damage) . PHP_EOL;
 					$map[$r][$c]->takeDamage($middleDmg * $this->_damage);
 				}
 				else {
+					if ($disp)
+						echo "Ship " .$map[$r][$c] ."takes damage: " .($longDmg * $this->_damage) . PHP_EOL;
 					$map[$r][$c]->takeDamage($longDmg * $this->_damage);
 				}
 				return [$r, $c]; // Used for MacroCanon

@@ -99,6 +99,10 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		return $this->_hp;
 	}
 
+	public function getShield() {
+		return $this->_shield;
+	}
+
 	public function getWeapons() {
 		return $this->_weapons;
 	}
@@ -322,7 +326,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 						$map_val->setStationary(True);
 						return 1;
 					}
-					else if ($map_val == "0") {
+					else if ($map_val === "x") {
 						$obstacle_hit = 1;
 					}
 				}
@@ -365,7 +369,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 						$map_val->setStationary(True);
 						return 1;
 					}
-					else if ($map_val == "0") {
+					else if ($map_val === "x") {
 						$obstacle_hit = 1;
 					}
 				}

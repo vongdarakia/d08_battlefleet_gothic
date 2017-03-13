@@ -13,7 +13,7 @@ require_once './classes/Weapon/NauticalLance.class.php';
 Battlefleet::$verbose = true;
 
 $bf = new Battlefleet();
-$ship = new ImperialIronclad(4, 71);
+$ship = new ImperialIronclad(5, 71);
 $ship2 = new ImperialFrigate(5, 83);
 $ship3 = new ImperialIronclad(5, 65);
 $ship4 = new ImperialIronclad(140, 90);
@@ -38,15 +38,14 @@ $bf->updateMap();
 saveGame($bf, './private/game');
 
 $ship2->display();
-echo "1\n";
-$bf->nextPhase();
+// $bf->nextPhase();
 while (true) {
 	if (!(selectPhaseOption1($bf)))
 		$bf->nextPhase() ;
 }
 
 function selectPhaseOption1( $bf ) {
-	$option = readline("Phase 1 (order)\n"
+	$option = readline("Phase ". ($bf->getCurrentPhase() + 1) ." \n"
 		. "\t[1] Select Ship\n"
 		. "\t[2] Damage Ship\n"
 		. "\t[m] Display Map\n"
@@ -93,6 +92,8 @@ function selectShip( $player, $phase, $bf ) {
 				selectPPOption($option, $ships[$option], $player);
 			else if ($phase == 1)
 				selectMove($option, $ships[$option], $bf);
+			else if ($phase == 2)
+				selectShoot($option, $ships[$option], $bf);
 		}
 		else {
 			echo "Invalid option" . PHP_EOL;
@@ -155,6 +156,45 @@ function selectMove( $shipIdx, $ship, $bf) {
 	}
 }
 
+function selectShoot( $shipIdx, $ship, $bf) {
+	
+	while (True) {
+		if (empty($ship->getWeapons())) {
+			echo "This ship has no weapons installed\n";
+			break ;
+		}
+		$ship->display();
+		$shp_count = count($bf->getAllShips());
+		$option = readline("Choose option\n"
+			. "\t[a] Attack\n"
+			. "\t[1-".$shp_count."] Display ship info\n"
+			. "\t[m] Display Map\n"
+			. "\t[q] End Turn\n"
+			. $bf->getCurrentPlayer() . ": "
+		);
+
+		if ($option == "a") {
+			$ship->getWeapons()[0]->new_shoot($bf->getMap(), 1);
+		}
+
+		else if (intval($option) >= 1 && intval($option) <= $shp_count - 1) {
+			echo PHP_EOL;
+			$tmp_ship = $bf->getAllShips()[intval($option)];
+			echo "HP: " . $tmp_ship->getHP() . PHP_EOL
+			. "Shield: " . $tmp_ship->getShield() . PHP_EOL
+			. "Stationary:" . $tmp_ship->isStationary() . PHP_EOL;
+		}
+
+		else if ($option == "m") {
+			echo PHP_EOL;
+			$bf->updateMap();
+			$bf->displayMap();
+		}
+
+		else
+			break ;
+	}
+}
 
 function selectPPOption($shipIdx, $ship, $player) {
 	echo "\nYou've selected " . $ship . PHP_EOL . PHP_EOL;
