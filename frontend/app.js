@@ -163,7 +163,21 @@ app.controller('myCtrl', ['$scope', '$http', '$state', function($scope, $http, $
         } else {
             $scope.currentPlayer = 0;
             $scope.currentShip = 0;
+            end_turn();
             $scope.currentPhase = 1;
         };
     };
+
+    function end_turn() {
+        $http({
+            url: "/d08/actions/end_turn.php",
+            method: "GET",
+            headers: {'Content-Type': "application/x-www-form-urlencoded"},
+            params: inData
+        }).then(function successCallback(response) {
+            updateGame(response);
+        }, function errorCallback(response) {
+            console.log("error");
+        });
+    }
 }]);
