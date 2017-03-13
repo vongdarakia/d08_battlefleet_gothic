@@ -16,7 +16,6 @@ Hull points: 5
 PP: 10
 Speed: 15
 Handling: 4
-Shield: 0
-Weapons: Nautical lance (changed from side laser batteries because it hasn't
+Weapons: Nautical Lance (changed from side laser batteries because it hasn't
 been implemeneted yet)
 ------------------------------------------------------------ ImperialFrigate ->
