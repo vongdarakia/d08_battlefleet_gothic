@@ -10,6 +10,7 @@ require_once __DIR__ . '/../classes/Spaceship/Faction/Imperial/ImperialFrigate.c
 require_once __DIR__ . '/../classes/Weapon/NauticalLance.class.php';
 require_once __DIR__ . '/../classes/Weapon/Weapon.class.php';
 
+// Checks if it's the players turn. If not, then exit.
 function playerCheck( $game, $playerID ) {
 	if (!$game->isPlayerTurn($playerID)) {
 		sendError("Not your turn!");
