@@ -1,14 +1,14 @@
 <?php 
 require_once 'get_game.php';
 
-$playerID = isset($_POST['player_id']) ? intval($_POST['player_id']) : 0;
-playerCheck($game, $playerID);
+// $playerID = isset($_GET['player_id']) ? intval($_GET['player_id']) : 0;
+// playerCheck($game, $playerID);
 
-$ppSpeed 	= isset($_POST['speed']) ? intval($_POST['speed']) : 0;
-$ppShield 	= isset($_POST['shield']) ? intval($_POST['shield']) : 0;
-$ppWeapon 	= isset($_POST['weapon']) ? intval($_POST['weapon']) : 0;
-$ppRepair 	= isset($_POST['repair']) ? intval($_POST['repair']) : 0;
-$shipID 	= isset($_POST['ship_id']) ? intval($_POST['ship_id']) : 0;
+$ppSpeed 	= isset($_GET['speed']) ? intval($_GET['speed']) : 0;
+$ppShield 	= isset($_GET['shield']) ? intval($_GET['shield']) : 0;
+$ppWeapon 	= isset($_GET['weapon']) ? intval($_GET['weapon']) : 0;
+$ppRepair 	= isset($_GET['repair']) ? intval($_GET['repair']) : 0;
+$shipID 	= isset($_GET['ship_id']) ? intval($_GET['ship_id']) : 0;
 $ship 		= $game->getShipByID($shipID);
 
 if ($ship) {
