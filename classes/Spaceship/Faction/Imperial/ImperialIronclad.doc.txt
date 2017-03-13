@@ -1,0 +1,20 @@
+
+<- ImperialIronclad -----------------------------------------------------------
+The ImperialIronclad class is a Spaceship that is part of the Imperial faction.
+
+Usage:
+new ImperialIronclad( $x, $y, $owner, $name );
+$x and $y are the coordinates of the spaceship.
+By default, $x = $y = 0.
+$owner is the player that owns the spaceship.
+By default, $owner = null.
+$name is an optional parameter to set the name of the spaceship.
+By default, $name = 'Imperial Ironclad'.
+
+Size: 2x7 cases
+Hull points: 10
+PP: 12
+Speed: 10
+Handling: 5
+Weapons: Heavy Nautical Lance
+----------------------------------------------------------- ImperialIronclad ->
