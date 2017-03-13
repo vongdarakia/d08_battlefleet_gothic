@@ -108,12 +108,20 @@ class Battlefleet implements JsonSerializable {
 		if ($this->_currentPhase == 0) {
 			$ships = $this->getAllShips();
 			foreach ($ships as $key => $ship) {
-				$ship->resetPP();
+				$ship->resetStats();
 			}
 		}
 
-		if ($this->_currentPhase == 2) {
+		else if ($this->_currentPhase == 2) {
 			$ships = $this->getAllShips();
+
+			foreach ($ships as $ship) {
+				if ($ship->isStationary())
+					continue ;
+				$diff = $ship->getMovedDist() - $ship->getHandle();
+				if ($diff < 0)
+					$ship->moveShip( $diff, $this->getMap() );
+			}
 
 			foreach ($ships as $ship) {
 				if (!$ship->isDead()) {
@@ -122,10 +130,7 @@ class Battlefleet implements JsonSerializable {
 				}
 			}
 			$this->updateShips();
-			$ships = $this->getAllShips();
-			foreach ($this->_players as $player) {
-				
-			}
+			$this->updateMap();
 		}
 	}
 
