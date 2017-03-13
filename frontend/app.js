@@ -1,33 +1,5 @@
 var app = angular.module('myApp', ['ui.router']);
 
-// app.config([
-// '$stateProvider',
-// '$urlRouterProvider',
-// '$locationProvider',
-// '$httpProvider',
-// function($stateProvider, $urlRouterProvider, $httpProvider ) {
-//     $urlRouterProvider.otherwise("/");
-
-//     $stateProvider
-//     .state('phase1', {
-//         url: "/phase1",
-//         templateUrl: "/d08/frontend/test.html"
-//     })
-
-//     .state('phase2', {
-//         url: "/phase2",
-//         templateUrl: "/static/partials/profile/albums.html"
-//     })
-
-//     .state('phase3', {
-//         url: "/phase3/:album/:filename",
-//         templateUrl: "/static/partials/profile/media.html",
-//         controller: function($stateParams, $scope, $http) {
-//             // .....
-//         }
-//     })
-// }]);
-
 app.controller('myCtrl', ['$scope', '$http', '$state', function($scope, $http, $state) {
     $scope.players = [];
     $scope.ships = [];
@@ -78,16 +50,19 @@ app.controller('myCtrl', ['$scope', '$http', '$state', function($scope, $http, $
     };
 
     $scope.sendp1 = function() {
-        var Indata = {
+        var inData = {
+            'player_id' : $scope.players[$scope.currentPlayer],
             'ship_id': $scope.ships[$scope.currentShip],
             'speed': $scope.p1.speed,
             'shield': $scope.p1.shield,
             'weapon': $scope.p1.weapon,
             'repair': $scope.p1.repair };
+        console.log(inData);
         $http({
             url: "/d08/actions/p0_spend_pp.php",
             method: "POST",
-            params: Indata
+            headers: {'Content-Type': "application/x-www-form-urlencoded"},
+            params: inData
         }).then(function successCallback(response) {
             console.log("success");
             console.log(response);
