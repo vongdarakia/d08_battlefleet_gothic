@@ -92,7 +92,8 @@ abstract class Weapon extends Object implements JsonSerializable {
 	// This is a basic shoot function for weapons that shoot one straight line
 	// from the front of the ship.
 	// It should be changed for weapons that have different effects.
-	public function new_shoot( $map, $disp = 0) {
+
+	public function shoot( $map, $disp=0 ) {
 		$charge = $this->_charge + $this->_extraCharge;
 		$roll = Battlefleet::rollDice($charge);
 		//display rool

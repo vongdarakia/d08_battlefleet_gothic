@@ -34,10 +34,10 @@
 			<div class="p1 col-3" ng-show="currentPhase == 1">
 				<div class="info">
 					<h2>Order Phase</h2>
-					<p>Player : {{ gameState.players[currentPlayer].playerName }}</p>
-					<p>Phase : {{ currentPhase }}</p>
-					<p>Ship : {{ currentShip }}</p>
-					<p>Power Points Available : {{ pp }}</p>
+					<p><strong>Player</strong> : {{ gameState.players[currentPlayer].playerName }}</p>
+					<p><strong>Ship</strong> : {{ gameState.players[currentPlayer].ships[currentShip].name }}</p>
+					<hr>
+					<p><i>Power Points Available</i> : {{ gameState.players[currentPlayer].ships[currentShip].pp }}</p>
 				</div>
 
 				<div>
@@ -83,6 +83,40 @@
 				<p></p>
 				<button type="button" class="btn btn-info" ng-click="sendp1()">Allocate Power Points</button>
 			</div>
+
+			<div class="p1 col-3" ng-show="currentPhase == 2">
+				<div class="info">
+					<h2>Movement Phase</h2>
+					<p><strong>Player</strong> : {{ gameState.players[currentPlayer].playerName }}</p>
+					<p><strong>Ship</strong> : {{ gameState.players[currentPlayer].ships[currentShip].name }}</p>
+					<hr>
+					<p><i>Min Distance Allowed</i> : {{ p2.minSpeed }}</p>
+					<p><i>Max Distance Allowed</i> : {{ p2.maxSpeed }}</p>
+					<hr>
+				</div>
+
+				<div>
+					<i class="material-icons" ng-click="p1.usepp(1, 'speed')">arrow_forward</i>
+					<div class="p1control">
+						<div class="value-button" id="decrease" ng-click="p1.usepp(-1, 'speed')" value="Decrease Value">-</div>
+						<input type="number" id="number" ng-value="p1.speed" />
+						<div class="value-button" id="increase" ng-click="p1.usepp(1, 'speed')" value="Increase Value">+</div>
+						<p>Distance to Move</p>
+					</div>
+					<p></p>
+					<button type="button" class="btn btn-primary" ng-click="sendp2()">Move Ship</button>
+				</div>
+
+				<hr>
+				<div>
+					<p>Turn Ship</p>
+					<i class="material-icons">undo</i>
+					<i class="material-icons">redo</i>
+				</div>
+				<hr>
+				<p></p>
+				<button type="button" class="btn btn-danger" ng-click="sendp2()">End Turn</button>
+			</div>
 		</div>
 
 		<script src="grid-layout.js"></script>
@@ -126,10 +160,6 @@
 			<button type="button" class="btn btn-warning">Warning</button>
 			<button type="button" class="btn btn-danger">Danger</button>
 			<button type="button" class="btn btn-link">Link</button> -->
-
-<!-- 			<i class="material-icons">undo</i>
-			<i class="material-icons">redo</i>
- -->
 
 		<!-- <div class="container" style="text-align: left;">
 			<form>

@@ -158,6 +158,11 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		return false;
 	}
 
+	public function setXY( $x, $y ) {
+		$this->_x = $x;
+		$this->_y = $y;
+	}
+
 	/*public function getXDir() {
 		if ($this->_direction == Battlefleet::N || $this->_direction == Battlefleet::E)
 			return 1;
@@ -497,26 +502,27 @@ abstract class Spaceship extends Object implements JsonSerializable {
 
 	public function jsonSerialize() {
         return (object)array(
-        	"_id" 		=> $this->_id,
-        	"length" 	=> $this->_length,
-			"width" 	=> $this->_width,
-			"hp" 		=> $this->_hp,
-			"maxhp" 	=> $this->_maxhp,
-			"pp"		=> $this->_pp,
-			"speed" 	=> $this->_speed,
-			"handle" 	=> $this->_handle,
-			"weapons"	=> $this->_weapons,
-			"direction"	=> $this->_direction,
-			"cost" 		=> $this->_cost,
-			"name" 		=> $this->_name,
-			"x" 		=> $this->_x,
-			"y" 		=> $this->_y,
-			"hor" 		=> $this->_hor,
-			"ver"		=> $this->_ver,
-			"shield" 	=> $this->_shield,
-			"extraSpeed" => $this->_extraSpeed,
-			"maxSpeed" 	=> ($this->_extraSpeed + $this->_speed),
-			"minSpeed" 	=> ($this->_stationary ? 0 : $this->_handle)
+        	"_id" 			=> $this->_id,
+        	"length" 		=> $this->_length,
+			"width" 		=> $this->_width,
+			"hp" 			=> $this->_hp,
+			"maxhp" 		=> $this->_maxhp,
+			"pp"			=> $this->_pp,
+			"speed" 		=> $this->_speed,
+			"handle" 		=> $this->_handle,
+			"weapons"		=> $this->_weapons,
+			"direction"		=> $this->_direction,
+			"cost" 			=> $this->_cost,
+			"name" 			=> $this->_name,
+			"x" 			=> $this->_x,
+			"y" 			=> $this->_y,
+			"hor" 			=> $this->_hor,
+			"ver"			=> $this->_ver,
+			"shield" 		=> $this->_shield,
+			"extraSpeed" 	=> $this->_extraSpeed,
+			"maxSpeed" 		=> ($this->_extraSpeed + $this->_speed),
+			"minSpeed" 		=> ($this->_stationary ? 0 : $this->_handle),
+			"stationary" 	=> $this->_stationary
         );
     }
 }
