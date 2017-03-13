@@ -6,5 +6,5 @@ require_once 'get_game.php';
 
 $game->endTurn();
 saveGame($game, $gameFile);
-sendOK();
+sendJSON($game);
 ?>
