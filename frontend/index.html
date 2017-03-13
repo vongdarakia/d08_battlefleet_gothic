@@ -34,14 +34,69 @@
 			<div class="p1 col-3" ng-show="currentPhase == 1">
 				<div class="info">
 					<h2>Order Phase</h2>
-					<p>Player : {{ gameState.players[currentPlayer].playerName }}</p>
-					<p>Phase : {{ currentPhase }}</p>
-					<p>Ship : {{ currentShip }}</p>
-					<p>Power Points Available : {{ pp }}</p>
+					<p><strong>Player</strong> : {{ gameState.players[currentPlayer].playerName }}</p>
+					<p><strong>Ship</strong> : {{ gameState.players[currentPlayer].ships[currentShip].name }}</p>
+					<hr>
+					<p><i>Power Points Available</i> : {{ gameState.players[currentPlayer].ships[currentShip].pp }}</p>
 				</div>
 
 				<div>
 					<i class="material-icons" ng-click="p1.usepp(1, 'speed')">fast_forward</i>
+					<div class="p1control">
+						<div class="value-button" id="decrease" ng-click="p1.usepp(-1, 'speed')" value="Decrease Value">-</div>
+						<input type="number" id="number" ng-value="p1.speed" disabled />
+						<div class="value-button" id="increase" ng-click="p1.usepp(1, 'speed')" value="Increase Value">+</div>
+						<p>Speed</p>
+					</div>
+				</div>
+
+				<div>
+					<i class="material-icons" ng-click="p1.usepp(1, 'shield')">verified_user</i>
+					<div class="p1control">
+						<div class="value-button" id="decrease" ng-click="p1.usepp(-1, 'shield')" value="Decrease Value">-</div>
+						<input type="number" id="number" ng-value="p1.shield" disabled />
+						<div class="value-button" id="increase" ng-click="p1.usepp(1, 'shield')" value="Increase Value">+</div>
+						<p>Shield</p>
+					</div>
+				</div>
+
+				<div>
+					<i class="material-icons" ng-click="p1.usepp(1, 'weapon')">camera</i>
+					<div class="p1control">
+						<div class="value-button" id="decrease" ng-click="p1.usepp(-1, 'weapon')" value="Decrease Value">-</div>
+						<input type="number" id="number" ng-value="p1.weapon" disabled />
+						<div class="value-button" id="increase" ng-click="p1.usepp(1, 'weapon')" value="Increase Value">+</div>
+						<p>Weapons</p>
+					</div>
+				</div>
+
+				<div>
+					<i class="material-icons" ng-click="p1.usepp(1, 'repair')">error_outline</i>
+					<div class="p1control">
+						<div class="value-button" id="decrease" ng-click="p1.usepp(-1, 'repair')" value="Decrease Value">-</div>
+						<input type="number" id="number" ng-value="p1.repair" disabled />
+						<div class="value-button" id="increase" ng-click="p1.usepp(1, 'repair')" value="Increase Value">+</div>
+						<p>Repair</p>
+					</div>
+				</div>
+
+				<p></p>
+				<button type="button" class="btn btn-info" ng-click="sendp1()">Allocate Power Points</button>
+			</div>
+
+			<div class="p1 col-3" ng-show="currentPhase == 2">
+				<div class="info">
+					<h2>Movement Phase</h2>
+					<p><strong>Player</strong> : {{ gameState.players[currentPlayer].playerName }}</p>
+					<p><strong>Ship</strong> : {{ gameState.players[currentPlayer].ships[currentShip].name }}</p>
+					<hr>
+					<p><i>Min Distance Allowed</i> : {{ minDistance }}</p>
+					<p><i>Max Distance Allowed</i> : {{ maxDistance }}</p>
+					<hr>
+				</div>
+
+				<div>
+					<i class="material-icons" ng-click="p1.usepp(1, 'speed')">arrow_forward</i>
 					<div class="p1control">
 						<div class="value-button" id="decrease" ng-click="p1.usepp(-1, 'speed')" value="Decrease Value">-</div>
 						<input type="number" id="number" ng-value="p1.speed" disabled />
