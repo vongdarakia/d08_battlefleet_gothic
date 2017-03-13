@@ -31,6 +31,9 @@ var app = angular.module('myApp', ['ui.router']);
 app.controller('myCtrl', ['$scope', '$http', '$state', function($scope, $http, $state) {
     $scope.players = [];
     $scope.ships = [];
+    $scope.currentPlayer = 0;
+    $scope.currentShip = 0;
+    $scope.currentPhase = 0;
 
     $http.get("/d08/actions/get_game_state.php")
     .then(function(response) {
@@ -58,6 +61,7 @@ app.controller('myCtrl', ['$scope', '$http', '$state', function($scope, $http, $
                 $scope.pp = ship.pp
             }
         }
+
     });
 
     $scope.p1 = {
@@ -71,5 +75,25 @@ app.controller('myCtrl', ['$scope', '$http', '$state', function($scope, $http, $
                 $scope.pp -= n
             }
         }
+    };
+
+    $scope.sendp1 = function() {
+        var Indata = {
+            'ship_id': $scope.ships[$scope.currentShip],
+            'speed': $scope.p1.speed,
+            'shield': $scope.p1.shield,
+            'weapon': $scope.p1.weapon,
+            'repair': $scope.p1.repair };
+        $http({
+            url: "/d08/actions/p0_spend_pp.php",
+            method: "POST",
+            params: Indata
+        }).then(function successCallback(response) {
+            console.log("success");
+            console.log(response);
+        }, function errorCallback(response) {
+            console.log("error");
+            console.log(response);
+        });
     };
 }]);

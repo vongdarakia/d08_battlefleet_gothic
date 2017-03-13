@@ -34,3 +34,20 @@
 	font-size: 0.75em;
 	text-align: left;
 }
+
+.p1 {
+	text-align: center;
+	display: inline-block;
+	position: absolute;
+	top: 0;
+}
+
+.info {
+	margin-top: 30px;
+}
+
+@media (min-width: 1200px) {
+	.container {
+	    width: 2100px;
+	}
+}
