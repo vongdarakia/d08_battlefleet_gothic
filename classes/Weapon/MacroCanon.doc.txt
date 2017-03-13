@@ -9,7 +9,6 @@ $ship is the ship that controls the weapon.
 By default, both are set to null.
 
 Charges: 0
-Damage: 1
 Short Range: 1 to 10 cells
 Middle Range: 11 to 20 cells
 Long Range: 21 to 30 cells

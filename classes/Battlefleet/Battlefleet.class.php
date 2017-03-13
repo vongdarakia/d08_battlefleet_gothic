@@ -225,10 +225,6 @@ class Battlefleet implements JsonSerializable {
 		return $val;
 	}
 
-	public static function inMap( $r, $c ) {
-		return $r >= 0 && $r < Battlefleet::MAP_LEN && $c >= 0 && $c < Battlefleet::MAP_WIDTH;
-	}
-
 	public function jsonSerialize() {
         return (object)array(
         	"currentPhase" => $this->_currentPhase,

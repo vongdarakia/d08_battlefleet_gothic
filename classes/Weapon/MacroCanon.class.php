@@ -11,25 +11,8 @@ class MacroCanon extends Weapon {
 	}
 
 	public function shoot( $map ) {
-		$hit = parent::shoot($map);
-		if ($hit === null) {
-			return $hit;
-		}
-		$ships = array();
-		for ($i = -9; $i <= 9; $i++) {
-			for ($j = -9; $j <= 9; $j++) {
-				if ($i * $i + $j * $j <= 81) {
-					$r = $i + hit[0];
-					$c = $j + hit[1];
-					if (Battlefleet::inMap($r, $c) && $map[$r][$c] !== null && !in_array($map[$r][$c], $ships)) {
-						$ships[] = $map[$r][$c];
-					}
-				}
-			}
-		}
-		foreach ($ships as $ship) {
-			$ship->takeDamage(rand(1, 6)); // random dice roll
-		}
+		$coords = parent::shoot($map);
+		// handle explosion
 	}
 }
 ?>
