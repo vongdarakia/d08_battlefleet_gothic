@@ -30,7 +30,10 @@ app.controller('myCtrl', ['$scope', '$http', '$state', function($scope, $http, $
                 draw_ship(x, y, h, v, p);
             }
         }
+        console.log(response.data);
         resetp1();
+        resetp2();
+        console.log($scope.gameState.players[$scope.currentPlayer].ships[$scope.currentShip]);
     }
 
     $http.get("/d08/actions/get_game_state.php")
@@ -53,6 +56,19 @@ app.controller('myCtrl', ['$scope', '$http', '$state', function($scope, $http, $
         };
     }
 
+    function resetp2() {
+        $scope.p2 = {
+            minSpeed : $scope.gameState.players[$scope.currentPlayer].ships[$scope.currentShip].minSpeed,
+            maxSpeed : $scope.gameState.players[$scope.currentPlayer].ships[$scope.currentShip].maxSpeed,
+            // usepp : function(n, type) {
+            //     if (( n > 0 && $scope.gameState.players[$scope.currentPlayer].ships[$scope.currentShip].pp > 0) || ( n < 0 && $scope.p1[type] > 0)) {
+            //         $scope.p1[type] += n;
+            //         $scope.gameState.players[$scope.currentPlayer].ships[$scope.currentShip].pp -= n
+            //     }
+            // }
+        };
+    }
+
     $scope.sendp1 = function() {
         var inData = {
             'player_id' : $scope.gameState.players[$scope.currentPlayer]['_id'],
@@ -63,6 +79,73 @@ app.controller('myCtrl', ['$scope', '$http', '$state', function($scope, $http, $
             'repair': $scope.p1.repair };
         $http({
             url: "/d08/actions/p0_spend_pp.php",
+            method: "GET",
+            headers: {'Content-Type': "application/x-www-form-urlencoded"},
+            params: inData
+        }).then(function successCallback(response) {
+            updateGame(response);
+            $scope.currentPhase = 1.5;
+            if ($scope.currentShip < $scope.gameState.players[$scope.currentPlayer].ships.length - 1) {
+                $scope.currentShip++;
+                $scope.currentPhase = 1;
+            } else if ( $scope.currentPlayer < $scope.gameState.players.length - 1 ) {
+                $scope.currentPlayer++;
+                $scope.currentShip = 0;
+                $scope.currentPhase = 1;
+            } else {
+                $scope.currentPlayer = 0;
+                $scope.currentShip = 0;
+                $scope.currentPhase = 2;
+            };
+        }, function errorCallback(response) {
+            console.log("error");
+            console.log(response);
+        });
+    };
+
+    $scope.sendp2move = function() {
+        var inData = {
+            'player_id' : $scope.gameState.players[$scope.currentPlayer]['_id'],
+            'ship_id': $scope.gameState.players[$scope.currentPlayer].ships[$scope.currentShip]['_id'],
+            'speed': $scope.p1.speed,
+            'shield': $scope.p1.shield,
+            'weapon': $scope.p1.weapon,
+            'repair': $scope.p1.repair };
+        $http({
+            url: "/d08/actions/p1_move_ship.php",
+            method: "GET",
+            headers: {'Content-Type': "application/x-www-form-urlencoded"},
+            params: inData
+        }).then(function successCallback(response) {
+            updateGame(response);
+            $scope.currentPhase = 1.5;
+            if ($scope.currentShip < $scope.gameState.players[$scope.currentPlayer].ships.length - 1) {
+                $scope.currentShip++;
+                $scope.currentPhase = 1;
+            } else if ( $scope.currentPlayer < $scope.gameState.players.length - 1 ) {
+                $scope.currentPlayer++;
+                $scope.currentShip = 0;
+                $scope.currentPhase = 1;
+            } else {
+                $scope.currentPlayer = 0;
+                $scope.currentShip = 0;
+                $scope.currentPhase = 2;
+            };
+        }, function errorCallback(response) {
+            console.log("error");
+            console.log(response);
+        });
+    };
+    $scope.sendp2turn = function() {
+        var inData = {
+            'player_id' : $scope.gameState.players[$scope.currentPlayer]['_id'],
+            'ship_id': $scope.gameState.players[$scope.currentPlayer].ships[$scope.currentShip]['_id'],
+            'speed': $scope.p1.speed,
+            'shield': $scope.p1.shield,
+            'weapon': $scope.p1.weapon,
+            'repair': $scope.p1.repair };
+        $http({
+            url: "/d08/actions/p1_turn_ship.php",
             method: "GET",
             headers: {'Content-Type': "application/x-www-form-urlencoded"},
             params: inData
