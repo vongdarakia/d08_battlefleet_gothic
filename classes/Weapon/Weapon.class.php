@@ -15,7 +15,7 @@ abstract class Weapon extends Object implements JsonSerializable {
 
 	protected $_extraCharge = 0;
 
-	private static $_idCounter = 0;
+	private static $_idCounter = 1;
 
 	public static function doc() {
 		return file_get_contents('./Weapon.doc.txt');

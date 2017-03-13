@@ -1,17 +1,24 @@
 <?php 
 require_once 'get_game.php';
 
-// player_id
-// ship_id
-// weapon_id
-$ship = $game->getShipByID($_POST["ship_id"]);
+$playerID = isset($_POST['player_id']) ? intval($_POST['player_id']) : 0;
+playerCheck($game, $playerID);
+
+$weaponID 	= isset($_POST['weapon_id']) ? intval($_POST['weapon_id']) : 0;
+$shipID 	= isset($_POST['ship_id']) ? intval($_POST['ship_id']) : 0;
+$ship 		= $game->getShipByID($shipID);
+$ship 		= $game->getShipByID($shipID);
+
 if ($ship) {
-	$weapon = $ship->getWeaponByID($_POST["weapon_id"]);
+	$weapon = $ship->getWeaponByID($weaponID);
 	if ($weapon) {
-		$weapon->shoot($game->getMap());
-		saveGame($game, $gameFile);
-		sendOK();
+		if ($weapon->shoot($game->getMap())) {
+			saveGame($game, $gameFile);
+			sendOK("Shot something!");
+		}
+		sendError("Can't shoot");
 	}
+	sendError("Weapon doesn't exist");
 }
-sendError():
+sendError("Invalid ship ID");
 ?>
