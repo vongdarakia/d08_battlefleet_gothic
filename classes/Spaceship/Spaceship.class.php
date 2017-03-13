@@ -467,8 +467,8 @@ abstract class Spaceship extends Object implements JsonSerializable {
 			"hp" 		=> $this->_hp,
 			"maxhp" 	=> $this->_maxhp,
 			"pp"		=> $this->_pp,
-			// "speed" 	=> $this->_speed,
-			// "handle" => $this->_handle,
+			"speed" 	=> $this->_speed,
+			"handle" => $this->_handle,
 			"weapons"	=> $this->_weapons,
 			"direction"	=> $this->_direction,
 			"cost" 		=> $this->_cost,
@@ -478,7 +478,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 			"hor" 		=> $this->_hor,
 			"ver"		=> $this->_ver,
 			"shield" 	=> $this->_shield,
-			// "extraSpeed" => $this->_extraSpeed,
+			"extraSpeed" => $this->_extraSpeed,
 			"maxSpeed" 	=> ($this->_extraSpeed + $this->_speed),
 			"minSpeed" 	=> ($this->_stationary ? 0 : $this->_handle)
         );
