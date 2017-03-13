@@ -22,7 +22,6 @@ abstract class Spaceship extends Object implements JsonSerializable {
 
 	protected $_hor = 1;
 	protected $_ver = 1;
-	protected $_stationary = 1;
 	protected $_movedDist = 0; 
 
 	protected $_shield = 0; // shield
