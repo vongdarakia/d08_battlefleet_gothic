@@ -21,6 +21,22 @@ class Battlefleet implements JsonSerializable {
 	private $_gameSize;
 	private $_map;
 	private $_currentPlayer;
+	private $_obstacles = array();
+
+	private function setObstacles() {
+		for ($ob_num=0; $ob_num < 10; $ob_num++) {
+			
+			$x = rand(15, Battlefleet::MAP_WIDTH - 20);
+			$y = rand(15, Battlefleet::MAP_LEN - 20);
+			$hor = rand(2,5);
+			$ver = rand(2,5);
+			for ($i=0; $i < $ver; $i++) {
+				for ($j=0; $j < $hor; $j++)
+					$this->_obstacles[] = array($y + $j, $x + $i); 
+			}
+			
+		}
+	}
 
 	public function __construct() {
 		$this->_currentPhase = 0;
@@ -41,7 +57,7 @@ class Battlefleet implements JsonSerializable {
 		$this->_currentPlayer = $this->_players[0];
 
 		$this->_map = array();
-
+		
 		for ($i=0; $i < Battlefleet::MAP_LEN; $i++) {
 			$cols = array();
 			for ($j=0; $j < Battlefleet::MAP_WIDTH; $j++) { 
@@ -49,7 +65,7 @@ class Battlefleet implements JsonSerializable {
 			}
 			$this->_map[] = $cols;
 		}
-
+		$this->setObstacles(); 
 		$this->updateMap();
 
 		if (self::$verbose)
@@ -159,6 +175,10 @@ class Battlefleet implements JsonSerializable {
 				$ver = $ship->getVer();
 				$x = $ship->getX();
 				$y = $ship->getY();
+				foreach ($this->_obstacles as $obst) {
+					$this->_map[$obst[0]][$obst[1]] = "x";
+				}
+
 				for ($r = 0; $r < $ver; $r++) { 
 					for ($c = 0; $c < $hor; $c++) { 
 						$this->_map[$y + $r][$x + $c] = $ship;
@@ -178,6 +198,8 @@ class Battlefleet implements JsonSerializable {
 			for ($j=0; $j < Battlefleet::MAP_WIDTH; $j++) { 
 				if ($this->_map[$i][$j] === null)
 					echo ".";
+				else if ($this->_map[$i][$j] === "x")
+					echo "x";
 				else if ($this->_map[$i][$j]->getOwner() === null)
 					echo " ";
 				else
