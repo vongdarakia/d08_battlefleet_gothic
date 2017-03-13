@@ -28,12 +28,17 @@ if ($_POST["submit"] === "Send")
 <html>
 	<head>
 		<title>Chat</title>
-		<script langage="javascript">top.frames['chat'].location = 'chat.php';</script>
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<script>
+			function updateChat() {
+				$.post("chat.php", {submit: "Send", message: $("#message").text()});
+			}
+		</script>
 	</head>
 	<body>
-		<form action="speak.php" method="post">
-			<input type="text" name="message">
-			<input type="submit" name="submit" value="Send">
+		<form method="post">
+			<input id="message" type="text" name="message">
+			<input type="submit" name="submit" value="Send" onclick="updateChat()">
 		</form>
 	</body>
 </html>

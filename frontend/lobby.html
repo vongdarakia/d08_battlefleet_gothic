@@ -5,7 +5,13 @@
 	<body>
 		<input type="submit" value="Click to create game">
 		<input type="submit" value="Click to join game">
-		<iframe name="chat" src="chat.php" width="100%" height="550px"></iframe>
-		<iframe name="speak" src="speak.php" width="100%" height="50px"></iframe>
+		<iframe id="chat" name="chat" src="chat.php" width="100%" height="550px"></iframe>
+		<iframe id="speak" name="speak" src="speak.php" width="100%" height="50px"></iframe>
+		<script>
+			window.setInterval("reloadIFrame();", 1000);
+			function reloadIFrame() {
+				document.getElementById("chat").src = "chat.php";
+			}
+		</script>
 	</body>
 </html>
