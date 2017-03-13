@@ -87,6 +87,7 @@
 			<div class="p1 col-3" ng-show="currentPhase == 2">
 				<div class="info">
 					<h2>Movement Phase</h2>
+					<p ng-bind="p2.error" style="color: red;"></p>
 					<p><strong>Player</strong> : {{ gameState.players[currentPlayer].playerName }}</p>
 					<p><strong>Ship</strong> : {{ gameState.players[currentPlayer].ships[currentShip].name }}</p>
 					<hr>
@@ -123,7 +124,7 @@
 		<script src="incdec.js"></script>
 	</body>
 </html>
-<!-- 		<div class="card">
+		<div class="card">
 			<img src="ship1.jpg" alt="Avatar" style="width:100%">
 			<div class="container">
 			<h5><b>Despoiler Class Battleship</b></h5>
@@ -136,9 +137,9 @@
 				<li>Weapons : 0</li>
 			</ul>
 			</div>
-		</div> -->
+		</div>
 
-<!-- 		<div class="card card-inset">
+		<div class="card card-inset">
 			<img src="ship2.jpg" alt="Avatar" style="width:100%">
 			<div class="container">
 			<h5><b>Retaliator Cruiser</b></h5>
@@ -151,7 +152,7 @@
 				<li>Weapons : 0</li>
 			</ul>
 			</div>
-		</div> -->
+		</div>
 
 <!-- 			<button type="button" class="btn btn-default">Default</button>
 			<button type="button" class="btn btn-primary">Primary</button>
