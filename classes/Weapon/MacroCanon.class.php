@@ -19,8 +19,8 @@ class MacroCanon extends Weapon {
  		for ($i = -9; $i <= 9; $i++) {
  			for ($j = -9; $j <= 9; $j++) {
  				if ($i * $i + $j * $j <= 81) {
- 					$r = $i + hit[0];
- 					$c = $j + hit[1];
+ 					$r = $i + $hit[0];
+ 					$c = $j + $hit[1];
  					if (Battlefleet::inMap($r, $c) && $map[$r][$c] !== null && !in_array($map[$r][$c], $ships)) {
  						$ships[] = $map[$r][$c];
  					}
