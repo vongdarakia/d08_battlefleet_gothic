@@ -131,6 +131,7 @@ class Battlefleet implements JsonSerializable {
 			}
 			$this->updateShips();
 			$this->updateMap();
+			$this->_currentPhase = 0;
 		}
 	}
 
