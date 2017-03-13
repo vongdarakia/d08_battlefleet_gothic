@@ -17,6 +17,7 @@ if ($ship) {
 		echo json_encode($game);
 		exit();
 	}
+	sendError("Can't turn");
 }
-sendError();
+sendError("Invalid ship ID");
 ?>
