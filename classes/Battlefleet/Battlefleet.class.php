@@ -152,6 +152,10 @@ class Battlefleet implements JsonSerializable {
 		return $this->_currentPlayer;
 	}
 
+	public function getObstacles() {
+		return $this->_obstacles;
+	}
+
 	public function getAllShips() {
 		$ships = array();
 
@@ -297,7 +301,8 @@ class Battlefleet implements JsonSerializable {
 			"players" => $this->_players,
 			"gameSize" => $this->_gameSize,
 			"map" => $this->_map,
-			"currentPlayer" => $this->_currentPlayer
+			"currentPlayer" => $this->_currentPlayer,
+			"obstacles" => $this->_obstacles
         );
     }
 }
