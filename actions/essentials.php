@@ -1,6 +1,7 @@
 <?php 
 function sendOK($msg = "") {
 	header("HTTP/1.1 200 OK");
+	echo $msg;
 	exit();
 }
 
