@@ -13,9 +13,7 @@ if ($ship) {
 	if ($ship->turnShip($rot, $game->getMap())) {
 		$game->updateMap();
 		saveGame($game, $gameFile);
-		header("Content-Type: application/json");
-		echo json_encode($game);
-		exit();
+		sendJSON($game);
 	}
 	sendError("Can't turn");
 }

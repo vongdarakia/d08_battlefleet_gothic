@@ -14,10 +14,7 @@ $ship 		= $game->getShipByID($shipID);
 if ($ship) {
 	$ship->spendPP($ppSpeed, $ppShield, array($ppWeapon), $ppRepair);
 	saveGame($game, $gameFile);
-	header("Content-Type: application/json");
-	echo json_encode($game);
+	sendJSON($game);
 }
-else {
-	sendError("Invalid ship ID");
-}
+sendError("Invalid ship ID");
 ?>

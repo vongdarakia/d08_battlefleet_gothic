@@ -12,9 +12,7 @@ if ($ship) {
 	if ($ship->moveShip($dist, $game->getMap())) {
 		$game->updateMap();
 		saveGame($game, $gameFile);
-		header("Content-Type: application/json");
-		echo json_encode($game);
-		exit();
+		sendJSON($game);
 	}
 	sendError("Can't move");
 }
