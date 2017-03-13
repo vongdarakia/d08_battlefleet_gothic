@@ -9,7 +9,6 @@ function saveGame($game, $gameFile) {
 function loadGame($gameFile) {
 	if (file_exists($gameFile))
 		return unserialize(file_get_contents($gameFile));
-	else
-		echo "File doesn't exist";
+	return false;
 }
 ?>
