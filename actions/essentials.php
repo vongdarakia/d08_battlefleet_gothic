@@ -1,13 +1,23 @@
 <?php 
-function sendOK($msg = "") {
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+date_default_timezone_set('America/Los_Angeles');
+
+function sendOK( $msg = "" ) {
 	header("HTTP/1.1 200 OK");
 	echo $msg;
 	exit();
 }
 
-function sendError($msg = "") {
+function sendError( $msg = "" ) {
 	header('HTTP/1.1 500 Internal Server Error');
 	echo $msg;
+	exit();
+}
+
+function sendJSON( $json ) {
+	header("Content-Type: application/json");
+	echo json_encode($json);
 	exit();
 }
 
