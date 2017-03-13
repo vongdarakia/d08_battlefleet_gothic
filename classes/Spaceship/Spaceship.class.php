@@ -271,22 +271,25 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		$ver = ($orient % 2) ? $this->_length : $this->_width;
 
 		// Checking interval;
-		$x0 = $this->_x + ($orient % 3 == 0) * $hor;
-		$intx = $x + ($orient % 3 != 0) * $hor;
-		$y0 = $this->_y + (($orient + 1) % 3 != 0) * $ver;
-		$inty = $y + (($orient + 1) % 3 == 0) * $ver;
+		$x0 = $this->_x + (($orient + 1) % 4 == 0) * ($hor - 1);
+		$intx = $x + (($orient + 1) % 4 != 0) * ($hor - 1);
+		$y0 = $this->_y + (($orient + 1) % 3 != 0) * ($ver - 1);
+		$inty = $y + (($orient + 1) % 3 == 0) * ($ver - 1);
 
 		// Set the direction for collision of checking
 		$x_sign = ($orient == 3) ? -1 : 1;
-		$y_sign = ($orient == 0) ? -1 : 1;
+		$y_sign = ($orient == 2) ? 1 : -1;
 
 		// Check for collisions
 		if ($orient % 2 == 1) {
-			// echo "x0: " . $x0 . " | intx: " . $intx . " | sign_x: ". $sign_x . PHP_EOL
-			// . "y0: " . $y0 . " | inty: " . $inty . " | sign_y: ". $sign_y. PHP_EOL;
-			for ($c = $x0; ($intx - $c) * $x_sign > 0; $c += $x_sign) {
+			// echo "x0: " . $x0 . " | intx: " . $intx . " | sign_x: ". $x_sign . PHP_EOL
+			// . "y0: " . $y0 . " | inty: " . $inty . " | sign_y: ". $y_sign. PHP_EOL;
+			for ($c = $x0; ($intx - $c) * $x_sign >= 0; $c += $x_sign) {
 				$obstacle_hit = 0;
-				for ($r = $y0; ($inty - $r) * $y_sign > 0; $r += $y_sign) {
+				for ($r = $y0; ($inty - $r) * $y_sign >= 0; $r += $y_sign) {
+					// Check map border collisions
+					if ($c >= Battlefleet::MAP_WIDTH || $r >= Battlefleet::MAP_LEN || $c < 0 || $r < 0)
+						return - 1;
 					$map_val = $map[$r][$c];
 					// echo "Map val: " . $map_val . PHP_EOL;
 					if ($map_val instanceof Spaceship && $map_val !== $this) {
@@ -294,7 +297,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 						$obstacle_hit = 0;
 						if ($orient == $this->_direction) {
 														
-							$x = $c - ($orient == 1) ? $hor : 1;
+							$x = $c - (($orient == 1) ? $hor :  -1);
 							$this->_movedDist += abs($this->_x - $x);
 							
 							// Check and take damage
@@ -324,9 +327,12 @@ abstract class Spaceship extends Object implements JsonSerializable {
 		else {
 			// echo "y0: " . $y0 . " | inty: " . $inty . " | sign_y: ". $y_sign. PHP_EOL
 			// . "x0: " . $x0 . " | intx: " . $intx . " | sign_x: ". $x_sign . PHP_EOL;
-			for ($r = $y0; ($inty - $r) * $y_sign > 0; $r += $y_sign) {
+			for ($r = $y0; ($inty - $r) * $y_sign >= 0; $r += $y_sign) {
 				$obstacle_hit = 0;
-				for ($c = $x0; ($intx - $c) * $x_sign > 0; $c += $x_sign) {
+				for ($c = $x0; ($intx - $c) * $x_sign >= 0; $c += $x_sign) {
+					// Check map border collisions
+					if ($c >= Battlefleet::MAP_WIDTH || $r >= Battlefleet::MAP_LEN || $c < 0 || $r < 0)
+						return - 1;
 					$map_val = $map[$r][$c];
 					// echo "Map val: " . $map_val . PHP_EOL;
 					if ($map_val instanceof Spaceship && $map_val !== $this) {
@@ -334,7 +340,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 						$obstacle_hit = 0;
 						if ($orient == $this->_direction) {
 														
-							$y = $r - ($orient == 2) ? $ver : 1;
+							$y = $r - (($orient == 2) ? $ver :  -1);
 							$this->_movedDist += abs($this->_y - $y);
 							
 							// Check and take damage
@@ -361,11 +367,6 @@ abstract class Spaceship extends Object implements JsonSerializable {
 					return -1;
 			}
 		}
-		
-		// Check map border collisions
-		if (max($intx, $x0) > Battlefleet::MAP_WIDTH || max($inty, $y0) > Battlefleet::MAP_LEN
-			|| min($intx, $x0) < 0 || min($inty, $y0) < 0)
-			return -1;
 
 		// Still flying =)
 		return 0;

@@ -1,0 +1,36 @@
+.grid {
+	display: inline-block;
+}
+.card {
+	box-shadow: 4px 8px 16px 0 rgba(0,0,0,0.2);
+	transition: 0.3s;
+	width: 10%;
+	height: 30%;
+	border: 1px solid gray;
+	display: inline-block;
+	top: 20px;
+}
+
+.card-inset {
+	padding: 5px;
+	background-color: #eee;
+	box-shadow: 1px 1px 10px #555 inset;
+}
+
+.card:hover {
+	box-shadow: 8px 16px 25px 0 rgba(0,0,0,0.2);
+}
+
+.card-inset:hover {
+	box-shadow: 1px 1px 20px #555 inset;
+}
+
+.container {
+	padding: 2px 16px;
+}
+
+.container li {
+	margin: 0;
+	font-size: 0.75em;
+	text-align: left;
+}

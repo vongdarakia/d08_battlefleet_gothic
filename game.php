@@ -7,13 +7,16 @@ date_default_timezone_set('America/Los_Angeles');
 require_once './actions/game_save.php';
 require_once './classes/Battlefleet/Battlefleet.class.php';
 require_once './classes/Spaceship/Faction/Imperial/ImperialFrigate.class.php';
+require_once './classes/Spaceship/Faction/Imperial/ImperialIronclad.class.php';
 require_once './classes/Weapon/NauticalLance.class.php';
 
 Battlefleet::$verbose = true;
 
 $bf = new Battlefleet();
-$ship = new ImperialFrigate(5, 70);
-$ship2 = new ImperialFrigate(5, 75);
+$ship = new ImperialIronclad(4, 71);
+$ship2 = new ImperialFrigate(5, 83);
+$ship3 = new ImperialIronclad(5, 65);
+$ship4 = new ImperialIronclad(140, 90);
 // $ship->addWeapon(new NauticalLance());
 // $id = 0;
 // $id++;
@@ -22,6 +25,8 @@ $ship2 = new ImperialFrigate(5, 75);
 
 $bf->getCurrentPlayer()->addShip($ship);
 $bf->getCurrentPlayer()->addShip($ship2);
+$bf->getCurrentPlayer()->addShip($ship3);
+$bf->getCurrentPlayer()->addShip($ship4);
 $bf->updateMap();
 
 $ship->getWeapons()[0]->addCharge(20);
@@ -141,7 +146,8 @@ function selectMove( $shipIdx, $ship, $bf) {
 			echo PHP_EOL;
 			echo "HP: " . $ship->getHP() . PHP_EOL
 			. "Speed: " . $ship->getSpeed() . PHP_EOL
-			. "Moved Dist: ". $ship->getMovedDist() . PHP_EOL;
+			. "Moved Dist: ". $ship->getMovedDist() . PHP_EOL
+			. "Stationary:" . $ship->isStationary() . PHP_EOL;
 		}
 
 		else

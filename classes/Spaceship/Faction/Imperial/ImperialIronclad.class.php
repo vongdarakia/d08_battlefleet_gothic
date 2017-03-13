@@ -2,7 +2,7 @@
 require_once 'Imperial.class.php';
 require_once __DIR__ . '/../../../Weapon/HeavyNauticalLance.class.php';
 
-class ImperialFrigate extends Imperial {
+class ImperialIronclad extends Imperial {
 	public static function doc() {
 		return file_get_contents('./ImperialIronclad.doc.txt');
 	}
