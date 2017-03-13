@@ -1,20 +1,25 @@
 <?php 
 require_once 'get_game.php';
 
-$ppSpeed = intval($_POST['speed']);
-$ppShield = intval($_POST['shield']);
-$ppWeapon = intval($_POST['weapon']);
-$ppRepair = intval($_POST['repair']);
-$playerId = intval($_POST['player_id']);
+$playerID = isset($_POST['player_id']) ? intval($_POST['player_id']) : 0;
+playerCheck($game, $playerID);
 
-$ship = $game->getShipById(intval($_POST['ship_id']));
+$ppSpeed 	= isset($_POST['speed']) ? intval($_POST['speed']) : 3;
+$ppShield 	= isset($_POST['shield']) ? intval($_POST['shield']) : 0;
+$ppWeapon 	= isset($_POST['weapon']) ? intval($_POST['weapon']) : 0;
+$ppRepair 	= isset($_POST['repair']) ? intval($_POST['repair']) : 0;
+$shipID 	= isset($_POST['ship_id']) ? intval($_POST['ship_id']) : 0;
+$ship 		= $game->getShipByID($shipID);
+
 if ($ship) {
-	$game->spendPP($ppSpeed, $ppShield, $ppWeapon, $ppRepair);
+
+	$ship->spendPP($ppSpeed, $ppShield, array($ppWeapon), $ppRepair);
 	saveGame($game, $gameFile);
 	header("Content-Type: application/json");
-	echo json_encode($game);
+	echo json_encode($game->getAllShips());
+
 }
 else {
-	echo "Invalid ship ID: '" . $_POST['ship_id'] . "'";
+	sendError("Invalid ship ID");
 }
 ?>

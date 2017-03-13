@@ -192,7 +192,7 @@ abstract class Spaceship extends Object implements JsonSerializable {
 	public function spendPP( $speed, $shield, $weapons, $repair ) {
 		$pp = $speed + $shield + $repair;
 
-		foreach ($weapon as $key => $amount) {
+		foreach ($weapons as $key => $amount) {
 			$pp += $amount;
 		}
 		if ($pp > $this->_pp) { 
